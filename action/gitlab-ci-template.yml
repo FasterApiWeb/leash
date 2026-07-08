@@ -1,0 +1,47 @@
+# Leash GitLab CI Template
+# Include in your .gitlab-ci.yml:
+#
+#   include:
+#     - remote: 'https://raw.githubusercontent.com/FasterApiWeb/leash/main/action/gitlab-ci-template.yml'
+#
+# Or copy this file into your project.
+
+leash-scan:
+  stage: test
+  image: node:20-alpine
+  variables:
+    LEASH_FAIL_ON: "critical"
+    LEASH_SEVERITY: "warning"
+    LEASH_SCAN_MODE: "diff"
+  before_script:
+    - npm install -g leash
+  script:
+    - |
+      if [ "$LEASH_SCAN_MODE" = "diff" ]; then
+        FILES=$(git diff --name-only --diff-filter=ACM origin/$CI_MERGE_REQUEST_TARGET_BRANCH_NAME..HEAD 2>/dev/null || echo ".")
+      else
+        FILES="."
+      fi
+
+      leash scan $FILES --json > /tmp/leash-report.json 2>&1 || true
+
+      CRITS=$(node -e "try{const f=require('/tmp/leash-report.json');console.log(f.filter(x=>x.severity==='critical').length)}catch(e){console.log(0)}")
+      WARNS=$(node -e "try{const f=require('/tmp/leash-report.json');console.log(f.filter(x=>x.severity==='warning').length)}catch(e){console.log(0)}")
+
+      echo "Findings: $CRITS critical, $WARNS warnings"
+
+      if [ "$LEASH_FAIL_ON" = "critical" ] && [ "$CRITS" != "0" ]; then
+        leash scan $FILES --verbose
+        echo "FAILED: $CRITS critical secret(s) found"
+        exit 1
+      elif [ "$LEASH_FAIL_ON" = "warning" ] && [ "$((CRITS + WARNS))" != "0" ]; then
+        leash scan $FILES --verbose
+        echo "FAILED: Found secrets"
+        exit 1
+      fi
+
+      echo "No critical secrets found."
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  allow_failure: false

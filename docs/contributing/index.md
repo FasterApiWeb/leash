@@ -8,7 +8,7 @@ Thank you for making the internet safer. Leash grows stronger with every contrib
 
 Found a secret type leash doesn't detect? This is the most valuable contribution.
 
-[:octicons-arrow-right-24: Adding Patterns Guide](adding-patterns.md)
+[Adding Patterns Guide :material-arrow-right:](adding-patterns.md)
 
 ### 2. Reduce False Positives
 

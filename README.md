@@ -41,7 +41,7 @@ You ask your AI agent to set up a Stripe integration. Without leash:
 ```python
 import stripe
 
-stripe.api_key = "sk_live_" + "51H7mKjG8z4x9vRnC3yT5qW2bA0xF6pL8dM1nO4kJ7sE9iU"
+stripe.api_key = "sk_live_" + "YourActualKeyWouldBeHere1234567890"
 
 def create_payment(amount, currency="usd"):
     return stripe.PaymentIntent.create(
@@ -411,6 +411,156 @@ Leash does not phone home. No telemetry, no analytics, no accounts, no backend. 
 
 Network calls happen only during install (fetching files from GitHub) and are documented in [SECURITY.md](SECURITY.md).
 
+## Use It Everywhere
+
+### CLI
+
+```bash
+npm install -g leash
+
+leash scan .                    # Scan current directory
+leash scan src/ --verbose       # With risk details
+leash scan config.yml --json    # JSON output for CI
+leash report .                  # Markdown security report
+leash patterns                  # List all 71 patterns
+leash validate                  # Validate pattern files
+```
+
+### GitHub Action
+
+Add to `.github/workflows/secret-scan.yml`:
+
+```yaml
+name: Secret Scan
+on: [push, pull_request]
+
+jobs:
+  leash:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: FasterApiWeb/leash/action@main
+```
+
+See [action/README.md](action/README.md) for configuration options (`scan-mode`, `fail-on`, `exclude`, etc.).
+
+### GitLab CI
+
+```yaml
+include:
+  - remote: 'https://raw.githubusercontent.com/FasterApiWeb/leash/main/action/gitlab-ci-template.yml'
+```
+
+### VS Code Extension
+
+```bash
+cd vscode-extension
+npm install
+npx @vscode/vsce package
+code --install-extension leash-vscode-1.0.0.vsix
+```
+
+Real-time inline diagnostics as you type, workspace scanning, and a status bar indicator. See [vscode-extension/README.md](vscode-extension/README.md).
+
+### Programmatic API
+
+```javascript
+const { loadPatterns, scanFile, scanString } = require('leash');
+
+const findings = scanFile('config.py');
+// or
+const findings = scanString('api_key = "sk_live_abc123..."', { filename: 'app.py' });
+
+findings.forEach(f => {
+  console.log(`${f.severity}: ${f.pattern.name} at line ${f.line}`);
+});
+```
+
+## For Contributors
+
+### Local Development Setup
+
+```bash
+git clone https://github.com/FasterApiWeb/leash.git
+cd leash
+
+# Run tests (zero dependencies, no install needed)
+make test
+
+# Scan the repo itself for secrets
+make scan
+
+# Serve docs locally at http://127.0.0.1:8000
+make docs-serve
+
+# See all available commands
+make help
+```
+
+### Test Locally Before Submitting a PR
+
+```bash
+make test          # Validate patterns + run regex tests
+make lint          # Check shell scripts
+make scan          # Dogfood: scan own repo
+make docs          # Build docs site
+```
+
+### How the CI/CD Pipeline Works
+
+| Workflow | Trigger | What it does |
+|----------|---------|-------------|
+| **CI** | Every push & PR | Tests on Node 18/20/22, shell linting, dogfood scan |
+| **Validate Patterns** | PR touching `patterns/` | Validates pattern schema and regex tests |
+| **Release** | Push to main | release-please creates release PR, publishes to npm, uploads assets |
+| **Deploy Docs** | Push to main (docs changed) | Builds MkDocs, deploys to GitHub Pages |
+
+### Conventional Commits
+
+We use [Conventional Commits](https://conventionalcommits.org) for automated releases:
+
+```
+feat: add Datadog API key pattern          → minor version bump
+fix: reduce false positives for JWT        → patch version bump
+pattern: add Twilio phone SID detection    → patch version bump
+docs: update installation guide            → no version bump
+```
+
+## Publishing & Releasing
+
+### npm
+
+Releases are automated via release-please. When you merge a PR with conventional commits:
+
+1. release-please opens a "Release PR" bumping the version
+2. Merging the Release PR triggers:
+   - `npm publish` with provenance
+   - GitHub Release with `.tar.gz` and `.zip` assets
+   - CHANGELOG.md update
+
+Manual publish (maintainers only):
+
+```bash
+npm login
+npm publish --access public
+```
+
+### VS Code Marketplace
+
+```bash
+cd vscode-extension
+npx @vscode/vsce package             # Creates .vsix
+npx @vscode/vsce publish             # Publish (requires PAT)
+```
+
+### GitHub Pages (Docs)
+
+Automatic on push to main. Manual trigger via Actions > Deploy Docs > Run workflow.
+
+Docs URL: **https://fasterapiweb.github.io/leash**
+
 ## Contributing
 
 Leash's power grows with every pattern contributed. See [CONTRIBUTING.md](CONTRIBUTING.md) for:
@@ -421,18 +571,10 @@ Leash's power grows with every pattern contributed. See [CONTRIBUTING.md](CONTRI
 - **Documentation** — examples, translations, guides
 - **Testing** — pattern validation, edge cases
 
-```bash
-# Validate patterns
-node scripts/check-patterns.js
-
-# Run tests
-npm test
-```
-
 ## Roadmap
 
-- [ ] **leash-ci** — GitHub Action / GitLab CI integration
-- [ ] **leash-vscode** — VS Code extension with inline warnings
+- [x] **leash-ci** — GitHub Action / GitLab CI integration
+- [x] **leash-vscode** — VS Code extension with inline warnings
 - [ ] **leash-dashboard** — team-wide secret exposure metrics
 - [ ] **Pattern marketplace** — community-contributed pattern packs
 - [ ] **Entropy detection** — catch secrets that don't match known patterns
@@ -447,7 +589,8 @@ Every star helps another developer find leash before their secrets find the inte
 <p align="center">
   <a href="CONTRIBUTING.md">Contributing</a> ·
   <a href="SECURITY.md">Security</a> ·
-  <a href="docs/custom-patterns.md">Custom Patterns</a> ·
+  <a href="https://fasterapiweb.github.io/leash">Documentation</a> ·
+  <a href="action/README.md">GitHub Action</a> ·
   <a href="https://github.com/FasterApiWeb/leash/issues">Issues</a>
 </p>
 

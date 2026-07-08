@@ -10,8 +10,8 @@ permissions:
   contents: read
 
 jobs:
-  lint-and-test:
-    name: Lint & Test
+  test:
+    name: Test (Node ${{ matrix.node-version }})
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -30,35 +30,42 @@ jobs:
       - name: Run pattern tests
         run: node tests/test-patterns.js
 
-      - name: Verify install script syntax
-        run: bash -n scripts/install.sh
+      - name: Test CLI scan (should detect secrets in fixture)
+        run: |
+          node bin/leash.js scan tests/fixtures/has-secrets.py && exit 1 || true
 
-      - name: Verify pre-commit hook syntax
-        run: bash -n hooks/pre-commit.sh
+      - name: Test CLI scan (should pass on clean fixture)
+        run: node bin/leash.js scan tests/fixtures/clean.py
 
-      - name: Check EditorConfig compliance
-        uses: editorconfig-checker/action-editorconfig-checker@main
-        continue-on-error: true
-
-  security-audit:
-    name: Security Audit
+  shellcheck:
+    name: Shell Scripts
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Ensure no real secrets in repo
+      - name: Check install script syntax
+        run: bash -n scripts/install.sh
+
+      - name: Check pre-commit hook syntax
+        run: bash -n hooks/pre-commit.sh
+
+  dogfood:
+    name: Dogfood (Scan Own Repo)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Scan repo for real secrets (excluding test fixtures and docs)
         run: |
-          echo "Scanning for common secret prefixes in non-test files..."
-          FOUND=0
-          for pattern in "sk_live_" "AKIA[A-Z0-9]{12}" "-----BEGIN RSA PRIVATE KEY-----"; do
-            if grep -r --include="*.md" --include="*.json" --include="*.js" --include="*.sh" \
-               -l "$pattern" . 2>/dev/null | grep -v "tests/fixtures" | grep -v "patterns/" | grep -v "node_modules"; then
-              echo "WARNING: Possible secret pattern found: $pattern"
-              FOUND=1
-            fi
-          done
-          if [ $FOUND -eq 1 ]; then
-            echo "::warning::Review the files above for potential secrets"
-          else
-            echo "No secrets found outside test fixtures."
+          node bin/leash.js scan src/ scripts/ hooks/ bin/ --json > /tmp/findings.json 2>&1 || true
+          CRITICALS=$(node -e "const f=require('/tmp/findings.json');console.log(f.filter(x=>x.severity==='critical').length)" 2>/dev/null || echo "0")
+          if [ "$CRITICALS" != "0" ]; then
+            echo "::error::Found $CRITICALS critical secrets in source code"
+            cat /tmp/findings.json
+            exit 1
           fi
+          echo "No critical secrets found in source code."

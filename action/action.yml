@@ -1,0 +1,164 @@
+name: 'Leash Secret Scanner'
+description: 'Scan your codebase for exposed API keys, tokens, and credentials. 71 patterns across 11 provider categories.'
+author: 'FasterApiWeb'
+
+branding:
+  icon: 'lock'
+  color: 'blue'
+
+inputs:
+  path:
+    description: 'Path to scan (file or directory)'
+    required: false
+    default: '.'
+  severity:
+    description: 'Minimum severity to report: critical, warning, or info'
+    required: false
+    default: 'warning'
+  fail-on:
+    description: 'Fail the check if findings at this severity or above: critical, warning, or none'
+    required: false
+    default: 'critical'
+  exclude:
+    description: 'Comma-separated glob patterns to exclude (e.g., "tests/**,docs/**")'
+    required: false
+    default: ''
+  format:
+    description: 'Output format: text, json, or sarif'
+    required: false
+    default: 'text'
+  scan-mode:
+    description: 'What to scan: all (full repo), diff (changed files only), staged'
+    required: false
+    default: 'diff'
+
+outputs:
+  findings:
+    description: 'Number of findings'
+  critical:
+    description: 'Number of critical findings'
+  warning:
+    description: 'Number of warning findings'
+  report:
+    description: 'Path to the generated report file'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Run leash scan
+      id: scan
+      shell: bash
+      env:
+        INPUT_PATH: ${{ inputs.path }}
+        INPUT_SEVERITY: ${{ inputs.severity }}
+        INPUT_FAIL_ON: ${{ inputs.fail-on }}
+        INPUT_EXCLUDE: ${{ inputs.exclude }}
+        INPUT_FORMAT: ${{ inputs.format }}
+        INPUT_SCAN_MODE: ${{ inputs.scan-mode }}
+      run: |
+        LEASH_DIR="${{ github.action_path }}/.."
+
+        # Determine files to scan
+        FILES=""
+        case "$INPUT_SCAN_MODE" in
+          diff)
+            if [ "${{ github.event_name }}" = "pull_request" ]; then
+              FILES=$(git diff --name-only --diff-filter=ACM ${{ github.event.pull_request.base.sha }}..${{ github.sha }} 2>/dev/null || echo "$INPUT_PATH")
+            else
+              FILES=$(git diff --name-only --diff-filter=ACM HEAD~1 2>/dev/null || echo "$INPUT_PATH")
+            fi
+            ;;
+          staged)
+            FILES=$(git diff --cached --name-only --diff-filter=ACM 2>/dev/null || echo "$INPUT_PATH")
+            ;;
+          all)
+            FILES="$INPUT_PATH"
+            ;;
+        esac
+
+        if [ -z "$FILES" ]; then
+          echo "No files to scan."
+          echo "findings=0" >> "$GITHUB_OUTPUT"
+          echo "critical=0" >> "$GITHUB_OUTPUT"
+          echo "warning=0" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
+
+        # Build exclude args
+        EXCLUDE_ARGS=""
+        if [ -n "$INPUT_EXCLUDE" ]; then
+          IFS=',' read -ra EXCLUDES <<< "$INPUT_EXCLUDE"
+          for pat in "${EXCLUDES[@]}"; do
+            EXCLUDE_ARGS="$EXCLUDE_ARGS --exclude $(echo $pat | xargs)"
+          done
+        fi
+
+        # Run scan
+        REPORT_FILE=$(mktemp /tmp/leash-report-XXXXXX.json)
+
+        if [ "$INPUT_SCAN_MODE" = "all" ]; then
+          node "$LEASH_DIR/bin/leash.js" scan $FILES --json > "$REPORT_FILE" 2>&1 || true
+        else
+          echo "$FILES" | while IFS= read -r f; do
+            [ -f "$f" ] && node "$LEASH_DIR/bin/leash.js" scan "$f" --json 2>/dev/null
+          done | node -e "
+            let all = [];
+            process.stdin.on('data', d => {
+              try { all = all.concat(JSON.parse(d)); } catch(e) {}
+            });
+            process.stdin.on('end', () => console.log(JSON.stringify(all)));
+          " > "$REPORT_FILE" || true
+        fi
+
+        # Count findings
+        TOTAL=$(node -e "try{const f=require('$REPORT_FILE');console.log(f.length)}catch(e){console.log(0)}")
+        CRITS=$(node -e "try{const f=require('$REPORT_FILE');console.log(f.filter(x=>x.severity==='critical').length)}catch(e){console.log(0)}")
+        WARNS=$(node -e "try{const f=require('$REPORT_FILE');console.log(f.filter(x=>x.severity==='warning').length)}catch(e){console.log(0)}")
+
+        echo "findings=$TOTAL" >> "$GITHUB_OUTPUT"
+        echo "critical=$CRITS" >> "$GITHUB_OUTPUT"
+        echo "warning=$WARNS" >> "$GITHUB_OUTPUT"
+        echo "report=$REPORT_FILE" >> "$GITHUB_OUTPUT"
+
+        # Display results
+        if [ "$INPUT_FORMAT" = "json" ]; then
+          cat "$REPORT_FILE"
+        else
+          node "$LEASH_DIR/bin/leash.js" scan $INPUT_PATH --verbose 2>&1 || true
+        fi
+
+        # Annotate findings
+        if [ "$TOTAL" != "0" ]; then
+          node -e "
+            const findings = require('$REPORT_FILE');
+            for (const f of findings) {
+              const level = f.severity === 'critical' ? 'error' : 'warning';
+              console.log('::' + level + ' file=' + f.file + ',line=' + f.line + '::' + f.name + ': ' + f.fix);
+            }
+          " 2>/dev/null || true
+        fi
+
+        # Determine exit code
+        SHOULD_FAIL=0
+        case "$INPUT_FAIL_ON" in
+          critical)
+            [ "$CRITS" != "0" ] && SHOULD_FAIL=1
+            ;;
+          warning)
+            [ "$TOTAL" != "0" ] && SHOULD_FAIL=1
+            ;;
+          none)
+            SHOULD_FAIL=0
+            ;;
+        esac
+
+        if [ "$SHOULD_FAIL" = "1" ]; then
+          echo ""
+          echo "::error::leash found $CRITS critical and $WARNS warning secret(s). Fix them before merging."
+          exit 1
+        fi

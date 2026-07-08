@@ -57,7 +57,7 @@ You ask your AI agent to set up a Stripe integration. Without leash:
 ```python
 import stripe
 
-stripe.api_key = "sk_live_" + "51H7mKjG8z4x9vRnC3yT5qW2bA0xF6pL8dM1nO4kJ7sE9iU"
+stripe.api_key = "sk_live_" + "YourActualKeyWouldBeHere1234567890"
 
 def create_payment(amount, currency="usd"):
     return stripe.PaymentIntent.create(amount=amount, currency=currency)
