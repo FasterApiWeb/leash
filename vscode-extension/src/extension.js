@@ -49,8 +49,8 @@ function isAllowlisted(line) {
 
 function loadPatterns() {
   const locations = [
-    path.join(__dirname, '..', '..', 'patterns'),
     path.join(__dirname, '..', 'patterns'),
+    path.join(__dirname, '..', '..', 'patterns'),
   ];
 
   for (const dir of locations) {

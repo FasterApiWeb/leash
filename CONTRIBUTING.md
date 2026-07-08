@@ -79,6 +79,29 @@ node scripts/check-patterns.js
 
 # Run tests
 npm test
+
+# Package VS Code extension (dry run)
+npm run package-extension
+```
+
+## Maintainer Release Setup
+
+Releases are automated via [release-please](https://github.com/googleapis/release-please) when changes merge to `main`. Configure these GitHub Actions secrets once:
+
+| Secret | Purpose | How to create |
+|--------|---------|---------------|
+| `NPM_TOKEN` | Publish `leash-secrets` to npm | [npmjs.com](https://www.npmjs.com) → Access Tokens → Granular token with **Read and Write** + **Bypass 2FA for publish** |
+| `VSCE_PAT` | Publish `leash-secrets-vscode` to VS Marketplace | [Azure DevOps](https://dev.azure.com) → Personal Access Token with **Marketplace → Manage** scope |
+
+Local publishing (if needed):
+
+```bash
+npm login          # npm account must have 2FA enabled
+npm publish --access public
+
+cd vscode-extension
+export VSCE_PAT=your_token
+npm run publish
 ```
 
 ## PR Guidelines

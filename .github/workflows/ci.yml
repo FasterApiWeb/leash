@@ -69,3 +69,23 @@ jobs:
             exit 1
           fi
           echo "No critical secrets found in source code."
+
+  vscode-extension:
+    name: VS Code Extension
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Package extension (dry run)
+        run: npm run package-extension
+
+      - name: Verify patterns bundled in VSIX
+        run: |
+          test -f vscode-extension/patterns/index.json
+          PATTERN_FILES=$(node -e "console.log(require('./vscode-extension/patterns/index.json').pattern_files.length)")
+          test "$PATTERN_FILES" -eq 11
+          echo "Bundled $PATTERN_FILES pattern files"

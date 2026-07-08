@@ -78,10 +78,11 @@
     }
   },
   "scripts": {
-    "package": "npx @vscode/vsce package",
-    "publish": "npx @vscode/vsce publish"
+    "prepare": "node ../scripts/prepare-vscode-extension.js",
+    "package": "npm run prepare && vsce package --no-dependencies",
+    "publish": "npm run prepare && vsce publish --no-dependencies"
   },
   "devDependencies": {
-    "@vscode/vsce": "^3.0.0"
+    "@vscode/vsce": "^3.9.2"
   }
 }

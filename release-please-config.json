@@ -14,7 +14,12 @@
         { "type": "ci", "section": "CI/CD", "hidden": true }
       ],
       "extra-files": [
-        "CITATION.cff"
+        "CITATION.cff",
+        {
+          "type": "json",
+          "path": "vscode-extension/package.json",
+          "jsonpath": "$.version"
+        }
       ]
     }
   }

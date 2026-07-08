@@ -46,6 +46,8 @@ build/
 out/
 *.tgz
 *.tar.gz
+vscode-extension/*.vsix
+vscode-extension/patterns/
 
 # ── Test & Coverage ─────────────────────
 coverage/

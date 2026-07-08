@@ -1,4 +1,4 @@
-.PHONY: help test validate scan lint docs docs-serve clean install publish vscode-package
+.PHONY: help test validate scan lint docs docs-serve clean install publish vscode-package vscode-publish
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2}'
@@ -41,11 +41,14 @@ docs-serve: ## Serve docs locally at http://127.0.0.1:8000
 publish: test ## Publish to npm (requires NPM_TOKEN)
 	npm publish --access public
 
-vscode-package: ## Package VS Code extension
-	cd vscode-extension && npx @vscode/vsce package
+vscode-package: ## Package VS Code extension (.vsix)
+	npm run package-extension
 
 vscode-install: vscode-package ## Install VS Code extension locally
 	code --install-extension vscode-extension/leash-secrets-vscode-*.vsix
+
+vscode-publish: ## Publish VS Code extension (requires VSCE_PAT)
+	cd vscode-extension && npm run publish
 
 # ── Setup ────────────────────────────────────────────
 
@@ -65,4 +68,5 @@ uninstall: ## Uninstall leash-secrets from all agents
 clean: ## Remove build artifacts
 	@rm -rf site/ dist/ coverage/ *.tgz
 	@rm -f vscode-extension/*.vsix
+	@rm -rf vscode-extension/patterns
 	@echo "Cleaned"

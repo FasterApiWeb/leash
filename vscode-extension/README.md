@@ -42,8 +42,9 @@ Leash Secrets scans your code against 71 regex patterns that match known secret 
 ## Install from Source
 
 ```bash
-cd vscode-extension
-npm install
-npx @vscode/vsce package
-code --install-extension leash-secrets-vscode-1.0.0.vsix
+# From repo root
+npm run package-extension
+code --install-extension vscode-extension/leash-secrets-vscode-*.vsix
 ```
+
+The `prepare` step syncs all 71 patterns from the root `patterns/` directory into the extension before packaging.
