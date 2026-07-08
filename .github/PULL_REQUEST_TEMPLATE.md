@@ -21,6 +21,7 @@
 - [ ] Tests pass (`npm test`)
 - [ ] No real secrets are included in this PR
 - [ ] Documentation is updated (if applicable)
+- [ ] I understand maintainers may require CODEOWNER review before merge
 
 ## Test Plan
 

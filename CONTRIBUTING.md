@@ -122,6 +122,18 @@ npm run publish
 - **Keep commits atomic** — one logical change per commit
 - **Use conventional commits**: `feat: add datadog pattern`, `fix: reduce aws false positives`
 
+## Maintainer Governance
+
+To keep the project secure and maintainable:
+
+- `main` is protected: direct pushes are disabled for contributors
+- Pull requests are required for all changes
+- Required checks must pass before merge
+- CODEOWNER review is required for security-sensitive paths
+- Release tags and publish workflows are maintainer-controlled
+
+If you are an external contributor, open a PR and include a clear test plan. Maintainers will guide you through any required adjustments.
+
 ## Code of Conduct
 
 See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). Be kind, be helpful, be constructive.

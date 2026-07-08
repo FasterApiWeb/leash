@@ -1,11 +1,18 @@
-# Default owner for everything
-* @FasterApiWeb
+# Default owner for everything (single maintainer approval gate)
+* @EshwarCVS
 
-# Patterns — security-sensitive, require maintainer review
-/patterns/ @FasterApiWeb
+# Security-critical and release-critical paths
+/.github/workflows/ @EshwarCVS
+/.github/CODEOWNERS @EshwarCVS
+/patterns/ @EshwarCVS
+/hooks/ @EshwarCVS
+/.cursor/rules/ @EshwarCVS
+/AGENTS.md @EshwarCVS
+/skills/ @EshwarCVS
+/bin/ @EshwarCVS
+/scripts/ @EshwarCVS
 
-# Skills — core detection logic
-/skills/ @FasterApiWeb
-
-# CI/CD workflows
-/.github/workflows/ @FasterApiWeb
+# Product surfaces
+/README.md @EshwarCVS
+/docs/ @EshwarCVS
+/vscode-extension/ @EshwarCVS
