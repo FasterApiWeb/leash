@@ -50,24 +50,6 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-  publish-vscode:
-    name: Publish VS Code Extension
-    needs: release-please
-    if: ${{ needs.release-please.outputs.release_created }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Publish to Visual Studio Marketplace
-        working-directory: vscode-extension
-        run: npm run publish
-        env:
-          VSCE_PAT: ${{ secrets.VSCE_PAT }}
-
   upload-assets:
     name: Upload Release Assets
     needs: release-please
