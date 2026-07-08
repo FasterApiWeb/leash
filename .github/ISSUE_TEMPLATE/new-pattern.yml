@@ -1,12 +1,12 @@
 name: New Secret Pattern
-description: Suggest a new secret type for leash to detect
+description: Suggest a new secret type for leash-secrets to detect
 title: "[pattern] "
 labels: ["pattern", "enhancement"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for helping leash detect more secrets! Fill out this template to propose a new pattern.
+        Thanks for helping leash-secrets detect more secrets! Fill out this template to propose a new pattern.
 
   - type: input
     id: provider

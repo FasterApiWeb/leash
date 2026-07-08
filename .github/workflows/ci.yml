@@ -32,10 +32,10 @@ jobs:
 
       - name: Test CLI scan (should detect secrets in fixture)
         run: |
-          node bin/leash.js scan tests/fixtures/has-secrets.py && exit 1 || true
+          node bin/leash-secrets.js scan tests/fixtures/has-secrets.py && exit 1 || true
 
       - name: Test CLI scan (should pass on clean fixture)
-        run: node bin/leash.js scan tests/fixtures/clean.py
+        run: node bin/leash-secrets.js scan tests/fixtures/clean.py
 
   shellcheck:
     name: Shell Scripts
@@ -61,7 +61,7 @@ jobs:
 
       - name: Scan repo for real secrets (excluding test fixtures and docs)
         run: |
-          node bin/leash.js scan src/ scripts/ hooks/ bin/ --json > /tmp/findings.json 2>&1 || true
+          node bin/leash-secrets.js scan src/ scripts/ hooks/ bin/ --json > /tmp/findings.json 2>&1 || true
           CRITICALS=$(node -e "const f=require('/tmp/findings.json');console.log(f.filter(x=>x.severity==='critical').length)" 2>/dev/null || echo "0")
           if [ "$CRITICALS" != "0" ]; then
             echo "::error::Found $CRITICALS critical secrets in source code"

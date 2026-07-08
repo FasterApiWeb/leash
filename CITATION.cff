@@ -1,14 +1,14 @@
 cff-version: 1.2.0
-title: leash
+title: leash-secrets
 message: >-
-  If you use leash in your research or tooling,
+  If you use leash-secrets in your research or tooling,
   please cite it using this metadata.
 type: software
 authors:
   - name: FasterApiWeb
     alias: eeshu
-repository-code: https://github.com/FasterApiWeb/leash
-url: https://fasterapiweb.github.io/leash
+repository-code: https://github.com/FasterApiWeb/leash-secrets
+url: https://fasterapiweb.github.io/leash-secrets
 license: MIT
 version: 1.0.0
 date-released: "2026-07-07"

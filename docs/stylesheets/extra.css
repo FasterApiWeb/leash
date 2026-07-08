@@ -16,17 +16,17 @@
   font-weight: 700;
 }
 
-.leash-hero {
+.leash-secrets-hero {
   text-align: center;
   padding: 2rem 0;
 }
 
-.leash-hero img {
+.leash-secrets-hero img {
   max-width: 160px;
   margin-bottom: 1rem;
 }
 
-.leash-stats {
+.leash-secrets-stats {
   display: flex;
   gap: 2rem;
   justify-content: center;
@@ -34,14 +34,14 @@
   margin: 2rem 0;
 }
 
-.leash-stat {
+.leash-secrets-stat {
   text-align: center;
   padding: 1rem 1.5rem;
   border-radius: 8px;
   background: var(--md-code-bg-color);
 }
 
-.leash-stat strong {
+.leash-secrets-stat strong {
   display: block;
   font-size: 1.8rem;
   color: var(--md-primary-fg-color);

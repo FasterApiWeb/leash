@@ -3,37 +3,37 @@ hide:
   - navigation
 ---
 
-<div class="leash-hero" markdown>
+<div class="leash-secrets-hero" markdown>
 
-![leash](assets/leash-logo.png){ width="160" }
+![leash-secrets](assets/leash-secrets-logo.png){ width="160" }
 
-# leash
+# leash-secrets
 
-**Your AI writes fast. Leash makes sure it doesn't run away with your secrets.**
+**Your AI writes fast. Leash Secrets makes sure it doesn't run away with your secrets.**
 
 [Get Started](getting-started/installation.md){ .md-button .md-button--primary }
-[View on GitHub](https://github.com/FasterApiWeb/leash){ .md-button }
+[View on GitHub](https://github.com/FasterApiWeb/leash-secrets){ .md-button }
 
 </div>
 
-<div class="leash-stats" markdown>
+<div class="leash-secrets-stats" markdown>
 
-<div class="leash-stat" markdown>
+<div class="leash-secrets-stat" markdown>
 <strong>71</strong>
 Secret Patterns
 </div>
 
-<div class="leash-stat" markdown>
+<div class="leash-secrets-stat" markdown>
 <strong>11</strong>
 Provider Categories
 </div>
 
-<div class="leash-stat" markdown>
+<div class="leash-secrets-stat" markdown>
 <strong>20+</strong>
 AI Agents Supported
 </div>
 
-<div class="leash-stat" markdown>
+<div class="leash-secrets-stat" markdown>
 <strong>94%</strong>
 Detection Rate
 </div>
@@ -48,11 +48,11 @@ AI coding agents write code at lightning speed. GPT, Claude, Copilot — they're
 
 Every day, AI-generated code pushes API keys, database passwords, and cloud credentials straight into public repositories. GitHub's own secret scanning catches millions of leaked secrets per year. With AI writing more code than ever, the problem is accelerating.
 
-!!! danger "Other tools catch secrets after they're committed. Leash catches them while the AI is still typing."
+!!! danger "Other tools catch secrets after they're committed. Leash Secrets catches them while the AI is still typing."
 
 ## Before / After
 
-You ask your AI agent to set up a Stripe integration. Without leash:
+You ask your AI agent to set up a Stripe integration. Without leash-secrets:
 
 ```python
 import stripe
@@ -65,10 +65,10 @@ def create_payment(amount, currency="usd"):
 
 Your production Stripe key. In your source code. One `git push` from being public.
 
-With leash:
+With leash-secrets:
 
 ```
-⛔ LEASH — SECRET DETECTED
+⛔ LEASH-SECRETS — SECRET DETECTED
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Type:     Stripe Live Secret Key
 File:     payments.py:3
@@ -91,7 +91,7 @@ The agent stops. Shows the risk. Provides the fix. Your key never reaches the co
 
 ```mermaid
 graph LR
-    A[AI Agent<br/>writes code] --> B[leash<br/>scans]
+    A[AI Agent<br/>writes code] --> B[leash-secrets<br/>scans]
     B --> C{Secret?}
     C -->|🔴 Critical| D[BLOCK<br/>Show fix]
     C -->|🟡 Warning| E[WARN<br/>Ask user]
@@ -102,7 +102,7 @@ graph LR
 ```
 
 1. **Install** drops a skill/rule file into your AI agent
-2. **Skill** instructs the agent to run the Leash Protocol on every code change
+2. **Skill** instructs the agent to run the Leash Secrets Protocol on every code change
 3. **71 regex patterns** match specific secret formats (not vague heuristics)
 4. **Pre-commit hook** as a backup safety net
 
@@ -113,13 +113,13 @@ No server, no API, no telemetry. Everything runs locally.
 === "macOS / Linux / WSL"
 
     ```bash
-    curl -fsSL https://raw.githubusercontent.com/FasterApiWeb/leash/main/scripts/install.sh | bash
+    curl -fsSL https://raw.githubusercontent.com/FasterApiWeb/leash-secrets/main/scripts/install.sh | bash
     ```
 
 === "Windows"
 
     ```powershell
-    irm https://raw.githubusercontent.com/FasterApiWeb/leash/main/scripts/install.ps1 | iex
+    irm https://raw.githubusercontent.com/FasterApiWeb/leash-secrets/main/scripts/install.ps1 | iex
     ```
 
 === "Manual"
@@ -130,8 +130,8 @@ No server, no API, no telemetry. Everything runs locally.
 
 <div style="text-align: center; margin-top: 3rem;" markdown>
 
-**Every star helps another developer find leash before their secrets find the internet.**
+**Every star helps another developer find leash-secrets before their secrets find the internet.**
 
-[:star: Star on GitHub](https://github.com/FasterApiWeb/leash){ .md-button }
+[:star: Star on GitHub](https://github.com/FasterApiWeb/leash-secrets){ .md-button }
 
 </div>

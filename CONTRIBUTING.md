@@ -1,12 +1,12 @@
-# Contributing to Leash
+# Contributing to Leash Secrets
 
-Thank you for wanting to make the internet a little safer. Leash grows stronger with every contribution.
+Thank you for wanting to make the internet a little safer. Leash Secrets grows stronger with every contribution.
 
 ## How to Contribute
 
 ### 1. Add a Secret Pattern (Most Impactful)
 
-Found a secret type that leash doesn't detect? Adding a pattern is the single most valuable contribution.
+Found a secret type that leash-secrets doesn't detect? Adding a pattern is the single most valuable contribution.
 
 **Steps:**
 
@@ -42,7 +42,7 @@ Found a secret type that leash doesn't detect? Adding a pattern is the single mo
 
 ### 2. Reduce False Positives
 
-If leash is flagging something that isn't a secret:
+If leash-secrets is flagging something that isn't a secret:
 
 1. Open an issue with the false positive example
 2. Suggest an allowlist rule or regex refinement
@@ -50,7 +50,7 @@ If leash is flagging something that isn't a secret:
 
 ### 3. Add Agent Support
 
-Want leash to work with a new AI agent?
+Want leash-secrets to work with a new AI agent?
 
 1. Create the adapter file (rule file, plugin config, etc.)
 2. Add install instructions to `scripts/install.sh`
@@ -65,13 +65,13 @@ Want leash to work with a new AI agent?
 
 ### 5. Fix Bugs
 
-Check the [issues](https://github.com/eeshu/leash/issues) for bugs and feature requests.
+Check the [issues](https://github.com/FasterApiWeb/leash-secrets/issues) for bugs and feature requests.
 
 ## Development Setup
 
 ```bash
-git clone https://github.com/eeshu/leash.git
-cd leash
+git clone https://github.com/FasterApiWeb/leash-secrets.git
+cd leash-secrets
 npm install
 
 # Validate patterns

@@ -1,6 +1,6 @@
-# Leash Scan — On-Demand Secret Scanner
+# Leash Secrets Scan — On-Demand Secret Scanner
 
-The user invoked `/leash-scan`. Perform a targeted secret scan.
+The user invoked `/leash-secrets-scan`. Perform a targeted secret scan.
 
 ## Procedure
 
@@ -11,13 +11,13 @@ The user invoked `/leash-scan`. Perform a targeted secret scan.
 
 2. **For each file in scope:**
    - Read the file contents
-   - Run every pattern from the Leash Protocol (see `skills/leash.md`)
+   - Run every pattern from the Leash Secrets Protocol (see `skills/leash-secrets.md`)
    - Record each finding with: file path, line number, secret type, severity, matched snippet (redacted)
 
 3. **Output the report:**
 
 ```
-🔍 LEASH SCAN REPORT
+🔍 LEASH-SECRETS SCAN REPORT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Scanned: [N] files | [M] lines
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -37,7 +37,7 @@ Scanned: [N] files | [M] lines
 4. **If zero findings:** Report the all-clear.
 
 ```
-✅ LEASH SCAN — ALL CLEAR
+✅ LEASH-SECRETS SCAN — ALL CLEAR
 Scanned [N] files. No secrets detected.
 ```
 

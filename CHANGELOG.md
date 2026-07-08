@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to leash will be documented in this file.
+All notable changes to leash-secrets will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Core Leash Protocol — always-on secret detection skill for AI coding agents
+- Core Leash Secrets Protocol — always-on secret detection skill for AI coding agents
 - 70+ secret detection patterns across 11 provider categories:
   - AWS, GCP, Azure, GitHub & Git platforms
   - AI providers (OpenAI, Anthropic, Cohere, Hugging Face, Replicate)
@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Cryptographic material (RSA, OpenSSH, EC, DSA, PGP private keys)
   - Generic patterns (passwords, API keys, JWT secrets, Bearer tokens)
 - Agent support for Cursor, Claude Code, Codex, GitHub Copilot, Gemini CLI, Windsurf, Cline, and any agent that reads AGENTS.md
-- Commands: `/leash`, `/leash-scan`, `/leash-audit`, `/leash-fix`, `/leash-report`, `/leash-help`
+- Commands: `/leash-secrets`, `/leash-secrets-scan`, `/leash-secrets-audit`, `/leash-secrets-fix`, `/leash-secrets-report`, `/leash-secrets-help`
 - Modes: patrol (default), sweep, lockdown, off
 - Pre-commit hook for git
 - Universal installer for macOS, Linux, WSL, and Windows

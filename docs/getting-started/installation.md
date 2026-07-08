@@ -2,18 +2,18 @@
 
 ## One-Command Installer
 
-The fastest way to install leash. Detects every agent on your machine and installs for each.
+The fastest way to install leash-secrets. Detects every agent on your machine and installs for each.
 
 === "macOS / Linux / WSL / Git Bash"
 
     ```bash
-    curl -fsSL https://raw.githubusercontent.com/FasterApiWeb/leash/main/scripts/install.sh | bash
+    curl -fsSL https://raw.githubusercontent.com/FasterApiWeb/leash-secrets/main/scripts/install.sh | bash
     ```
 
 === "Windows PowerShell 5.1+"
 
     ```powershell
-    irm https://raw.githubusercontent.com/FasterApiWeb/leash/main/scripts/install.ps1 | iex
+    irm https://raw.githubusercontent.com/FasterApiWeb/leash-secrets/main/scripts/install.ps1 | iex
     ```
 
 ~15 seconds. Skips agents you don't have. Safe to re-run.
@@ -39,10 +39,10 @@ Copy the rule file to your project or global rules:
 ```bash
 # Project-level (recommended)
 mkdir -p .cursor/rules
-cp .cursor/rules/leash.mdc your-project/.cursor/rules/
+cp .cursor/rules/leash-secrets.mdc your-project/.cursor/rules/
 
 # Global (all projects)
-cp .cursor/rules/leash.mdc ~/.cursor/rules/
+cp .cursor/rules/leash-secrets.mdc ~/.cursor/rules/
 ```
 
 ### Claude Code
@@ -50,7 +50,7 @@ cp .cursor/rules/leash.mdc ~/.cursor/rules/
 ```bash
 # As a skill
 mkdir -p ~/.claude/skills
-cp skills/leash.md ~/.claude/skills/
+cp skills/leash-secrets.md ~/.claude/skills/
 
 # Or append to your project's CLAUDE.md
 cat AGENTS.md >> your-project/CLAUDE.md
@@ -80,28 +80,28 @@ cp .github/copilot-instructions.md ~/.copilot/copilot-instructions.md
 ### Gemini CLI
 
 ```bash
-gemini extensions install https://github.com/FasterApiWeb/leash
+gemini extensions install https://github.com/FasterApiWeb/leash-secrets
 ```
 
 ### Windsurf
 
 ```bash
 mkdir -p .windsurf/rules
-cp skills/leash.md your-project/.windsurf/rules/leash.md
+cp skills/leash-secrets.md your-project/.windsurf/rules/leash-secrets.md
 ```
 
 ### Cline
 
 ```bash
 mkdir -p .clinerules
-cp skills/leash.md your-project/.clinerules/leash.md
+cp skills/leash-secrets.md your-project/.clinerules/leash-secrets.md
 ```
 
 ### Kiro
 
 ```bash
 mkdir -p .kiro/steering
-cp skills/leash.md your-project/.kiro/steering/leash.md
+cp skills/leash-secrets.md your-project/.kiro/steering/leash-secrets.md
 ```
 
 ### Any Agent That Reads `AGENTS.md`
@@ -117,10 +117,10 @@ Works with: Aider, CodeWhale, Swival, VS Code + Codex extension, and many others
 ## Via npm
 
 ```bash
-npm install -g leash
+npm install -g leash-secrets
 ```
 
-This installs the pattern validation tools and gives you access to `npx leash` commands.
+This installs the pattern validation tools and gives you access to `npx leash-secrets` commands.
 
 ---
 
@@ -129,10 +129,10 @@ This installs the pattern validation tools and gives you access to `npx leash` c
 After installing, open your AI agent and type:
 
 ```
-/leash
+/leash-secrets
 ```
 
-You should see the current mode (default: `patrol`). Try `/leash-help` for a quick reference.
+You should see the current mode (default: `patrol`). Try `/leash-secrets-help` for a quick reference.
 
 ---
 
@@ -140,10 +140,10 @@ You should see the current mode (default: `patrol`). Try `/leash-help` for a qui
 
 | Agent | Command |
 |-------|---------|
-| Cursor | Delete `.cursor/rules/leash.mdc` |
-| Claude Code | Delete `~/.claude/skills/leash.md` |
-| Codex | Remove leash section from `AGENTS.md` |
+| Cursor | Delete `.cursor/rules/leash-secrets.mdc` |
+| Claude Code | Delete `~/.claude/skills/leash-secrets.md` |
+| Codex | Remove leash-secrets section from `AGENTS.md` |
 | Copilot | Delete `.github/copilot-instructions.md` |
-| Gemini | `gemini extensions uninstall leash` |
+| Gemini | `gemini extensions uninstall leash-secrets` |
 | Windsurf / Cline / Kiro | Delete the copied rule file |
-| Git hook | Delete `.git/hooks/pre-commit-leash` |
+| Git hook | Delete `.git/hooks/pre-commit-leash-secrets` |

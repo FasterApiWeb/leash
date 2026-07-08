@@ -1,6 +1,6 @@
-# Leash Audit — Full Repository Secret Audit
+# Leash Secrets Audit — Full Repository Secret Audit
 
-The user invoked `/leash-audit`. Perform a comprehensive security audit of the entire repository.
+The user invoked `/leash-secrets-audit`. Perform a comprehensive security audit of the entire repository.
 
 ## Procedure
 
@@ -15,7 +15,7 @@ The user invoked `/leash-audit`. Perform a comprehensive security audit of the e
    - Is there a `.env.example` with placeholder values? If not: 🟡 WARNING
    - Are secret manager references present? (vault paths, AWS SSM, etc.)
 
-3. **Scan every file** using the full Leash Protocol pattern set.
+3. **Scan every file** using the full Leash Secrets Protocol pattern set.
 
 4. **Check git history** for previously committed secrets:
    - `git log --all -p -- '*.env'`
@@ -24,7 +24,7 @@ The user invoked `/leash-audit`. Perform a comprehensive security audit of the e
 5. **Generate the audit report:**
 
 ```
-📋 LEASH AUDIT REPORT
+📋 LEASH-SECRETS AUDIT REPORT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Repository:  [name]
 Files:       [total] scanned

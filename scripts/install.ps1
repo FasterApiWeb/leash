@@ -1,16 +1,16 @@
 # ──────────────────────────────────────────
-# leash installer — Windows PowerShell 5.1+
+# leash-secrets installer — Windows PowerShell 5.1+
 # ──────────────────────────────────────────
 
 $ErrorActionPreference = "Stop"
 $Version = "1.0.0"
-$Repo = "FasterApiWeb/leash"
+$Repo = "FasterApiWeb/leash-secrets"
 $Raw = "https://raw.githubusercontent.com/$Repo/main"
 
 function Write-Banner {
     Write-Host ""
     Write-Host "  ┌─────────────────────────────────────┐" -ForegroundColor Cyan
-    Write-Host "  │       🔒 leash installer v$Version       │" -ForegroundColor Cyan
+    Write-Host "  │    🔒 leash-secrets installer v$Version   │" -ForegroundColor Cyan
     Write-Host "  │  keep your secrets on a leash       │" -ForegroundColor Cyan
     Write-Host "  └─────────────────────────────────────┘" -ForegroundColor Cyan
     Write-Host ""
@@ -27,8 +27,8 @@ function Install-CursorRule {
     $dir = "$env:USERPROFILE\.cursor\rules"
     New-Item -ItemType Directory -Force -Path $dir | Out-Null
     try {
-        Invoke-WebRequest -Uri "$Raw/.cursor/rules/leash.mdc" -OutFile "$dir\leash.mdc" -UseBasicParsing
-        Write-Ok "Installed leash for Cursor → $dir\leash.mdc"
+        Invoke-WebRequest -Uri "$Raw/.cursor/rules/leash-secrets.mdc" -OutFile "$dir\leash-secrets.mdc" -UseBasicParsing
+        Write-Ok "Installed leash-secrets for Cursor → $dir\leash-secrets.mdc"
     } catch {
         Write-Fail "Could not install Cursor rule: $_"
     }
@@ -38,8 +38,8 @@ function Install-ClaudeSkill {
     $dir = "$env:USERPROFILE\.claude\skills"
     New-Item -ItemType Directory -Force -Path $dir | Out-Null
     try {
-        Invoke-WebRequest -Uri "$Raw/skills/leash.md" -OutFile "$dir\leash.md" -UseBasicParsing
-        Write-Ok "Installed leash for Claude Code → $dir\leash.md"
+        Invoke-WebRequest -Uri "$Raw/skills/leash-secrets.md" -OutFile "$dir\leash-secrets.md" -UseBasicParsing
+        Write-Ok "Installed leash-secrets for Claude Code → $dir\leash-secrets.md"
     } catch {
         Write-Fail "Could not install Claude Code skill: $_"
     }
@@ -50,7 +50,7 @@ function Install-CopilotInstructions {
     New-Item -ItemType Directory -Force -Path $dir | Out-Null
     try {
         Invoke-WebRequest -Uri "$Raw/.github/copilot-instructions.md" -OutFile "$dir\copilot-instructions.md" -UseBasicParsing
-        Write-Ok "Installed leash for GitHub Copilot → $dir\copilot-instructions.md"
+        Write-Ok "Installed leash-secrets for GitHub Copilot → $dir\copilot-instructions.md"
     } catch {
         Write-Fail "Could not install Copilot instructions: $_"
     }
@@ -61,7 +61,7 @@ Install-ClaudeSkill
 Install-CopilotInstructions
 
 Write-Host ""
-Write-Host "  leash installed." -ForegroundColor Green -NoNewline
+Write-Host "  leash-secrets installed." -ForegroundColor Green -NoNewline
 Write-Host " Your secrets are on a leash."
-Write-Host "  Type /leash in your agent to get started." -ForegroundColor Cyan
+Write-Host "  Type /leash-secrets in your agent to get started." -ForegroundColor Cyan
 Write-Host ""

@@ -13,13 +13,13 @@ validate: ## Validate pattern files against schema
 	@node scripts/check-patterns.js
 
 scan: ## Scan current directory for secrets
-	@node bin/leash.js scan .
+	@node bin/leash-secrets.js scan .
 
 scan-verbose: ## Scan with detailed risk information
-	@node bin/leash.js scan . --verbose
+	@node bin/leash-secrets.js scan . --verbose
 
 scan-json: ## Scan and output JSON
-	@node bin/leash.js scan . --json
+	@node bin/leash-secrets.js scan . --json
 
 lint: ## Check shell scripts for syntax errors
 	@bash -n scripts/install.sh
@@ -45,11 +45,11 @@ vscode-package: ## Package VS Code extension
 	cd vscode-extension && npx @vscode/vsce package
 
 vscode-install: vscode-package ## Install VS Code extension locally
-	code --install-extension vscode-extension/leash-vscode-*.vsix
+	code --install-extension vscode-extension/leash-secrets-vscode-*.vsix
 
 # ── Setup ────────────────────────────────────────────
 
-install: ## Install leash for all agents on this machine
+install: ## Install leash-secrets for all agents on this machine
 	@bash scripts/install.sh
 
 install-hooks: ## Install git pre-commit hook for this repo
@@ -57,7 +57,7 @@ install-hooks: ## Install git pre-commit hook for this repo
 	@chmod +x .git/hooks/pre-commit
 	@echo "Pre-commit hook installed"
 
-uninstall: ## Uninstall leash from all agents
+uninstall: ## Uninstall leash-secrets from all agents
 	@bash scripts/install.sh --uninstall
 
 # ── Cleanup ──────────────────────────────────────────

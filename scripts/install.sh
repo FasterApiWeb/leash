@@ -2,11 +2,11 @@
 set -euo pipefail
 
 # ──────────────────────────────────────────
-# leash installer — macOS · Linux · WSL · Git Bash
+# leash-secrets installer — macOS · Linux · WSL · Git Bash
 # ──────────────────────────────────────────
 
 VERSION="1.0.0"
-REPO="FasterApiWeb/leash"
+REPO="FasterApiWeb/leash-secrets"
 RAW="https://raw.githubusercontent.com/$REPO/main"
 
 RED='\033[0;31m'
@@ -20,7 +20,7 @@ banner() {
   echo ""
   echo -e "${CYAN}${BOLD}"
   echo "  ┌─────────────────────────────────────┐"
-  echo "  │       🔒 leash installer v$VERSION       │"
+  echo "  │    🔒 leash-secrets installer v$VERSION   │"
   echo "  │  keep your secrets on a leash       │"
   echo "  └─────────────────────────────────────┘"
   echo -e "${NC}"
@@ -61,16 +61,16 @@ install_cursor() {
   fi
 
   if $UNINSTALL; then
-    rm -f "$rules_dir/leash.mdc"
-    success "Removed leash from Cursor"
+    rm -f "$rules_dir/leash-secrets.mdc"
+    success "Removed leash-secrets from Cursor"
     return
   fi
 
-  curl -fsSL "$RAW/.cursor/rules/leash.mdc" -o "$rules_dir/leash.mdc" 2>/dev/null || \
-    cp -f .cursor/rules/leash.mdc "$rules_dir/leash.mdc" 2>/dev/null || {
+  curl -fsSL "$RAW/.cursor/rules/leash-secrets.mdc" -o "$rules_dir/leash-secrets.mdc" 2>/dev/null || \
+    cp -f .cursor/rules/leash-secrets.mdc "$rules_dir/leash-secrets.mdc" 2>/dev/null || {
       fail "Could not install Cursor rule"; return
     }
-  success "Installed leash for Cursor → $rules_dir/leash.mdc"
+  success "Installed leash-secrets for Cursor → $rules_dir/leash-secrets.mdc"
 }
 
 install_claude() {
@@ -78,16 +78,16 @@ install_claude() {
   mkdir -p "$claude_dir"
 
   if $UNINSTALL; then
-    rm -f "$claude_dir/leash.md"
-    success "Removed leash from Claude Code"
+    rm -f "$claude_dir/leash-secrets.md"
+    success "Removed leash-secrets from Claude Code"
     return
   fi
 
-  curl -fsSL "$RAW/skills/leash.md" -o "$claude_dir/leash.md" 2>/dev/null || \
-    cp -f skills/leash.md "$claude_dir/leash.md" 2>/dev/null || {
+  curl -fsSL "$RAW/skills/leash-secrets.md" -o "$claude_dir/leash-secrets.md" 2>/dev/null || \
+    cp -f skills/leash-secrets.md "$claude_dir/leash-secrets.md" 2>/dev/null || {
       fail "Could not install Claude Code skill"; return
     }
-  success "Installed leash for Claude Code → $claude_dir/leash.md"
+  success "Installed leash-secrets for Claude Code → $claude_dir/leash-secrets.md"
 }
 
 install_codex() {
@@ -95,20 +95,20 @@ install_codex() {
   mkdir -p "$codex_dir"
 
   if $UNINSTALL; then
-    rm -f "$codex_dir/leash.md"
-    success "Removed leash from Codex"
+    rm -f "$codex_dir/leash-secrets.md"
+    success "Removed leash-secrets from Codex"
     return
   fi
 
   if [[ -f "$codex_dir/AGENTS.md" ]]; then
-    if ! grep -q "leash" "$codex_dir/AGENTS.md" 2>/dev/null; then
+    if ! grep -q "leash-secrets" "$codex_dir/AGENTS.md" 2>/dev/null; then
       cat AGENTS.md >> "$codex_dir/AGENTS.md" 2>/dev/null || true
     fi
   else
     curl -fsSL "$RAW/AGENTS.md" -o "$codex_dir/AGENTS.md" 2>/dev/null || \
       cp -f AGENTS.md "$codex_dir/AGENTS.md" 2>/dev/null || true
   fi
-  success "Installed leash for Codex → $codex_dir/AGENTS.md"
+  success "Installed leash-secrets for Codex → $codex_dir/AGENTS.md"
 }
 
 install_copilot() {
@@ -117,7 +117,7 @@ install_copilot() {
 
   if $UNINSTALL; then
     rm -f "$copilot_dir/copilot-instructions.md"
-    success "Removed leash from GitHub Copilot"
+    success "Removed leash-secrets from GitHub Copilot"
     return
   fi
 
@@ -125,7 +125,7 @@ install_copilot() {
     cp -f .github/copilot-instructions.md "$copilot_dir/copilot-instructions.md" 2>/dev/null || {
       fail "Could not install Copilot instructions"; return
     }
-  success "Installed leash for GitHub Copilot → $copilot_dir/copilot-instructions.md"
+  success "Installed leash-secrets for GitHub Copilot → $copilot_dir/copilot-instructions.md"
 }
 
 install_windsurf() {
@@ -133,16 +133,16 @@ install_windsurf() {
   mkdir -p "$rules_dir"
 
   if $UNINSTALL; then
-    rm -f "$rules_dir/leash.md"
-    success "Removed leash from Windsurf"
+    rm -f "$rules_dir/leash-secrets.md"
+    success "Removed leash-secrets from Windsurf"
     return
   fi
 
-  curl -fsSL "$RAW/skills/leash.md" -o "$rules_dir/leash.md" 2>/dev/null || \
-    cp -f skills/leash.md "$rules_dir/leash.md" 2>/dev/null || {
+  curl -fsSL "$RAW/skills/leash-secrets.md" -o "$rules_dir/leash-secrets.md" 2>/dev/null || \
+    cp -f skills/leash-secrets.md "$rules_dir/leash-secrets.md" 2>/dev/null || {
       fail "Could not install Windsurf rule"; return
     }
-  success "Installed leash for Windsurf → $rules_dir/leash.md"
+  success "Installed leash-secrets for Windsurf → $rules_dir/leash-secrets.md"
 }
 
 install_cline() {
@@ -150,27 +150,27 @@ install_cline() {
   mkdir -p "$rules_dir"
 
   if $UNINSTALL; then
-    rm -f "$rules_dir/leash.md"
-    success "Removed leash from Cline"
+    rm -f "$rules_dir/leash-secrets.md"
+    success "Removed leash-secrets from Cline"
     return
   fi
 
-  curl -fsSL "$RAW/skills/leash.md" -o "$rules_dir/leash.md" 2>/dev/null || \
-    cp -f skills/leash.md "$rules_dir/leash.md" 2>/dev/null || {
+  curl -fsSL "$RAW/skills/leash-secrets.md" -o "$rules_dir/leash-secrets.md" 2>/dev/null || \
+    cp -f skills/leash-secrets.md "$rules_dir/leash-secrets.md" 2>/dev/null || {
       fail "Could not install Cline rule"; return
     }
-  success "Installed leash for Cline → $rules_dir/leash.md"
+  success "Installed leash-secrets for Cline → $rules_dir/leash-secrets.md"
 }
 
 install_gemini() {
   if $UNINSTALL; then
-    info "For Gemini, run: gemini extensions uninstall leash"
+    info "For Gemini, run: gemini extensions uninstall leash-secrets"
     return
   fi
 
   if command -v gemini &>/dev/null; then
     gemini extensions install "https://github.com/$REPO" 2>/dev/null && \
-      success "Installed leash for Gemini CLI" || \
+      success "Installed leash-secrets for Gemini CLI" || \
       warn "Could not auto-install for Gemini. Run: gemini extensions install https://github.com/$REPO"
   else
     warn "Gemini CLI not found. Install manually: gemini extensions install https://github.com/$REPO"
@@ -179,27 +179,27 @@ install_gemini() {
 
 install_git_hooks() {
   if $UNINSTALL; then
-    rm -f .git/hooks/pre-commit-leash
-    success "Removed leash git hooks"
+    rm -f .git/hooks/pre-commit-leash-secrets
+    success "Removed leash-secrets git hooks"
     return
   fi
 
   if [[ -d ".git" ]]; then
-    curl -fsSL "$RAW/hooks/pre-commit.sh" -o ".git/hooks/pre-commit-leash" 2>/dev/null || \
-      cp -f hooks/pre-commit.sh ".git/hooks/pre-commit-leash" 2>/dev/null || {
+    curl -fsSL "$RAW/hooks/pre-commit.sh" -o ".git/hooks/pre-commit-leash-secrets" 2>/dev/null || \
+      cp -f hooks/pre-commit.sh ".git/hooks/pre-commit-leash-secrets" 2>/dev/null || {
         warn "Could not install git pre-commit hook"; return
       }
-    chmod +x ".git/hooks/pre-commit-leash"
+    chmod +x ".git/hooks/pre-commit-leash-secrets"
 
     if [[ -f ".git/hooks/pre-commit" ]]; then
-      if ! grep -q "pre-commit-leash" ".git/hooks/pre-commit" 2>/dev/null; then
-        echo -e '\n# leash secret scanner\n.git/hooks/pre-commit-leash' >> .git/hooks/pre-commit
+      if ! grep -q "pre-commit-leash-secrets" ".git/hooks/pre-commit" 2>/dev/null; then
+        echo -e '\n# leash-secrets scanner\n.git/hooks/pre-commit-leash-secrets' >> .git/hooks/pre-commit
       fi
     else
-      echo -e '#!/usr/bin/env bash\n# leash secret scanner\n.git/hooks/pre-commit-leash' > .git/hooks/pre-commit
+      echo -e '#!/usr/bin/env bash\n# leash-secrets scanner\n.git/hooks/pre-commit-leash-secrets' > .git/hooks/pre-commit
       chmod +x .git/hooks/pre-commit
     fi
-    success "Installed leash git pre-commit hook"
+    success "Installed leash-secrets git pre-commit hook"
   else
     warn "Not a git repo — skipped pre-commit hook"
   fi
@@ -232,9 +232,9 @@ install_git_hooks
 
 echo ""
 if $UNINSTALL; then
-  echo -e "  ${GREEN}${BOLD}leash removed.${NC} Your secrets are on their own now."
+  echo -e "  ${GREEN}${BOLD}leash-secrets removed.${NC} Your secrets are on their own now."
 else
-  echo -e "  ${GREEN}${BOLD}leash installed.${NC} Your secrets are on a leash."
-  echo -e "  Type ${CYAN}/leash${NC} in your agent to get started."
+  echo -e "  ${GREEN}${BOLD}leash-secrets installed.${NC} Your secrets are on a leash."
+  echo -e "  Type ${CYAN}/leash-secrets${NC} in your agent to get started."
 fi
 echo ""

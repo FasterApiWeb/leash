@@ -64,13 +64,13 @@ jobs:
       - name: Package skill files
         run: |
           VERSION=${{ needs.release-please.outputs.version }}
-          tar -czf leash-${VERSION}.tar.gz \
+          tar -czf leash-secrets-${VERSION}.tar.gz \
             skills/ patterns/ hooks/ src/ bin/ \
-            AGENTS.md .cursor/rules/leash.mdc .github/copilot-instructions.md \
+            AGENTS.md .cursor/rules/leash-secrets.mdc .github/copilot-instructions.md \
             package.json README.md LICENSE
-          zip -r leash-${VERSION}.zip \
+          zip -r leash-secrets-${VERSION}.zip \
             skills/ patterns/ hooks/ src/ bin/ \
-            AGENTS.md .cursor/rules/leash.mdc .github/copilot-instructions.md \
+            AGENTS.md .cursor/rules/leash-secrets.mdc .github/copilot-instructions.md \
             package.json README.md LICENSE
 
       - name: Upload release assets
@@ -79,5 +79,5 @@ jobs:
         run: |
           VERSION=${{ needs.release-please.outputs.version }}
           gh release upload ${{ needs.release-please.outputs.tag_name }} \
-            leash-${VERSION}.tar.gz \
-            leash-${VERSION}.zip
+            leash-secrets-${VERSION}.tar.gz \
+            leash-secrets-${VERSION}.zip

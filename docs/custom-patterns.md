@@ -1,6 +1,6 @@
 # Custom Patterns
 
-Leash's detection engine is powered by extensible JSON pattern files. You can add patterns for your organization's internal services, custom tokens, or any secret format leash doesn't cover yet.
+Leash Secrets' detection engine is powered by extensible JSON pattern files. You can add patterns for your organization's internal services, custom tokens, or any secret format leash-secrets doesn't cover yet.
 
 ## Pattern File Structure
 

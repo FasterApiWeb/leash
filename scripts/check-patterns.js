@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Validates all leash pattern files against the schema.
+ * Validates all leash-secrets pattern files against the schema.
  * Run: node scripts/check-patterns.js
  */
 
@@ -29,7 +29,7 @@ function ok(msg) {
   console.log(`  \x1b[32m✓\x1b[0m ${msg}`);
 }
 
-console.log('\n  Validating leash patterns...\n');
+console.log('\n  Validating leash-secrets patterns...\n');
 
 const index = JSON.parse(fs.readFileSync(INDEX_FILE, 'utf-8'));
 

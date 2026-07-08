@@ -1,5 +1,5 @@
 # Test fixture: Python file with intentionally exposed secrets (all fake)
-# Used for testing leash pattern detection
+# Used for testing leash-secrets pattern detection
 
 import os
 import stripe

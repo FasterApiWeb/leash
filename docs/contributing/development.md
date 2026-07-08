@@ -8,22 +8,22 @@
 ## Clone and Setup
 
 ```bash
-git clone https://github.com/FasterApiWeb/leash.git
-cd leash
+git clone https://github.com/FasterApiWeb/leash-secrets.git
+cd leash-secrets
 ```
 
-No `npm install` needed for the core project — leash has zero runtime dependencies.
+No `npm install` needed for the core project — leash-secrets has zero runtime dependencies.
 
 ## Project Structure
 
 ```
-leash/
+leash-secrets/
 ├── skills/              # AI agent skill files (the core product)
-│   ├── leash.md         # Main Leash Protocol
-│   ├── leash-scan.md    # /leash-scan command
-│   ├── leash-audit.md   # /leash-audit command
-│   ├── leash-fix.md     # /leash-fix command
-│   └── leash-report.md  # /leash-report command
+│   ├── leash-secrets.md         # Main Leash Secrets Protocol
+│   ├── leash-secrets-scan.md    # /leash-secrets-scan command
+│   ├── leash-secrets-audit.md   # /leash-secrets-audit command
+│   ├── leash-secrets-fix.md     # /leash-secrets-fix command
+│   └── leash-secrets-report.md  # /leash-secrets-report command
 ├── patterns/            # Secret detection patterns (extensible JSON)
 │   ├── index.json       # Pattern registry
 │   ├── schema.json      # JSON Schema for patterns
@@ -62,12 +62,12 @@ npm test
 
 ## Testing the Skill
 
-The best way to test leash is to use it:
+The best way to test leash-secrets is to use it:
 
-1. Copy `.cursor/rules/leash.mdc` to your test project
+1. Copy `.cursor/rules/leash-secrets.mdc` to your test project
 2. Open the project in Cursor
 3. Ask the agent to write code with intentional secrets
-4. Verify leash catches them
+4. Verify leash-secrets catches them
 
 ## Building the Docs
 
@@ -79,10 +79,10 @@ mkdocs build   # Build to site/
 
 ## Architecture Principles
 
-Leash follows SOLID principles:
+Leash Secrets follows SOLID principles:
 
 - **Single Responsibility**: Each pattern file covers one provider. Each skill file handles one command.
 - **Open/Closed**: Add new patterns by creating JSON files — no modification of existing code needed.
-- **Liskov Substitution**: All agent adapters deliver the same Leash Protocol, regardless of format.
+- **Liskov Substitution**: All agent adapters deliver the same Leash Secrets Protocol, regardless of format.
 - **Interface Segregation**: Commands are separate skills — agents only load what they support.
 - **Dependency Inversion**: The skill depends on the protocol abstraction, not on specific regex implementations. Patterns are injected via JSON, not hardcoded.

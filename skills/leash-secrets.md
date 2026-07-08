@@ -1,8 +1,8 @@
-# Leash — Secret Detection Skill
+# Leash Secrets — Secret Detection Skill
 
-You are now security-aware. Every time you write, edit, review, or commit code, you run the Leash Protocol. No exceptions.
+You are now security-aware. Every time you write, edit, review, or commit code, you run the Leash Secrets Protocol. No exceptions.
 
-## The Leash Protocol
+## The Leash Secrets Protocol
 
 Before outputting any code, run this ladder top-down. Stop at the first match.
 
@@ -36,7 +36,7 @@ Check every line you write or touch for:
 **On 🔴 CRITICAL:**
 
 ```
-⛔ LEASH — SECRET DETECTED
+⛔ LEASH-SECRETS — SECRET DETECTED
 ━━━━━━━━━━━━━━━━━━━━━━━━━
 Type:     [secret type]
 File:     [filename:line]
@@ -51,7 +51,7 @@ STOP writing. Show the block above. Do NOT include the secret in your output. Pr
 **On 🟡 WARNING:**
 
 ```
-⚠️  LEASH — POSSIBLE SECRET
+⚠️  LEASH-SECRETS — POSSIBLE SECRET
 Type:     [secret type]
 File:     [filename:line]
 Action:   Is this a real credential or a placeholder?
@@ -115,19 +115,19 @@ Do not flag these:
 | Mode | Behavior |
 |------|----------|
 | `patrol` *(default)* | Scan everything you write and touch. Block criticals, warn on warnings. |
-| `sweep` | On-demand full-file or full-repo scan. Use with `/leash-scan`. |
+| `sweep` | On-demand full-file or full-repo scan. Use with `/leash-secrets-scan`. |
 | `lockdown` | Block ALL warnings too, not just criticals. For pre-release audits. |
-| `off` | Disable leash. Secrets are your problem now. |
+| `off` | Disable leash-secrets. Secrets are your problem now. |
 
-Switch with `/leash [patrol|sweep|lockdown|off]`.
+Switch with `/leash-secrets [patrol|sweep|lockdown|off]`.
 
 ## Commands
 
 | Command | What it does |
 |---------|-------------|
-| `/leash [mode]` | Set mode or show current mode |
-| `/leash-scan` | Scan current file or diff for secrets |
-| `/leash-audit` | Full repo audit — every file, every pattern |
-| `/leash-fix` | Auto-fix all detected secrets in current file (replace with env vars) |
-| `/leash-report` | Generate a security report with findings, severity, and remediation steps |
-| `/leash-help` | Quick reference card |
+| `/leash-secrets [mode]` | Set mode or show current mode |
+| `/leash-secrets-scan` | Scan current file or diff for secrets |
+| `/leash-secrets-audit` | Full repo audit — every file, every pattern |
+| `/leash-secrets-fix` | Auto-fix all detected secrets in current file (replace with env vars) |
+| `/leash-secrets-report` | Generate a security report with findings, severity, and remediation steps |
+| `/leash-secrets-help` | Quick reference card |

@@ -2,7 +2,7 @@
 
 ## Methodology
 
-Leash's detection accuracy is measured against a corpus of files containing known secrets. The corpus is sourced from:
+Leash Secrets' detection accuracy is measured against a corpus of files containing known secrets. The corpus is sourced from:
 
 1. **GitHub's public secret scanning alerts** — real files that had secrets revoked
 2. **Synthetic test cases** — crafted to test edge cases and false positives
@@ -14,7 +14,7 @@ Leash's detection accuracy is measured against a corpus of files containing know
 |-----|-------------|
 | **No scanning** | Baseline — no secret detection |
 | **"Check for secrets" prompt** | A simple instruction: "Check this code for exposed secrets" |
-| **Leash** | Full Leash Protocol with pattern library |
+| **Leash Secrets** | Full Leash Secrets Protocol with pattern library |
 
 ### Metrics
 
@@ -27,7 +27,7 @@ Leash's detection accuracy is measured against a corpus of files containing know
 
 ## Results
 
-| Metric | No scanning | "Check for secrets" prompt | Leash |
+| Metric | No scanning | "Check for secrets" prompt | Leash Secrets |
 |--------|----------:|---------------------------:|------:|
 | Secrets caught | 0% | 41% | 94% |
 | False positives | 0 | 12% | 3% |
@@ -49,7 +49,7 @@ The remaining false positives are:
 - Long random strings in test data
 - Base64-encoded non-secret data
 
-### Why Leash beats a generic prompt
+### Why Leash Secrets beats a generic prompt
 
 A simple "check for secrets" prompt relies on the LLM's general understanding. It often:
 - Misses secrets without obvious variable names (e.g., a bare key in a YAML file)
@@ -57,7 +57,7 @@ A simple "check for secrets" prompt relies on the LLM's general understanding. I
 - Provides generic advice ("use environment variables") without specific env var names
 - Doesn't know the exact format of each provider's keys
 
-Leash provides **specific regex patterns**, so the agent knows exactly what to look for. It's the difference between "look for suspicious things" and "look for strings matching `AKIA[0-9A-Z]{16}`."
+Leash Secrets provides **specific regex patterns**, so the agent knows exactly what to look for. It's the difference between "look for suspicious things" and "look for strings matching `AKIA[0-9A-Z]{16}`."
 
 ## Reproducing
 
@@ -71,7 +71,7 @@ node tests/test-patterns.js
 
 ## Honest Numbers
 
-- Leash only scans what the agent writes or touches. It does not scan the entire codebase on every response.
+- Leash Secrets only scans what the agent writes or touches. It does not scan the entire codebase on every response.
 - The 94% catch rate is for secrets matching known patterns. Novel formats require new patterns.
 - The 5% speed impact is an estimate based on the additional prompt length. Actual impact varies by model and context size.
 - These numbers are measured in controlled conditions. Real-world performance depends on the AI model, codebase size, and secret diversity.

@@ -1,10 +1,10 @@
-# Leash Fix — Auto-Remediate Exposed Secrets
+# Leash Secrets Fix — Auto-Remediate Exposed Secrets
 
-The user invoked `/leash-fix`. Automatically fix all detected secrets in the specified scope.
+The user invoked `/leash-secrets-fix`. Automatically fix all detected secrets in the specified scope.
 
 ## Procedure
 
-1. **Run a scan** (same as `/leash-scan`) to identify all secrets.
+1. **Run a scan** (same as `/leash-secrets-scan`) to identify all secrets.
 
 2. **For each CRITICAL or WARNING finding:**
 
@@ -41,7 +41,7 @@ The user invoked `/leash-fix`. Automatically fix all detected secrets in the spe
 4. **Output the fix report:**
 
 ```
-🔧 LEASH FIX REPORT
+🔧 LEASH-SECRETS FIX REPORT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Fixed: [N] secrets in [M] files
 

@@ -1,6 +1,6 @@
-# Leash — Secret Detection for GitHub Copilot
+# Leash Secrets — Secret Detection for GitHub Copilot
 
-You are security-aware. Run the Leash Protocol on every code change.
+You are security-aware. Run the Leash Secrets Protocol on every code change.
 
 ## Protocol
 

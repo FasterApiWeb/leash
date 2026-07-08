@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="docs/assets/leash-logo.png" alt="leash" width="200" />
+  <img src="docs/assets/leash-secrets-logo.png" alt="leash-secrets" width="200" />
 </p>
 
-<h1 align="center">leash</h1>
+<h1 align="center">leash-secrets</h1>
 
 <p align="center">
-  <strong>your AI writes fast. leash makes sure it doesn't run away with your secrets.</strong>
+  <strong>your AI writes fast. leash-secrets makes sure it doesn't run away with your secrets.</strong>
 </p>
 
 <p align="center">
@@ -19,8 +19,8 @@
 
 <p align="center">
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" /></a>
-  <a href="https://github.com/FasterApiWeb/leash/stargazers"><img src="https://img.shields.io/github/stars/FasterApiWeb/leash?style=social" alt="Stars" /></a>
-  <a href="https://github.com/FasterApiWeb/leash/issues"><img src="https://img.shields.io/github/issues/FasterApiWeb/leash" alt="Issues" /></a>
+  <a href="https://github.com/FasterApiWeb/leash-secrets/stargazers"><img src="https://img.shields.io/github/stars/FasterApiWeb/leash-secrets?style=social" alt="Stars" /></a>
+  <a href="https://github.com/FasterApiWeb/leash-secrets/issues"><img src="https://img.shields.io/github/issues/FasterApiWeb/leash-secrets" alt="Issues" /></a>
   <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" /></a>
 </p>
 
@@ -30,13 +30,13 @@ AI coding agents write code at lightning speed. GPT, Claude, Copilot — they're
 
 Every day, AI-generated code pushes API keys, database passwords, and cloud credentials straight into public repositories. GitHub's own secret scanning catches [millions of leaked secrets per year](https://github.blog/security/secret-scanning/). And with AI writing more code than ever, the problem is accelerating.
 
-**Other tools catch secrets after they're committed. Leash catches them while the AI is still typing.**
+**Other tools catch secrets after they're committed. Leash Secrets catches them while the AI is still typing.**
 
-Leash is a skill/plugin for [Cursor](https://cursor.com), [Claude Code](https://docs.anthropic.com/en/docs/claude-code), [Codex](https://openai.com/index/codex/), [GitHub Copilot](https://github.com/features/copilot), [Gemini CLI](https://github.com/google-gemini/gemini-cli), [Windsurf](https://windsurf.com), [Cline](https://github.com/cline/cline), and 20+ other AI agents. Install once. Your agent scans every line it writes for exposed secrets — API keys, tokens, passwords, private keys — and blocks them before they hit your codebase.
+Leash Secrets is a skill/plugin for [Cursor](https://cursor.com), [Claude Code](https://docs.anthropic.com/en/docs/claude-code), [Codex](https://openai.com/index/codex/), [GitHub Copilot](https://github.com/features/copilot), [Gemini CLI](https://github.com/google-gemini/gemini-cli), [Windsurf](https://windsurf.com), [Cline](https://github.com/cline/cline), and 20+ other AI agents. Install once. Your agent scans every line it writes for exposed secrets — API keys, tokens, passwords, private keys — and blocks them before they hit your codebase.
 
 ## Before / After
 
-You ask your AI agent to set up a Stripe integration. Without leash:
+You ask your AI agent to set up a Stripe integration. Without leash-secrets:
 
 ```python
 import stripe
@@ -52,10 +52,10 @@ def create_payment(amount, currency="usd"):
 
 Your production Stripe key. In your source code. One `git push` from being public.
 
-With leash:
+With leash-secrets:
 
 ```
-⛔ LEASH — SECRET DETECTED
+⛔ LEASH-SECRETS — SECRET DETECTED
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Type:     Stripe Live Secret Key
 File:     payments.py:3
@@ -80,7 +80,7 @@ The agent stops. Shows the risk. Provides the fix. Your key never reaches the co
 ### AWS Credentials
 
 ```
-⛔ LEASH — SECRET DETECTED
+⛔ LEASH-SECRETS — SECRET DETECTED
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Type:     AWS Access Key ID
 File:     config.py:12
@@ -97,7 +97,7 @@ ROTATE:   https://console.aws.amazon.com/iam/home#/security_credentials
 ### Database Connection String
 
 ```
-⛔ LEASH — SECRET DETECTED
+⛔ LEASH-SECRETS — SECRET DETECTED
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Type:     PostgreSQL Connection String with Password
 File:     database.ts:5
@@ -112,7 +112,7 @@ FIX:      Use DATABASE_URL environment variable
 ### OpenAI API Key in .env Committed to Git
 
 ```
-⛔ LEASH — SECRET DETECTED
+⛔ LEASH-SECRETS — SECRET DETECTED
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Type:     OpenAI Project API Key
 File:     .env:3
@@ -130,7 +130,7 @@ FIX:      .env should NEVER be committed.
 ### SSH Private Key
 
 ```
-⛔ LEASH — SECRET DETECTED
+⛔ LEASH-SECRETS — SECRET DETECTED
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Type:     OpenSSH Private Key
 File:     deploy/id_rsa:1
@@ -164,7 +164,7 @@ FIX:      Never commit SSH keys.
 │   │  → No AI awareness (don't know what the agent is doing)  │ │
 │   └──────────────────────────────────────────────────────────┘ │
 │                                                                │
-│   ┌─ leash ──────────────────────────────────────────────────┐ │
+│   ┌─ leash-secrets ─────────────────────────────────────────┐ │
 │   │  → Catches secrets AT THE POINT OF CREATION              │ │
 │   │  → Integrated into the AI agent's decision loop          │ │
 │   │  → Agent understands context (test vs production)        │ │
@@ -175,7 +175,7 @@ FIX:      Never commit SSH keys.
 └────────────────────────────────────────────────────────────────┘
 ```
 
-Leash doesn't replace your existing security tools. It adds a layer that catches secrets **before they exist in any file**, because the AI agent that's writing the code is also the one checking it.
+Leash Secrets doesn't replace your existing security tools. It adds a layer that catches secrets **before they exist in any file**, because the AI agent that's writing the code is also the one checking it.
 
 ## Install
 
@@ -183,18 +183,18 @@ Leash doesn't replace your existing security tools. It adds a layer that catches
 
 ```bash
 # macOS · Linux · WSL · Git Bash
-curl -fsSL https://raw.githubusercontent.com/FasterApiWeb/leash/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/FasterApiWeb/leash-secrets/main/scripts/install.sh | bash
 ```
 
 ```powershell
 # Windows · PowerShell 5.1+
-irm https://raw.githubusercontent.com/FasterApiWeb/leash/main/scripts/install.ps1 | iex
+irm https://raw.githubusercontent.com/FasterApiWeb/leash-secrets/main/scripts/install.ps1 | iex
 ```
 
 ~15 seconds. Skips agents you don't have. Safe to re-run.
 
 > [!TIP]
-> **Active by default.** Leash starts in `patrol` mode — it scans everything your agent writes and blocks critical secrets automatically. No command needed. Use `/leash off` to disable.
+> **Active by default.** Leash Secrets starts in `patrol` mode — it scans everything your agent writes and blocks critical secrets automatically. No command needed. Use `/leash-secrets off` to disable.
 
 <details>
 <summary><strong>Install for one agent, or any of 20+ others</strong></summary>
@@ -205,17 +205,17 @@ Copy the rule file to your project or global rules:
 
 ```bash
 # Project-level (recommended)
-cp .cursor/rules/leash.mdc your-project/.cursor/rules/
+cp .cursor/rules/leash-secrets.mdc your-project/.cursor/rules/
 
 # Global
-cp .cursor/rules/leash.mdc ~/.cursor/rules/
+cp .cursor/rules/leash-secrets.mdc ~/.cursor/rules/
 ```
 
 ### Claude Code
 
 ```bash
 # Via skill
-cp skills/leash.md ~/.claude/skills/
+cp skills/leash-secrets.md ~/.claude/skills/
 
 # Or add to CLAUDE.md
 cat AGENTS.md >> your-project/CLAUDE.md
@@ -240,25 +240,25 @@ cp AGENTS.md ~/.codex/AGENTS.md
 ### Gemini CLI
 
 ```bash
-gemini extensions install https://github.com/FasterApiWeb/leash
+gemini extensions install https://github.com/FasterApiWeb/leash-secrets
 ```
 
 ### Windsurf
 
 ```bash
-cp skills/leash.md your-project/.windsurf/rules/leash.md
+cp skills/leash-secrets.md your-project/.windsurf/rules/leash-secrets.md
 ```
 
 ### Cline
 
 ```bash
-cp skills/leash.md your-project/.clinerules/leash.md
+cp skills/leash-secrets.md your-project/.clinerules/leash-secrets.md
 ```
 
 ### Kiro
 
 ```bash
-cp skills/leash.md your-project/.kiro/steering/leash.md
+cp skills/leash-secrets.md your-project/.kiro/steering/leash-secrets.md
 ```
 
 ### Aider
@@ -279,25 +279,25 @@ Just copy `AGENTS.md` to your project root. CodeWhale, Swival, VS Code with Code
 
 | Command | What it does |
 |---------|-------------|
-| `/leash [patrol\|sweep\|lockdown\|off]` | Set mode or show current mode |
-| `/leash-scan` | Scan current file or staged diff for secrets |
-| `/leash-audit` | Full repo audit — every file, every pattern, scored A–F |
-| `/leash-fix` | Auto-fix detected secrets (replace with env vars) |
-| `/leash-report` | Generate a shareable security report |
-| `/leash-help` | Quick reference |
+| `/leash-secrets [patrol\|sweep\|lockdown\|off]` | Set mode or show current mode |
+| `/leash-secrets-scan` | Scan current file or staged diff for secrets |
+| `/leash-secrets-audit` | Full repo audit — every file, every pattern, scored A–F |
+| `/leash-secrets-fix` | Auto-fix detected secrets (replace with env vars) |
+| `/leash-secrets-report` | Generate a shareable security report |
+| `/leash-secrets-help` | Quick reference |
 
 ### Modes
 
 | Mode | Behavior |
 |------|----------|
 | `patrol` *(default)* | Scan everything the agent writes. Block criticals, warn on warnings. |
-| `sweep` | On-demand scanning only. Use with `/leash-scan`. |
+| `sweep` | On-demand scanning only. Use with `/leash-secrets-scan`. |
 | `lockdown` | Block ALL findings, including warnings. For pre-release audits. |
-| `off` | Disable leash. Your secrets are your problem now. |
+| `off` | Disable leash-secrets. Your secrets are your problem now. |
 
 ## Patterns
 
-Leash detects **70+ secret types** across 11 provider categories:
+Leash Secrets detects **70+ secret types** across 11 provider categories:
 
 | Category | Secrets Detected |
 |----------|-----------------|
@@ -321,7 +321,7 @@ Every pattern includes:
 
 ### Adding Custom Patterns
 
-Leash patterns are extensible JSON files. Add your own:
+Leash Secrets patterns are extensible JSON files. Add your own:
 
 ```json
 {
@@ -345,7 +345,7 @@ Save to `patterns/my-company.json` and add it to `patterns/index.json`. See [doc
 
 ## Benchmarks
 
-Tested against a corpus of 500 files from real GitHub repos that had secrets revoked (sourced from GitHub's public secret scanning alerts). Three arms: no scanning, leash, and a baseline "check for secrets" prompt.
+Tested against a corpus of 500 files from real GitHub repos that had secrets revoked (sourced from GitHub's public secret scanning alerts). Three arms: no scanning, leash-secrets, and a baseline "check for secrets" prompt.
 
 | Metric | No scanning | "Check for secrets" prompt | Leash |
 |--------|----------:|---------------------------:|------:|
@@ -354,7 +354,7 @@ Tested against a corpus of 500 files from real GitHub repos that had secrets rev
 | **Auto-fix accuracy** | N/A | 22% | **89%** |
 | **Agent speed impact** | baseline | +2% | **+5%** |
 
-Leash catches 94% of secrets because it uses **specific regex patterns** rather than relying on the LLM's general judgment. The 6% miss rate is mostly novel/unusual secret formats — contribute patterns to close the gap.
+Leash Secrets catches 94% of secrets because it uses **specific regex patterns** rather than relying on the LLM's general judgment. The 6% miss rate is mostly novel/unusual secret formats — contribute patterns to close the gap.
 
 The 5% speed impact is the cost of security. A small price for not putting your Stripe live key on the internet.
 
@@ -376,8 +376,8 @@ No server, no API, no telemetry. Leash is a prompt and a pattern library. Everyt
 
 ```
 ┌──────────────┐    ┌──────────┐    ┌───────────────┐
-│  AI Agent    │───▶│  leash   │───▶│  Your Code    │
-│  writes code │    │  scans   │    │  (no secrets)  │
+│  AI Agent    │───▶│ leash-   │───▶│  Your Code    │
+│  writes code │    │ secrets  │    │  (no secrets)  │
 └──────────────┘    └──────────┘    └───────────────┘
                          │
                     ┌────┴────┐
@@ -387,11 +387,11 @@ No server, no API, no telemetry. Leash is a prompt and a pattern library. Everyt
                     └─────────┘
 ```
 
-## Why Leash and Not Just truffleHog/gitleaks/git-secrets?
+## Why Leash Secrets and Not Just truffleHog/gitleaks/git-secrets?
 
 Those tools are excellent. Use them too. Leash is different because:
 
-| Feature | truffleHog / gitleaks | leash |
+| Feature | truffleHog / gitleaks | leash-secrets |
 |---------|:--------------------:|:-----:|
 | Scans committed code | ✅ | ✅ (via audit) |
 | Scans git history | ✅ | ✅ (via audit) |
@@ -403,11 +403,11 @@ Those tools are excellent. Use them too. Leash is different because:
 | **No installation beyond a text file** | ❌ | ✅ |
 | **Extensible pattern JSON anyone can contribute** | varies | ✅ |
 
-Use leash + truffleHog/gitleaks for defense in depth. Leash catches secrets at creation. Traditional tools catch anything that slips through.
+Use leash-secrets + truffleHog/gitleaks for defense in depth. Leash Secrets catches secrets at creation. Traditional tools catch anything that slips through.
 
 ## Privacy
 
-Leash does not phone home. No telemetry, no analytics, no accounts, no backend. The skill is a markdown file. The patterns are JSON files. The hook is a bash script. Everything runs locally on your machine, evaluated by your AI agent's own context window.
+Leash Secrets does not phone home. No telemetry, no analytics, no accounts, no backend. The skill is a markdown file. The patterns are JSON files. The hook is a bash script. Everything runs locally, evaluated by your AI agent's own context window.
 
 Network calls happen only during install (fetching files from GitHub) and are documented in [SECURITY.md](SECURITY.md).
 
@@ -416,14 +416,14 @@ Network calls happen only during install (fetching files from GitHub) and are do
 ### CLI
 
 ```bash
-npm install -g leash
+npm install -g leash-secrets
 
-leash scan .                    # Scan current directory
-leash scan src/ --verbose       # With risk details
-leash scan config.yml --json    # JSON output for CI
-leash report .                  # Markdown security report
-leash patterns                  # List all 71 patterns
-leash validate                  # Validate pattern files
+leash-secrets scan .                    # Scan current directory
+leash-secrets scan src/ --verbose       # With risk details
+leash-secrets scan config.yml --json    # JSON output for CI
+leash-secrets report .                  # Markdown security report
+leash-secrets patterns                  # List all 71 patterns
+leash-secrets validate                  # Validate pattern files
 ```
 
 ### GitHub Action
@@ -435,13 +435,13 @@ name: Secret Scan
 on: [push, pull_request]
 
 jobs:
-  leash:
+  leash-secrets:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: FasterApiWeb/leash/action@main
+      - uses: FasterApiWeb/leash-secrets/action@main
 ```
 
 See [action/README.md](action/README.md) for configuration options (`scan-mode`, `fail-on`, `exclude`, etc.).
@@ -450,7 +450,7 @@ See [action/README.md](action/README.md) for configuration options (`scan-mode`,
 
 ```yaml
 include:
-  - remote: 'https://raw.githubusercontent.com/FasterApiWeb/leash/main/action/gitlab-ci-template.yml'
+  - remote: 'https://raw.githubusercontent.com/FasterApiWeb/leash-secrets/main/action/gitlab-ci-template.yml'
 ```
 
 ### VS Code Extension
@@ -459,7 +459,7 @@ include:
 cd vscode-extension
 npm install
 npx @vscode/vsce package
-code --install-extension leash-vscode-1.0.0.vsix
+code --install-extension leash-secrets-vscode-1.0.0.vsix
 ```
 
 Real-time inline diagnostics as you type, workspace scanning, and a status bar indicator. See [vscode-extension/README.md](vscode-extension/README.md).
@@ -467,8 +467,7 @@ Real-time inline diagnostics as you type, workspace scanning, and a status bar i
 ### Programmatic API
 
 ```javascript
-const { loadPatterns, scanFile, scanString } = require('leash');
-
+const { loadPatterns, scanFile, scanString } = require('leash-secrets');
 const findings = scanFile('config.py');
 // or
 const findings = scanString('api_key = "sk_live_abc123..."', { filename: 'app.py' });
@@ -483,8 +482,8 @@ findings.forEach(f => {
 ### Local Development Setup
 
 ```bash
-git clone https://github.com/FasterApiWeb/leash.git
-cd leash
+git clone https://github.com/FasterApiWeb/leash-secrets.git
+cd leash-secrets
 
 # Run tests (zero dependencies, no install needed)
 make test
@@ -559,13 +558,13 @@ npx @vscode/vsce publish             # Publish (requires PAT)
 
 Automatic on push to main. Manual trigger via Actions > Deploy Docs > Run workflow.
 
-Docs URL: **https://fasterapiweb.github.io/leash**
+Docs URL: **https://fasterapiweb.github.io/leash-secrets**
 
 ## Contributing
 
-Leash's power grows with every pattern contributed. See [CONTRIBUTING.md](CONTRIBUTING.md) for:
+Leash Secrets' power grows with every pattern contributed. See [CONTRIBUTING.md](CONTRIBUTING.md) for:
 
-- **Adding patterns** — the most impactful contribution. Found a secret type leash misses? Add the regex.
+- **Adding patterns** — the most impactful contribution. Found a secret type leash-secrets misses? Add the regex.
 - **Improving detection** — reduce false positives, add allowlist rules
 - **Agent adapters** — add support for new AI agents
 - **Documentation** — examples, translations, guides
@@ -573,25 +572,25 @@ Leash's power grows with every pattern contributed. See [CONTRIBUTING.md](CONTRI
 
 ## Roadmap
 
-- [x] **leash-ci** — GitHub Action / GitLab CI integration
-- [x] **leash-vscode** — VS Code extension with inline warnings
-- [ ] **leash-dashboard** — team-wide secret exposure metrics
+- [x] **leash-secrets-ci** — GitHub Action / GitLab CI integration
+- [x] **leash-secrets-vscode** — VS Code extension with inline warnings
+- [ ] **leash-secrets-dashboard** — team-wide secret exposure metrics
 - [ ] **Pattern marketplace** — community-contributed pattern packs
 - [ ] **Entropy detection** — catch secrets that don't match known patterns
 - [ ] **Multi-language fix templates** — auto-fix for 15+ languages
 
 ## Star This Repo
 
-Every star helps another developer find leash before their secrets find the internet.
+Every star helps another developer find leash-secrets before their secrets find the internet.
 
 ---
 
 <p align="center">
   <a href="CONTRIBUTING.md">Contributing</a> ·
   <a href="SECURITY.md">Security</a> ·
-  <a href="https://fasterapiweb.github.io/leash">Documentation</a> ·
+  <a href="https://fasterapiweb.github.io/leash-secrets">Documentation</a> ·
   <a href="action/README.md">GitHub Action</a> ·
-  <a href="https://github.com/FasterApiWeb/leash/issues">Issues</a>
+  <a href="https://github.com/FasterApiWeb/leash-secrets/issues">Issues</a>
 </p>
 
 <p align="center">

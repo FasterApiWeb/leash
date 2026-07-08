@@ -1,5 +1,5 @@
 name: False Positive Report
-description: Report a value that leash incorrectly flags as a secret
+description: Report a value that leash-secrets incorrectly flags as a secret
 title: "[false-positive] "
 labels: ["false-positive", "bug"]
 body:

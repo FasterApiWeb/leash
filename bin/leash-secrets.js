@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 /**
- * leash CLI — scan files and repos for exposed secrets
+ * leash-secrets CLI — scan files and repos for exposed secrets
  *
  * Usage:
- *   leash scan <file|dir>       Scan files for secrets
- *   leash scan --staged         Scan git staged changes
- *   leash validate              Validate pattern files
- *   leash report <file|dir>     Generate a markdown report
+ *   leash-secrets scan <file|dir>       Scan files for secrets
+ *   leash-secrets scan --staged         Scan git staged changes
+ *   leash-secrets validate              Validate pattern files
+ *   leash-secrets report <file|dir>     Generate a markdown report
  */
 
 const path = require('path');
@@ -21,20 +21,20 @@ const command = args[0];
 
 function printUsage() {
   console.log(`
-  🔒 leash — keep your secrets on a leash
+  🔒 leash-secrets — keep your secrets on a leash
 
   Usage:
-    leash scan <file|dir> [--verbose] [--json]    Scan for secrets
-    leash validate                                 Validate pattern files
-    leash report <file|dir>                        Generate markdown report
-    leash patterns                                 List all patterns
-    leash help                                     Show this help
+    leash-secrets scan <file|dir> [--verbose] [--json]    Scan for secrets
+    leash-secrets validate                                 Validate pattern files
+    leash-secrets report <file|dir>                        Generate markdown report
+    leash-secrets patterns                                 List all patterns
+    leash-secrets help                                     Show this help
 
   Examples:
-    leash scan .                      Scan current directory
-    leash scan src/ --verbose         Scan with risk details
-    leash scan config.yml --json      Output as JSON
-    leash report .                    Generate report to stdout
+    leash-secrets scan .                      Scan current directory
+    leash-secrets scan src/ --verbose         Scan with risk details
+    leash-secrets scan config.yml --json      Output as JSON
+    leash-secrets report .                    Generate report to stdout
   `);
 }
 
@@ -98,7 +98,7 @@ function runReport() {
 function runPatterns() {
   try {
     const patterns = loadPatterns();
-    console.log(`\n  🔒 leash — ${patterns.length} patterns loaded\n`);
+    console.log(`\n  🔒 leash-secrets — ${patterns.length} patterns loaded\n`);
 
     const grouped = {};
     for (const p of patterns) {

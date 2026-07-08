@@ -1,11 +1,11 @@
 # Modes
 
-Leash has four operating modes. Switch with `/leash <mode>`.
+Leash Secrets has four operating modes. Switch with `/leash-secrets <mode>`.
 
 ## Patrol (Default)
 
 ```
-/leash patrol
+/leash-secrets patrol
 ```
 
 The recommended mode for daily development.
@@ -18,10 +18,10 @@ The recommended mode for daily development.
 ## Sweep
 
 ```
-/leash sweep
+/leash-secrets sweep
 ```
 
-On-demand scanning only. The agent doesn't scan automatically — you trigger scans with `/leash-scan`.
+On-demand scanning only. The agent doesn't scan automatically — you trigger scans with `/leash-secrets-scan`.
 
 Use when:
 
@@ -32,7 +32,7 @@ Use when:
 ## Lockdown
 
 ```
-/leash lockdown
+/leash-secrets lockdown
 ```
 
 Maximum security. Blocks **all** findings, including warnings.
@@ -47,13 +47,13 @@ Use when:
 ## Off
 
 ```
-/leash off
+/leash-secrets off
 ```
 
-Disables leash entirely. The agent will not scan for secrets.
+Disables leash-secrets entirely. The agent will not scan for secrets.
 
 !!! warning "Not recommended"
-    The pre-commit hook still runs as a backup, but the agent-level detection — leash's primary value — is disabled.
+    The pre-commit hook still runs as a backup, but the agent-level detection — leash-secrets' primary value — is disabled.
 
 ## Mode Comparison
 
@@ -69,10 +69,10 @@ Disables leash entirely. The agent will not scan for secrets.
 
 The mode resets each session. To set a default:
 
-Set the `LEASH_DEFAULT_MODE` environment variable:
+Set the `LEASH_SECRETS_DEFAULT_MODE` environment variable:
 
 ```bash
-export LEASH_DEFAULT_MODE=lockdown
+export LEASH_SECRETS_DEFAULT_MODE=lockdown
 ```
 
 Or add it to your shell profile (`~/.zshrc`, `~/.bashrc`).

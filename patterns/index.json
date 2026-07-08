@@ -1,8 +1,8 @@
 {
   "$schema": "./schema.json",
-  "name": "leash-patterns",
+  "name": "leash-secrets-patterns",
   "version": "1.0.0",
-  "description": "Master registry of all leash secret detection patterns",
+  "description": "Master registry of all leash-secrets detection patterns",
   "pattern_files": [
     "aws.json",
     "gcp.json",

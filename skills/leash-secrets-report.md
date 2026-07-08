@@ -1,16 +1,16 @@
-# Leash Report — Security Posture Report
+# Leash Secrets Report — Security Posture Report
 
-The user invoked `/leash-report`. Generate a comprehensive, shareable security report.
+The user invoked `/leash-secrets-report`. Generate a comprehensive, shareable security report.
 
 ## Procedure
 
-1. **Run a full audit** (same as `/leash-audit`).
+1. **Run a full audit** (same as `/leash-secrets-audit`).
 
 2. **Compile the report** in the following format:
 
 ```
 ╔══════════════════════════════════════════════╗
-║           🔒 LEASH SECURITY REPORT           ║
+║           🔒 LEASH-SECRETS SECURITY REPORT           ║
 ╠══════════════════════════════════════════════╣
 ║  Repository:  [name]                         ║
 ║  Date:        [YYYY-MM-DD]                   ║
@@ -48,10 +48,10 @@ ROTATION CHECKLIST
   ...
 ```
 
-3. **Save the report** to `leash-report-[YYYY-MM-DD].md` in the project root.
+3. **Save the report** to `leash-secrets-report-[YYYY-MM-DD].md` in the project root.
 
 4. **Offer next steps:**
-   - Run `/leash-fix` to auto-remediate findings
+   - Run `/leash-secrets-fix` to auto-remediate findings
    - Set up pre-commit hooks to prevent future exposures
    - Configure CI/CD secret scanning
 

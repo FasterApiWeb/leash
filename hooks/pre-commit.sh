@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # ──────────────────────────────────────────
-# leash pre-commit hook
+# leash-secrets pre-commit hook
 # Scans staged files for exposed secrets
 # ──────────────────────────────────────────
 
@@ -144,7 +144,7 @@ done <<< "$staged_files"
 
 if [[ $FOUND_CRITICAL -gt 0 ]]; then
   echo ""
-  echo -e "${RED}${BOLD}  ⛔ LEASH — COMMIT BLOCKED${NC}"
+  echo -e "${RED}${BOLD}  ⛔ LEASH-SECRETS — COMMIT BLOCKED${NC}"
   echo -e "  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   echo -e "  Found ${RED}$FOUND_CRITICAL critical${NC} and ${YELLOW}$FOUND_WARNING warning${NC} findings"
   echo -e "$FINDINGS"
@@ -157,7 +157,7 @@ fi
 
 if [[ $FOUND_WARNING -gt 0 ]]; then
   echo ""
-  echo -e "${YELLOW}${BOLD}  ⚠️  LEASH — WARNINGS${NC}"
+  echo -e "${YELLOW}${BOLD}  ⚠️  LEASH-SECRETS — WARNINGS${NC}"
   echo -e "$FINDINGS"
   echo -e "  ${CYAN}Proceeding with commit. Review warnings above.${NC}"
   echo ""

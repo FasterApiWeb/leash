@@ -1,5 +1,5 @@
 /**
- * leash — programmatic API
+ * leash-secrets — programmatic API
  *
  * SOLID architecture:
  *   S — Each module has one responsibility (load, scan, report)

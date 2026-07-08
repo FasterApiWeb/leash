@@ -116,7 +116,7 @@ function getBundledPatterns() {
 }
 
 function scanDocument(document) {
-  const config = vscode.workspace.getConfiguration('leash');
+  const config = vscode.workspace.getConfiguration('leash-secrets');
   if (!config.get('enabled')) return;
 
   const minSeverity = config.get('severity', 'warning');
@@ -153,10 +153,10 @@ function scanDocument(document) {
 
         const diagnostic = new vscode.Diagnostic(
           range,
-          `🔒 Leash: ${pattern.name} detected (${redacted})\nFix: ${pattern.fix}`,
+          `🔒 Leash Secrets: ${pattern.name} detected (${redacted})\nFix: ${pattern.fix}`,
           SEVERITY_MAP[pattern.severity] ?? vscode.DiagnosticSeverity.Warning
         );
-        diagnostic.source = 'leash';
+        diagnostic.source = 'leash-secrets';
         diagnostic.code = pattern.id;
         diagnostics.push(diagnostic);
       }
@@ -169,10 +169,10 @@ function scanDocument(document) {
 
 function updateStatusBar(count) {
   if (count > 0) {
-    statusBarItem.text = `$(lock) Leash: ${count} secret${count > 1 ? 's' : ''}`;
+    statusBarItem.text = `$(lock) Leash Secrets: ${count} secret${count > 1 ? 's' : ''}`;
     statusBarItem.backgroundColor = new vscode.ThemeColor('statusBarItem.errorBackground');
   } else {
-    statusBarItem.text = '$(lock) Leash';
+    statusBarItem.text = '$(lock) Leash Secrets';
     statusBarItem.backgroundColor = undefined;
   }
   statusBarItem.show();
@@ -184,15 +184,15 @@ function debouncedScan(document) {
 }
 
 function activate(context) {
-  diagnosticCollection = vscode.languages.createDiagnosticCollection('leash');
+  diagnosticCollection = vscode.languages.createDiagnosticCollection('leash-secrets');
   context.subscriptions.push(diagnosticCollection);
 
   patterns = loadPatterns();
 
   statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
-  statusBarItem.command = 'leash.scanFile';
-  statusBarItem.tooltip = 'Leash Secret Scanner';
-  statusBarItem.text = '$(lock) Leash';
+  statusBarItem.command = 'leash-secrets.scanFile';
+  statusBarItem.tooltip = 'Leash Secrets Scanner';
+  statusBarItem.text = '$(lock) Leash Secrets';
   statusBarItem.show();
   context.subscriptions.push(statusBarItem);
 
@@ -206,7 +206,7 @@ function activate(context) {
     })
   );
 
-  const config = vscode.workspace.getConfiguration('leash');
+  const config = vscode.workspace.getConfiguration('leash-secrets');
 
   if (config.get('scanOnType')) {
     context.subscriptions.push(
@@ -225,28 +225,28 @@ function activate(context) {
   }
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('leash.scanFile', () => {
+    vscode.commands.registerCommand('leash-secrets.scanFile', () => {
       const editor = vscode.window.activeTextEditor;
       if (editor) {
         scanDocument(editor.document);
         const diags = diagnosticCollection.get(editor.document.uri);
         const count = diags ? diags.length : 0;
         if (count === 0) {
-          vscode.window.showInformationMessage('Leash: No secrets detected in this file.');
+          vscode.window.showInformationMessage('Leash Secrets: No secrets detected in this file.');
         } else {
-          vscode.window.showWarningMessage(`Leash: Found ${count} potential secret(s). Check the Problems panel.`);
+          vscode.window.showWarningMessage(`Leash Secrets: Found ${count} potential secret(s). Check the Problems panel.`);
         }
       }
     })
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('leash.scanWorkspace', async () => {
+    vscode.commands.registerCommand('leash-secrets.scanWorkspace', async () => {
       const files = await vscode.workspace.findFiles('**/*', '{**/node_modules/**,**/.git/**,**/dist/**}', 500);
       let totalFindings = 0;
 
       await vscode.window.withProgress(
-        { location: vscode.ProgressLocation.Notification, title: 'Leash: Scanning workspace...', cancellable: true },
+        { location: vscode.ProgressLocation.Notification, title: 'Leash Secrets: Scanning workspace...', cancellable: true },
         async (progress, token) => {
           for (let i = 0; i < files.length; i++) {
             if (token.isCancellationRequested) break;
@@ -265,19 +265,19 @@ function activate(context) {
       );
 
       if (totalFindings === 0) {
-        vscode.window.showInformationMessage('Leash: No secrets found in workspace.');
+        vscode.window.showInformationMessage('Leash Secrets: No secrets found in workspace.');
       } else {
-        vscode.window.showWarningMessage(`Leash: Found ${totalFindings} potential secret(s) across workspace. Check the Problems panel.`);
+        vscode.window.showWarningMessage(`Leash Secrets: Found ${totalFindings} potential secret(s) across workspace. Check the Problems panel.`);
       }
     })
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('leash.toggleEnabled', () => {
-      const config = vscode.workspace.getConfiguration('leash');
+    vscode.commands.registerCommand('leash-secrets.toggleEnabled', () => {
+      const config = vscode.workspace.getConfiguration('leash-secrets');
       const current = config.get('enabled');
       config.update('enabled', !current, vscode.ConfigurationTarget.Global);
-      vscode.window.showInformationMessage(`Leash: ${!current ? 'Enabled' : 'Disabled'}`);
+      vscode.window.showInformationMessage(`Leash Secrets: ${!current ? 'Enabled' : 'Disabled'}`);
       if (current) {
         diagnosticCollection.clear();
         updateStatusBar(0);
@@ -285,7 +285,7 @@ function activate(context) {
     })
   );
 
-  vscode.window.showInformationMessage('Leash: Secret scanning active 🔒');
+  vscode.window.showInformationMessage('Leash Secrets: Secret scanning active 🔒');
 }
 
 function deactivate() {

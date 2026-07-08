@@ -1,6 +1,6 @@
 # Pattern Overview
 
-Leash detects **71 secret types** across **11 provider categories** using specific regex patterns.
+Leash Secrets detects **71 secret types** across **11 provider categories** using specific regex patterns.
 
 ## Categories
 
@@ -64,4 +64,4 @@ The agent reads the pattern library from `patterns/*.json` and checks code again
 
 ## Want to Add a Pattern?
 
-See [Custom Patterns](custom-patterns.md) for how to add your own, or [open a pattern request](https://github.com/FasterApiWeb/leash/issues/new?template=new-pattern.yml) on GitHub.
+See [Custom Patterns](custom-patterns.md) for how to add your own, or [open a pattern request](https://github.com/FasterApiWeb/leash-secrets/issues/new?template=new-pattern.yml) on GitHub.

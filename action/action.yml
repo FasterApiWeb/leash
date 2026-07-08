@@ -1,4 +1,4 @@
-name: 'Leash Secret Scanner'
+name: 'Leash Secrets Scanner'
 description: 'Scan your codebase for exposed API keys, tokens, and credentials. 71 patterns across 11 provider categories.'
 author: 'FasterApiWeb'
 
@@ -50,7 +50,7 @@ runs:
       with:
         node-version: '20'
 
-    - name: Run leash scan
+    - name: Run leash-secrets scan
       id: scan
       shell: bash
       env:
@@ -99,13 +99,13 @@ runs:
         fi
 
         # Run scan
-        REPORT_FILE=$(mktemp /tmp/leash-report-XXXXXX.json)
+        REPORT_FILE=$(mktemp /tmp/leash-secrets-report-XXXXXX.json)
 
         if [ "$INPUT_SCAN_MODE" = "all" ]; then
-          node "$LEASH_DIR/bin/leash.js" scan $FILES --json > "$REPORT_FILE" 2>&1 || true
+          node "$LEASH_DIR/bin/leash-secrets.js" scan $FILES --json > "$REPORT_FILE" 2>&1 || true
         else
           echo "$FILES" | while IFS= read -r f; do
-            [ -f "$f" ] && node "$LEASH_DIR/bin/leash.js" scan "$f" --json 2>/dev/null
+            [ -f "$f" ] && node "$LEASH_DIR/bin/leash-secrets.js" scan "$f" --json 2>/dev/null
           done | node -e "
             let all = [];
             process.stdin.on('data', d => {
@@ -129,7 +129,7 @@ runs:
         if [ "$INPUT_FORMAT" = "json" ]; then
           cat "$REPORT_FILE"
         else
-          node "$LEASH_DIR/bin/leash.js" scan $INPUT_PATH --verbose 2>&1 || true
+          node "$LEASH_DIR/bin/leash-secrets.js" scan $INPUT_PATH --verbose 2>&1 || true
         fi
 
         # Annotate findings
@@ -159,6 +159,6 @@ runs:
 
         if [ "$SHOULD_FAIL" = "1" ]; then
           echo ""
-          echo "::error::leash found $CRITS critical and $WARNS warning secret(s). Fix them before merging."
+          echo "::error::leash-secrets found $CRITS critical and $WARNS warning secret(s). Fix them before merging."
           exit 1
         fi

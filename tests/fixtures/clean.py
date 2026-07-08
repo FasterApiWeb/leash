@@ -1,5 +1,5 @@
 # Test fixture: Python file with NO secrets (clean code)
-# Used for testing leash false positive rates
+# Used for testing leash-secrets false positive rates
 
 import os
 import stripe

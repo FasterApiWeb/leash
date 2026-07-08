@@ -5,7 +5,7 @@ Step-by-step guide to contributing a new secret detection pattern.
 ## Before You Start
 
 1. Check the [Pattern Reference](../patterns/reference.md) — the pattern might already exist
-2. Check [open issues](https://github.com/FasterApiWeb/leash/issues?q=label%3Apattern) — someone might already be working on it
+2. Check [open issues](https://github.com/FasterApiWeb/leash-secrets/issues?q=label%3Apattern) — someone might already be working on it
 3. Gather at least 3 real examples of the secret format (redact them for the PR)
 
 ## Step 1: Identify the Pattern

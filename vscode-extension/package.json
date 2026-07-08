@@ -1,6 +1,6 @@
 {
-  "name": "leash-vscode",
-  "displayName": "Leash — Secret Scanner",
+  "name": "leash-secrets-vscode",
+  "displayName": "Leash Secrets — Secret Scanner",
   "description": "Inline warnings for exposed API keys, tokens, and credentials. 71 patterns across 11 provider categories.",
   "version": "1.0.0",
   "publisher": "FasterApiWeb",
@@ -8,7 +8,7 @@
   "icon": "icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/FasterApiWeb/leash.git",
+    "url": "https://github.com/FasterApiWeb/leash-secrets.git",
     "directory": "vscode-extension"
   },
   "engines": {
@@ -23,7 +23,7 @@
     "secrets",
     "api-keys",
     "credentials",
-    "leash",
+    "leash-secrets",
     "secret-detection"
   ],
   "activationEvents": [
@@ -33,43 +33,43 @@
   "contributes": {
     "commands": [
       {
-        "command": "leash.scanFile",
-        "title": "Leash: Scan Current File"
+        "command": "leash-secrets.scanFile",
+        "title": "Leash Secrets: Scan Current File"
       },
       {
-        "command": "leash.scanWorkspace",
-        "title": "Leash: Scan Workspace"
+        "command": "leash-secrets.scanWorkspace",
+        "title": "Leash Secrets: Scan Workspace"
       },
       {
-        "command": "leash.toggleEnabled",
-        "title": "Leash: Toggle On/Off"
+        "command": "leash-secrets.toggleEnabled",
+        "title": "Leash Secrets: Toggle On/Off"
       }
     ],
     "configuration": {
-      "title": "Leash",
+      "title": "Leash Secrets",
       "properties": {
-        "leash.enabled": {
+        "leash-secrets.enabled": {
           "type": "boolean",
           "default": true,
           "description": "Enable real-time secret scanning"
         },
-        "leash.severity": {
+        "leash-secrets.severity": {
           "type": "string",
           "default": "warning",
           "enum": ["critical", "warning", "info"],
           "description": "Minimum severity to display"
         },
-        "leash.scanOnSave": {
+        "leash-secrets.scanOnSave": {
           "type": "boolean",
           "default": true,
           "description": "Scan files when saved"
         },
-        "leash.scanOnType": {
+        "leash-secrets.scanOnType": {
           "type": "boolean",
           "default": true,
           "description": "Scan files as you type (with debounce)"
         },
-        "leash.excludePatterns": {
+        "leash-secrets.excludePatterns": {
           "type": "array",
           "default": ["**/node_modules/**", "**/.git/**", "**/dist/**", "**/build/**"],
           "description": "Glob patterns to exclude from scanning"

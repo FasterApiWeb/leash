@@ -1,6 +1,6 @@
 # Custom Patterns
 
-Leash's detection engine is powered by extensible JSON pattern files. Add patterns for your organization's internal services, custom tokens, or any secret format leash doesn't cover.
+Leash Secrets' detection engine is powered by extensible JSON pattern files. Add patterns for your organization's internal services, custom tokens, or any secret format leash-secrets doesn't cover.
 
 ## Quick Start
 
@@ -93,7 +93,7 @@ node scripts/check-patterns.js
 
 ## Contributing Upstream
 
-Found a secret type that leash should detect for everyone?
+Found a secret type that leash-secrets should detect for everyone?
 
 1. Fork the repo
 2. Add the pattern to the appropriate file in `patterns/`

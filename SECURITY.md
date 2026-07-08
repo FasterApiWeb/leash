@@ -2,11 +2,11 @@
 
 ## Reporting Vulnerabilities
 
-If you discover a security vulnerability in leash, please report it responsibly.
+If you discover a security vulnerability in leash-secrets, please report it responsibly.
 
 **DO NOT open a public issue for security vulnerabilities.**
 
-Email: **security@leash.dev** (or open a private security advisory on GitHub)
+Email: **security@leash-secrets.dev** (or open a private security advisory on GitHub)
 
 We will:
 1. Acknowledge receipt within 48 hours
@@ -15,7 +15,7 @@ We will:
 
 ## Scope
 
-Leash is a prompt-based skill and a pattern library. Its attack surface is minimal:
+Leash Secrets is a prompt-based skill and a pattern library. Its attack surface is minimal:
 
 | Component | Risk | Mitigation |
 |-----------|------|------------|
@@ -26,7 +26,7 @@ Leash is a prompt-based skill and a pattern library. Its attack surface is minim
 
 ## Privacy & Telemetry
 
-Leash makes **zero network calls** after installation:
+Leash Secrets makes **zero network calls** after installation:
 
 - No telemetry
 - No analytics
@@ -38,13 +38,13 @@ Leash makes **zero network calls** after installation:
 - `curl` to `raw.githubusercontent.com` to download skill/rule files
 - `gemini extensions install` calls GitHub (if Gemini CLI is being configured)
 
-These are the only network calls leash ever makes, and they only happen during installation.
+These are the only network calls leash-secrets ever makes, and they only happen during installation.
 
 ## Secret Handling
 
-Leash's own skill files and patterns **never contain real secrets**. All examples use clearly fake values.
+Leash Secrets' own skill files and patterns **never contain real secrets**. All examples use clearly fake values.
 
-When leash detects a secret in your code:
+When leash-secrets detects a secret in your code:
 - The full secret is **never logged, stored, or transmitted**
 - Output shows only the first 6 and last 4 characters
 - The pre-commit hook processes files in memory and discards findings after display

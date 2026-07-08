@@ -2,32 +2,32 @@
 
 All commands are available in agents that support skills/slash-commands (Cursor, Claude Code, Codex, Gemini CLI). For instruction-only agents, the always-on scanning works without commands.
 
-## `/leash`
+## `/leash-secrets`
 
 Set the scanning mode or show the current mode.
 
 ```
-/leash              # Show current mode
-/leash patrol       # Default — scan everything, block criticals
-/leash sweep        # On-demand scanning only
-/leash lockdown     # Block ALL findings including warnings
-/leash off          # Disable scanning
+/leash-secrets              # Show current mode
+/leash-secrets patrol       # Default — scan everything, block criticals
+/leash-secrets sweep        # On-demand scanning only
+/leash-secrets lockdown     # Block ALL findings including warnings
+/leash-secrets off          # Disable scanning
 ```
 
-## `/leash-scan`
+## `/leash-secrets-scan`
 
 Scan the current file or git diff for secrets.
 
 ```
-/leash-scan                 # Scan current diff (staged + unstaged)
-/leash-scan path/to/file    # Scan a specific file
-/leash-scan --all           # Scan all tracked files
+/leash-secrets-scan                 # Scan current diff (staged + unstaged)
+/leash-secrets-scan path/to/file    # Scan a specific file
+/leash-secrets-scan --all           # Scan all tracked files
 ```
 
 **Output:**
 
 ```
-🔍 LEASH SCAN REPORT
+🔍 LEASH-SECRETS SCAN REPORT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Scanned: 12 files | 847 lines
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -50,18 +50,18 @@ Scanned: 12 files | 847 lines
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-## `/leash-audit`
+## `/leash-secrets-audit`
 
 Full repository security audit with an A–F score.
 
 ```
-/leash-audit
+/leash-secrets-audit
 ```
 
 **Output:**
 
 ```
-📋 LEASH AUDIT REPORT
+📋 LEASH-SECRETS AUDIT REPORT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Repository:  my-app
 Files:       47 scanned
@@ -83,13 +83,13 @@ RECOMMENDATIONS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-## `/leash-fix`
+## `/leash-secrets-fix`
 
 Auto-fix all detected secrets by replacing them with environment variable references.
 
 ```
-/leash-fix              # Fix current file
-/leash-fix --all        # Fix all files with findings
+/leash-secrets-fix              # Fix current file
+/leash-secrets-fix --all        # Fix all files with findings
 ```
 
 The fix is language-aware:
@@ -106,20 +106,20 @@ The fix is language-aware:
 | Docker | `ARG` or `--secret` mount |
 | CI/CD YAML | `${{ secrets.VAR_NAME }}` |
 
-## `/leash-report`
+## `/leash-secrets-report`
 
-Generate a comprehensive, shareable security report saved to `leash-report-YYYY-MM-DD.md`.
+Generate a comprehensive, shareable security report saved to `leash-secrets-report-YYYY-MM-DD.md`.
 
 ```
-/leash-report
+/leash-secrets-report
 ```
 
 Includes: executive summary, all findings, hygiene scorecard, recommendations, and a rotation checklist.
 
-## `/leash-help`
+## `/leash-secrets-help`
 
 Quick reference card for all commands.
 
 ```
-/leash-help
+/leash-secrets-help
 ```

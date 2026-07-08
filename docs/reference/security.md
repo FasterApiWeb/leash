@@ -4,7 +4,7 @@
 
 **Do NOT open a public issue for security vulnerabilities.**
 
-Email: **security@leash.dev** (or use [GitHub's private security advisory](https://github.com/FasterApiWeb/leash/security/advisories/new))
+Email: **security@leash-secrets.dev** (or use [GitHub's private security advisory](https://github.com/FasterApiWeb/leash-secrets/security/advisories/new))
 
 We will:
 
@@ -14,7 +14,7 @@ We will:
 
 ## Attack Surface
 
-Leash is a prompt and a pattern library. Its attack surface is minimal:
+Leash Secrets is a prompt and a pattern library. Its attack surface is minimal:
 
 | Component | Risk | Mitigation |
 |-----------|------|------------|
@@ -25,7 +25,7 @@ Leash is a prompt and a pattern library. Its attack surface is minimal:
 
 ## Privacy & Telemetry
 
-Leash makes **zero network calls** after installation.
+Leash Secrets makes **zero network calls** after installation.
 
 - No telemetry
 - No analytics

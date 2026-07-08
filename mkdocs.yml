@@ -1,19 +1,19 @@
-site_name: leash
-site_url: https://fasterapiweb.github.io/leash
+site_name: leash-secrets
+site_url: https://fasterapiweb.github.io/leash-secrets
 site_description: >-
   Keep your secrets on a leash — AI agent skill that catches exposed
   API keys, tokens, and credentials before they hit your codebase.
 site_author: FasterApiWeb
-repo_url: https://github.com/FasterApiWeb/leash
-repo_name: FasterApiWeb/leash
+repo_url: https://github.com/FasterApiWeb/leash-secrets
+repo_name: FasterApiWeb/leash-secrets
 edit_uri: edit/main/docs/
 
 copyright: Copyright &copy; 2026 FasterApiWeb — MIT License
 
 theme:
   name: material
-  logo: assets/leash-logo.png
-  favicon: assets/leash-logo.png
+  logo: assets/leash-secrets-logo.png
+  favicon: assets/leash-secrets-logo.png
 
   palette:
     - media: "(prefers-color-scheme: light)"
@@ -56,7 +56,7 @@ theme:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/FasterApiWeb/leash
+      link: https://github.com/FasterApiWeb/leash-secrets
   generator: false
 
 extra_css:

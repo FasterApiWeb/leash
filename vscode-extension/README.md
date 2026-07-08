@@ -1,4 +1,4 @@
-# Leash for VS Code
+# Leash Secrets for VS Code
 
 Inline secret detection for Visual Studio Code. Highlights exposed API keys, tokens, and credentials directly in your editor.
 
@@ -15,23 +15,23 @@ Inline secret detection for Visual Studio Code. Highlights exposed API keys, tok
 
 | Command | Description |
 |---------|-------------|
-| `Leash: Scan Current File` | Scan the active file for secrets |
-| `Leash: Scan Workspace` | Scan all files in the workspace |
-| `Leash: Toggle On/Off` | Enable or disable scanning |
+| `Leash Secrets: Scan Current File` | Scan the active file for secrets |
+| `Leash Secrets: Scan Workspace` | Scan all files in the workspace |
+| `Leash Secrets: Toggle On/Off` | Enable or disable scanning |
 
 ## Settings
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `leash.enabled` | `true` | Enable real-time scanning |
-| `leash.severity` | `warning` | Minimum severity: `critical`, `warning`, or `info` |
-| `leash.scanOnSave` | `true` | Scan when files are saved |
-| `leash.scanOnType` | `true` | Scan as you type (debounced) |
-| `leash.excludePatterns` | `["**/node_modules/**", ...]` | Glob patterns to exclude |
+| `leash-secrets.enabled` | `true` | Enable real-time scanning |
+| `leash-secrets.severity` | `warning` | Minimum severity: `critical`, `warning`, or `info` |
+| `leash-secrets.scanOnSave` | `true` | Scan when files are saved |
+| `leash-secrets.scanOnType` | `true` | Scan as you type (debounced) |
+| `leash-secrets.excludePatterns` | `["**/node_modules/**", ...]` | Glob patterns to exclude |
 
 ## How It Works
 
-Leash scans your code against 71 regex patterns that match known secret formats (not vague heuristics). When a match is found:
+Leash Secrets scans your code against 71 regex patterns that match known secret formats (not vague heuristics). When a match is found:
 
 1. The secret is highlighted with an error/warning squiggle
 2. A diagnostic appears in the Problems panel with:
@@ -45,5 +45,5 @@ Leash scans your code against 71 regex patterns that match known secret formats 
 cd vscode-extension
 npm install
 npx @vscode/vsce package
-code --install-extension leash-vscode-1.0.0.vsix
+code --install-extension leash-secrets-vscode-1.0.0.vsix
 ```

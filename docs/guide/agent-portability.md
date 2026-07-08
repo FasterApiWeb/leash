@@ -1,23 +1,23 @@
 # Agent Portability
 
-Leash works with any AI coding agent that supports custom instructions, rules, or skills.
+Leash Secrets works with any AI coding agent that supports custom instructions, rules, or skills.
 
 ## Support Matrix
 
 | Agent | File | Path | Method |
 |-------|------|------|--------|
-| **Cursor** | `leash.mdc` | `.cursor/rules/leash.mdc` | Always-apply rule |
-| **Claude Code** | `leash.md` | `~/.claude/skills/` or `CLAUDE.md` | Skill or project doc |
+| **Cursor** | `leash-secrets.mdc` | `.cursor/rules/leash-secrets.mdc` | Always-apply rule |
+| **Claude Code** | `leash-secrets.md` | `~/.claude/skills/` or `CLAUDE.md` | Skill or project doc |
 | **Codex** | `AGENTS.md` | `~/.codex/` or project root | Agent instructions |
 | **GitHub Copilot** | `copilot-instructions.md` | `.github/copilot-instructions.md` | Custom instructions |
 | **Gemini CLI** | Extension | `gemini extensions install` | CLI extension |
-| **Windsurf** | `leash.md` | `.windsurf/rules/leash.md` | Rule file |
-| **Cline** | `leash.md` | `.clinerules/leash.md` | Rule file |
-| **Kiro** | `leash.md` | `.kiro/steering/leash.md` | Steering file |
+| **Windsurf** | `leash-secrets.md` | `.windsurf/rules/leash-secrets.md` | Rule file |
+| **Cline** | `leash-secrets.md` | `.clinerules/leash-secrets.md` | Rule file |
+| **Kiro** | `leash-secrets.md` | `.kiro/steering/leash-secrets.md` | Steering file |
 | **Aider** | `AGENTS.md` | Project root | Convention |
 | **CodeWhale** | `AGENTS.md` | Project root | Convention |
 | **Swival** | `AGENTS.md` | Project root or `~/.config/swival/` | Convention |
-| **OpenClaw** | `leash.md` | `.openclaw/skills/` | Skill |
+| **OpenClaw** | `leash-secrets.md` | `.openclaw/skills/` | Skill |
 
 ## Universal Fallback
 
@@ -37,7 +37,7 @@ cp AGENTS.md your-project/AGENTS.md
 
 ## What's in Each File
 
-All adapter files contain the same core Leash Protocol. Only the delivery format differs:
+All adapter files contain the same core Leash Secrets Protocol. Only the delivery format differs:
 
 - **`.mdc`** (Cursor) — includes `alwaysApply: true` frontmatter
 - **`.md`** (most agents) — standard markdown with protocol, patterns, commands

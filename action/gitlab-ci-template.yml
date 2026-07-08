@@ -1,12 +1,12 @@
-# Leash GitLab CI Template
+# Leash Secrets GitLab CI Template
 # Include in your .gitlab-ci.yml:
 #
 #   include:
-#     - remote: 'https://raw.githubusercontent.com/FasterApiWeb/leash/main/action/gitlab-ci-template.yml'
+#     - remote: 'https://raw.githubusercontent.com/FasterApiWeb/leash-secrets/main/action/gitlab-ci-template.yml'
 #
 # Or copy this file into your project.
 
-leash-scan:
+leash-secrets-scan:
   stage: test
   image: node:20-alpine
   variables:
@@ -14,7 +14,7 @@ leash-scan:
     LEASH_SEVERITY: "warning"
     LEASH_SCAN_MODE: "diff"
   before_script:
-    - npm install -g leash
+    - npm install -g leash-secrets
   script:
     - |
       if [ "$LEASH_SCAN_MODE" = "diff" ]; then
@@ -23,19 +23,19 @@ leash-scan:
         FILES="."
       fi
 
-      leash scan $FILES --json > /tmp/leash-report.json 2>&1 || true
+      leash-secrets scan $FILES --json > /tmp/leash-secrets-report.json 2>&1 || true
 
-      CRITS=$(node -e "try{const f=require('/tmp/leash-report.json');console.log(f.filter(x=>x.severity==='critical').length)}catch(e){console.log(0)}")
-      WARNS=$(node -e "try{const f=require('/tmp/leash-report.json');console.log(f.filter(x=>x.severity==='warning').length)}catch(e){console.log(0)}")
+      CRITS=$(node -e "try{const f=require('/tmp/leash-secrets-report.json');console.log(f.filter(x=>x.severity==='critical').length)}catch(e){console.log(0)}")
+      WARNS=$(node -e "try{const f=require('/tmp/leash-secrets-report.json');console.log(f.filter(x=>x.severity==='warning').length)}catch(e){console.log(0)}")
 
       echo "Findings: $CRITS critical, $WARNS warnings"
 
       if [ "$LEASH_FAIL_ON" = "critical" ] && [ "$CRITS" != "0" ]; then
-        leash scan $FILES --verbose
+        leash-secrets scan $FILES --verbose
         echo "FAILED: $CRITS critical secret(s) found"
         exit 1
       elif [ "$LEASH_FAIL_ON" = "warning" ] && [ "$((CRITS + WARNS))" != "0" ]; then
-        leash scan $FILES --verbose
+        leash-secrets scan $FILES --verbose
         echo "FAILED: Found secrets"
         exit 1
       fi

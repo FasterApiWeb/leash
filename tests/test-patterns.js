@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Tests leash patterns against known fixtures.
+ * Tests leash-secrets patterns against known fixtures.
  * Run: node tests/test-patterns.js
  */
 
@@ -122,7 +122,7 @@ const TEST_CASES = {
   },
 };
 
-console.log('\n  Testing leash patterns against fixtures...\n');
+console.log('\n  Testing leash-secrets patterns against fixtures...\n');
 
 const index = JSON.parse(fs.readFileSync(INDEX_FILE, 'utf-8'));
 const allPatterns = {};

@@ -1,8 +1,8 @@
 # How It Works
 
-## The Leash Protocol
+## The Leash Secrets Protocol
 
-Every time your AI agent writes, edits, or reviews code, leash runs a four-step protocol:
+Every time your AI agent writes, edits, or reviews code, leash-secrets runs a four-step protocol:
 
 ```mermaid
 graph TD
@@ -45,7 +45,7 @@ Each match is classified by severity:
 **Critical findings** produce a structured warning block:
 
 ```
-⛔ LEASH — SECRET DETECTED
+⛔ LEASH-SECRETS — SECRET DETECTED
 ━━━━━━━━━━━━━━━━━━━━━━━━━
 Type:     [what kind of secret]
 File:     [where it is]
@@ -59,7 +59,7 @@ The agent stops writing and waits for acknowledgment.
 
 ### Step 4: FIX
 
-For every detected secret, leash provides a language-appropriate fix:
+For every detected secret, leash-secrets provides a language-appropriate fix:
 
 1. **Replace** the hardcoded value with an environment variable
 2. **Add** the variable to `.env.example` with a placeholder
@@ -69,40 +69,38 @@ For every detected secret, leash provides a language-appropriate fix:
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────┐
-│                  Your AI Agent                   │
-│  (Cursor, Claude Code, Codex, Copilot, etc.)    │
-├─────────────────────────────────────────────────┤
-│                                                  │
-│  ┌──────────────┐  ┌────────────────────────┐   │
-│  │  leash skill  │──│  Pattern Library       │   │
-│  │  (markdown)   │  │  (71 JSON patterns)    │   │
-│  └──────┬───────┘  └────────────────────────┘   │
-│         │                                        │
-│  ┌──────┴───────┐                               │
-│  │  Leash       │                               │
-│  │  Protocol    │                               │
-│  │  SCAN →      │                               │
-│  │  CLASSIFY →  │                               │
-│  │  ACT →       │                               │
-│  │  FIX         │                               │
-│  └──────────────┘                               │
-│                                                  │
-├─────────────────────────────────────────────────┤
-│  Pre-commit Hook (backup safety net)             │
-└─────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────┐
+│                     Your AI Agent                     │
+│   (Cursor, Claude Code, Codex, Copilot, etc.)        │
+├──────────────────────────────────────────────────────┤
+│                                                       │
+│  ┌─────────────────────┐  ┌──────────────────────┐   │
+│  │  leash-secrets skill │──│  Pattern Library     │   │
+│  │  (markdown)          │  │  (71 JSON patterns)  │   │
+│  └──────────┬──────────┘  └──────────────────────┘   │
+│             │                                         │
+│  ┌──────────┴──────────┐                              │
+│  │  Leash Secrets      │                              │
+│  │  Protocol           │                              │
+│  │  SCAN → CLASSIFY →  │                              │
+│  │  ACT → FIX          │                              │
+│  └─────────────────────┘                              │
+│                                                       │
+├──────────────────────────────────────────────────────┤
+│  Pre-commit Hook (backup safety net)                  │
+└──────────────────────────────────────────────────────┘
 ```
 
-Leash is a **prompt-based skill**. It lives inside your agent's context window as a set of instructions. No external server, no API calls, no binary dependencies. The agent itself is the detection engine — leash tells it what to look for and how to respond.
+Leash Secrets is a **prompt-based skill**. It lives inside your agent's context window as a set of instructions. No external server, no API calls, no binary dependencies. The agent itself is the detection engine — leash-secrets tells it what to look for and how to respond.
 
 ## Defense in Depth
 
-Leash is designed to work alongside existing security tools:
+Leash Secrets is designed to work alongside existing security tools:
 
 | Layer | Tool | When It Catches Secrets |
 |-------|------|------------------------|
-| **1. Creation** | **leash** | While the AI writes code |
-| **2. Commit** | leash pre-commit hook | Before `git commit` completes |
+| **1. Creation** | **leash-secrets** | While the AI writes code |
+| **2. Commit** | leash-secrets pre-commit hook | Before `git commit` completes |
 | **3. Push** | GitHub Secret Scanning | When pushed to GitHub |
 | **4. Audit** | truffleHog, gitleaks | Scanning existing repos and history |
 

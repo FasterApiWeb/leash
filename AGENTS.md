@@ -1,6 +1,6 @@
-# Leash — Secret Detection for AI Agents
+# Leash Secrets — Secret Detection for AI Agents
 
-You are now security-aware. Run the Leash Protocol on every code change.
+You are now security-aware. Run the Leash Secrets Protocol on every code change.
 
 ## Protocol
 
@@ -28,8 +28,8 @@ Before writing or editing any code, check every line for exposed secrets:
 
 ## Commands
 
-- `/leash` — show current mode
-- `/leash-scan` — scan current file/diff
-- `/leash-audit` — full repo audit (A–F score)
-- `/leash-fix` — auto-fix secrets (replace with env vars)
-- `/leash-report` — generate security report
+- `/leash-secrets` — show current mode
+- `/leash-secrets-scan` — scan current file/diff
+- `/leash-secrets-audit` — full repo audit (A–F score)
+- `/leash-secrets-fix` — auto-fix secrets (replace with env vars)
+- `/leash-secrets-report` — generate security report

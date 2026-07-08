@@ -1,4 +1,4 @@
-# Leash GitHub Action
+# Leash Secrets GitHub Action
 
 Scan your codebase for exposed API keys, tokens, and credentials in CI/CD.
 
@@ -9,22 +9,22 @@ name: Secret Scan
 on: [push, pull_request]
 
 jobs:
-  leash:
+  leash-secrets:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - uses: FasterApiWeb/leash/action@main
+      - uses: FasterApiWeb/leash-secrets/action@main
 ```
 
-That's it. Leash will scan changed files and fail the check if critical secrets are found.
+That's it. Leash Secrets will scan changed files and fail the check if critical secrets are found.
 
 ## Configuration
 
 ```yaml
-- uses: FasterApiWeb/leash/action@main
+- uses: FasterApiWeb/leash-secrets/action@main
   with:
     # What to scan: diff (changed files), all (full repo), staged
     scan-mode: diff
@@ -57,13 +57,13 @@ That's it. Leash will scan changed files and fail the check if critical secrets 
 ### Using Outputs
 
 ```yaml
-- uses: FasterApiWeb/leash/action@main
-  id: leash
+- uses: FasterApiWeb/leash-secrets/action@main
+  id: leash-secrets
 
 - name: Comment on PR
-  if: steps.leash.outputs.critical != '0'
+  if: steps.leash-secrets.outputs.critical != '0'
   run: |
-    echo "Found ${{ steps.leash.outputs.critical }} critical secrets!"
+    echo "Found ${{ steps.leash-secrets.outputs.critical }} critical secrets!"
 ```
 
 ## Examples
@@ -71,7 +71,7 @@ That's it. Leash will scan changed files and fail the check if critical secrets 
 ### Scan Only Changed Files (Default)
 
 ```yaml
-- uses: FasterApiWeb/leash/action@main
+- uses: FasterApiWeb/leash-secrets/action@main
   with:
     scan-mode: diff
     fail-on: critical
@@ -80,7 +80,7 @@ That's it. Leash will scan changed files and fail the check if critical secrets 
 ### Full Repo Audit
 
 ```yaml
-- uses: FasterApiWeb/leash/action@main
+- uses: FasterApiWeb/leash-secrets/action@main
   with:
     scan-mode: all
     fail-on: warning
@@ -89,7 +89,7 @@ That's it. Leash will scan changed files and fail the check if critical secrets 
 ### Block All Warnings (Lockdown Mode)
 
 ```yaml
-- uses: FasterApiWeb/leash/action@main
+- uses: FasterApiWeb/leash-secrets/action@main
   with:
     scan-mode: diff
     fail-on: warning
@@ -99,11 +99,11 @@ That's it. Leash will scan changed files and fail the check if critical secrets 
 ### JSON Output for Custom Processing
 
 ```yaml
-- uses: FasterApiWeb/leash/action@main
-  id: leash
+- uses: FasterApiWeb/leash-secrets/action@main
+  id: leash-secrets
   with:
     format: json
 
 - name: Process findings
-  run: cat ${{ steps.leash.outputs.report }} | jq '.[] | select(.severity == "critical")'
+  run: cat ${{ steps.leash-secrets.outputs.report }} | jq '.[] | select(.severity == "critical")'
 ```
