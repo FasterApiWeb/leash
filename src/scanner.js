@@ -21,6 +21,17 @@ const DEFAULT_ALLOWLIST = [
   /dummy/i,
   /placeholder/i,
   /fake/i,
+  // Truncated / redacted educational examples in docs
+  /\.\.\./,
+  /…/,
+  /abc123/i,
+  /not[_-]?a[_-]?real/i,
+  /replace-me/i,
+  // Doc/report samples that quote PEM headers without a key body
+  /SECRET DETECTED/i,
+  /\|\s*Private Key\s*\|/i,
+  /followed by/i,
+  /-----BEGIN [A-Z0-9 ]+ PRIVATE KEY-----/,
 ];
 
 function redact(value) {
