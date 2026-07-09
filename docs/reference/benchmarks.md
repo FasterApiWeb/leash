@@ -56,6 +56,11 @@ Leash Secrets uses **specific regex patterns**, so the agent knows exactly what 
 ## Reproduce
 
 ```bash
-node scripts/check-patterns.js   # Validate patterns
-npm test                          # Run pattern tests
+npm test
+node scripts/benchmark-summary.js
+node scripts/check-patterns.js
 ```
+
+The commands above validate the checked-in fixture corpus and pattern schema. They are fully reproducible in this repository.
+
+For broader benchmark claims (94% catch rate), publish or link the external revoked-secret corpus and evaluation script before citing those numbers publicly.

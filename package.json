@@ -16,6 +16,7 @@
     "scan": "node bin/leash-secrets.js scan",
     "prepare-extension": "node scripts/prepare-vscode-extension.js",
     "package-extension": "npm run prepare-extension && cd vscode-extension && npm run package",
+    "benchmark": "node scripts/benchmark-summary.js",
     "docs:serve": "mkdocs serve",
     "docs:build": "mkdocs build --strict",
     "prepublishOnly": "npm test"

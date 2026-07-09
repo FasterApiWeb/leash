@@ -21,5 +21,5 @@
     "warning": "Possible secret that needs human confirmation.",
     "info": "Informational finding, not necessarily a secret."
   },
-  "contributing": "See docs/custom-patterns.md for how to add new patterns."
+  "contributing": "See docs/patterns/custom-patterns.md for how to add new patterns."
 }
