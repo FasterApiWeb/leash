@@ -577,15 +577,36 @@ Leash Secrets' power grows with every pattern contributed. See [CONTRIBUTING.md]
 - **Documentation** — examples, translations, guides
 - **Testing** — pattern validation, edge cases
 
-## Dogfooding
+## Used by
 
-This repository is scanned by its own tooling in CI (`Dogfood` job) and locally:
+Projects using leash-secrets for AI agent secret detection:
+
+| Project | Description |
+|---------|-------------|
+| [**LibreRing**](https://github.com/FasterApiWeb/laughing-chainsaw) | Open-source Oura Ring client — BLE, HealthKit, Supabase sync |
+
+[Open a PR](CONTRIBUTING.md) to add your project.
+
+## Credibility & hygiene
+
+This repo is dogfooded — the tool scans itself on every PR and push.
+
+| Check | Where |
+|-------|-------|
+| Pattern + fixture tests | [CI — Test](https://github.com/FasterApiWeb/leash-secrets/actions/workflows/ci.yml) (Node 18/20/22) |
+| Shell script lint | [CI — Shell Scripts](https://github.com/FasterApiWeb/leash-secrets/actions/workflows/ci.yml) |
+| Dogfood scan (no criticals in source) | [CI — Dogfood](https://github.com/FasterApiWeb/leash-secrets/actions/workflows/ci.yml) |
+| Reproducible benchmark | `npm test` + `node scripts/benchmark-summary.js` |
+| Install smoke test | `npm run verify` |
 
 ```bash
+npm run verify   # all local hygiene checks
 npm test
 node scripts/benchmark-summary.js
 node bin/leash-secrets.js scan src/ scripts/ hooks/ bin/
 ```
+
+Global install: `npm install -g leash-secrets` · curl installer: see [Installation](docs/getting-started/installation.md)
 
 ## Roadmap
 
