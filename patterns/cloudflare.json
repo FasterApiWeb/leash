@@ -1,0 +1,26 @@
+{
+  "provider": "cloudflare",
+  "display_name": "Cloudflare",
+  "patterns": [
+    {
+      "id": "cloudflare-api-token",
+      "name": "Cloudflare API Token",
+      "severity": "critical",
+      "regex": "(?i)(?:cloudflare|cf)[_-]?(?:api[_-]?)?token\\s*[=:]\\s*['\"]?[A-Za-z0-9_-]{40}['\"]?",
+      "description": "Cloudflare API token used to manage zones, DNS, Workers, and account settings",
+      "risk": "CRITICAL: Full or scoped control of Cloudflare account resources (DNS, WAF, Workers, R2, etc.).",
+      "fix": "Use CLOUDFLARE_API_TOKEN environment variable. Scope tokens with least privilege and rotate immediately if exposed.",
+      "rotation_url": "https://dash.cloudflare.com/profile/api-tokens"
+    },
+    {
+      "id": "cloudflare-global-api-key",
+      "name": "Cloudflare Global API Key",
+      "severity": "critical",
+      "regex": "(?i)(?:cloudflare|cf)[_-]?(?:global[_-]?)?(?:api[_-]?)?key\\s*[=:]\\s*['\"]?[a-f0-9]{37}['\"]?",
+      "description": "Cloudflare Global API Key (legacy, account-wide)",
+      "risk": "CRITICAL: Unrestricted account access. Prefer scoped API tokens instead of the global key.",
+      "fix": "Prefer CLOUDFLARE_API_TOKEN with least privilege. If a global key was committed, rotate it immediately.",
+      "rotation_url": "https://dash.cloudflare.com/profile/api-tokens"
+    }
+  ]
+}
