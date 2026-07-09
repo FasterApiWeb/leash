@@ -1,0 +1,39 @@
+{
+  "provider": "datadog",
+  "display_name": "Datadog",
+  "patterns": [
+    {
+      "id": "datadog-api-key",
+      "name": "Datadog API Key",
+      "severity": "critical",
+      "regex": "(?i)(?:datadog|dd)[_-]?(?:api[_-]?)?key\\s*[=:]\\s*['\"]?[a-f0-9]{32}['\"]?",
+      "description": "Datadog API key used to submit metrics, logs, and traces",
+      "risk": "Can submit metrics/logs as your org, potentially exhaust quotas or inject false telemetry.",
+      "fix": "Use DD_API_KEY or DATADOG_API_KEY environment variable. Rotate if exposed.",
+      "rotation_url": "https://app.datadoghq.com/organization-settings/api-keys",
+      "false_positive_hints": [
+        "Ignore all-zero or repeated hex placeholders in docs",
+        "Ignore example keys in tutorials"
+      ]
+    },
+    {
+      "id": "datadog-app-key",
+      "name": "Datadog Application Key",
+      "severity": "critical",
+      "regex": "(?i)(?:datadog|dd)[_-]?(?:app|application)[_-]?key\\s*[=:]\\s*['\"]?[a-f0-9]{40}['\"]?",
+      "description": "Datadog Application key used with API key for full API access",
+      "risk": "Combined with an API key, can read/modify monitors, dashboards, and org configuration.",
+      "fix": "Use DD_APP_KEY or DATADOG_APP_KEY environment variable. Rotate if exposed.",
+      "rotation_url": "https://app.datadoghq.com/organization-settings/application-keys"
+    },
+    {
+      "id": "datadog-api-key-assignment",
+      "name": "Datadog DD_API_KEY assignment",
+      "severity": "warning",
+      "regex": "(?i)DD_API_KEY\\s*[=:]\\s*['\"]?[a-f0-9]{32}['\"]?",
+      "description": "DD_API_KEY environment-style assignment with a 32-char hex value",
+      "risk": "Likely a real Datadog API key hardcoded in source or config.",
+      "fix": "Inject DD_API_KEY at runtime via secrets manager or CI secrets."
+    }
+  ]
+}
