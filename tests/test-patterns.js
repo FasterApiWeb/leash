@@ -25,6 +25,16 @@ function fail(msg) {
 }
 
 const TEST_CASES = {
+  'cloudflare-api-token': {
+    shouldMatch: [
+      "CLOUDFLARE_API_TOKEN=abcdefghijklmnopqrstuvwxyz0123456789ABCD",
+      "cf_api_token: 'abcdefghijklmnopqrstuvwxyz0123456789ABCD'",
+    ],
+    shouldNotMatch: [
+      'cloudflare_token=short',
+      'not_a_cloudflare_token',
+    ],
+  },
   'aws-access-key-id': {
     shouldMatch: [
       'AKIAIOSFODNN7EXAMPLE',
