@@ -7,7 +7,8 @@ on:
 
 permissions:
   contents: write
-  pull-requests: read
+  pull-requests: write
+  issues: write
 
 jobs:
   release-please:
@@ -19,16 +20,41 @@ jobs:
       version: ${{ steps.release.outputs.version }}
 
     steps:
+      - uses: actions/checkout@v4
+
+      - name: Check if release already published
+        id: published
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          TAG="leash-secrets-v${VERSION}"
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release ${TAG} already exists — skipping release-please"
+            echo "already_published=true" >> "$GITHUB_OUTPUT"
+          fi
+
       # FasterApiWeb org blocks GITHUB_TOKEN from opening PRs. Release PRs are
-      # prepared locally (scripts/prepare-release.sh). CI only tags/releases
-      # when a labeled release PR is merged to main.
+      # prepared locally (scripts/prepare-release.sh). CI tags/releases when a
+      # labeled release PR is merged to main.
       - uses: googleapis/release-please-action@v4
         id: release
+        if: steps.published.outputs.already_published != 'true'
         with:
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
           token: ${{ secrets.GITHUB_TOKEN }}
           skip-github-pull-request: true
+
+      - name: Clean up autorelease labels on merged PRs
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr list --repo "$GITHUB_REPOSITORY" --state merged --label "autorelease: pending" --json number -q '.[].number' \
+            | while read -r num; do
+                gh issue edit "$num" --repo "$GITHUB_REPOSITORY" --remove-label "autorelease: pending" || true
+              done
 
       - name: Delete orphan release-please branch
         if: always()
