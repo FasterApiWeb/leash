@@ -1,66 +1,59 @@
 # Benchmarks
 
-## Methodology
+## Published corpus
 
-Leash Secrets' detection accuracy is measured against a corpus of files containing known secrets, sourced from:
-
-1. **GitHub's public secret scanning alerts** — real files that had secrets revoked
-2. **Synthetic test cases** — crafted edge cases and false positive tests
-3. **AI-generated code samples** — code produced by GPT-4, Claude, and Copilot containing secrets
-
-### Test Arms
-
-| Arm | Description |
-|-----|-------------|
-| No scanning | Baseline — no secret detection |
-| "Check for secrets" prompt | Simple instruction: "Check this code for exposed secrets" |
-| Leash Secrets | Full Leash Secrets Protocol with pattern library |
-
-## Results
-
-| Metric | No scanning | Generic prompt | Leash Secrets |
-|--------|:----------:|:--------------:|:-----:|
-| **Secrets caught** | 0% | 41% | **94%** |
-| **False positives** | 0% | 12% | **3%** |
-| **Auto-fix accuracy** | N/A | 22% | **89%** |
-| **Speed impact** | baseline | +2% | **+5%** |
-
-### Why 94% and Not 100%?
-
-The 6% miss rate comes from:
-
-- Novel/custom secret formats not in the pattern library
-- Secrets split across multiple lines
-- Secrets encoded (base64, URL-encoded) without context
-- Very short secrets without identifying prefixes
-
-### Why Leash Secrets Beats a Generic Prompt
-
-A "check for secrets" prompt relies on LLM general knowledge. It:
-
-- Misses secrets without obvious variable names
-- Flags too many things (high false positive rate)
-- Provides generic advice instead of specific env var names
-- Doesn't know exact key formats for each provider
-
-Leash Secrets uses **specific regex patterns**, so the agent knows exactly what `AKIA[0-9A-Z]{16}` looks like versus a generic long string.
-
-## Honest Numbers
-
-!!! note "Transparency"
-    - The 94% catch rate is for secrets matching **known patterns**. Novel formats need new patterns.
-    - The 5% speed impact is from additional prompt length. Varies by model and context size.
-    - Leash Secrets only scans what the agent writes or touches, not the entire codebase every response.
-    - These are controlled benchmarks. Real-world performance depends on model, codebase, and secret diversity.
-
-## Reproduce
+**Raw data:** [`benchmarks/corpus/cases.json`](https://github.com/FasterApiWeb/leash-secrets/blob/main/benchmarks/corpus/cases.json)  
+**Fixture files:** [`benchmarks/corpus/samples/`](https://github.com/FasterApiWeb/leash-secrets/tree/main/benchmarks/corpus/samples)  
+**Last results:** [`benchmarks/results.json`](https://github.com/FasterApiWeb/leash-secrets/blob/main/benchmarks/results.json)
 
 ```bash
-npm test
-node scripts/benchmark-summary.js
-node scripts/check-patterns.js
+node scripts/run-benchmark.js   # reproduce locally
 ```
 
-The commands above validate the checked-in fixture corpus and pattern schema. They are fully reproducible in this repository.
+## What we measure
 
-For broader benchmark claims (94% catch rate), publish or link the external revoked-secret corpus and evaluation script before citing those numbers publicly.
+The published corpus tests the **pattern scanner** (`leash-secrets scan` / agent protocol regex library):
+
+| Metric | Definition |
+|--------|------------|
+| **Recall** | % of labeled positives detected at the correct line |
+| **False positive rate** | % of labeled negatives that incorrectly fire critical |
+| **Known gaps** | Secret shapes documented as not yet detected |
+
+## Latest committed results
+
+See [`benchmarks/results.json`](../benchmarks/results.json) for the full per-case breakdown.
+
+| Metric | Result |
+|--------|-------:|
+| Positives detected | 30 / 30 |
+| Recall | **100%** |
+| False positives on negatives | 0 / 8 |
+| Documented known misses | 3 |
+
+## What we do not claim (yet)
+
+These require separate eval harnesses and are **not** in the published corpus:
+
+- Comparison vs a generic LLM "check for secrets" prompt
+- Auto-fix accuracy percentages
+- Agent latency overhead
+
+We publish pattern-scanner numbers only. Skeptics can clone, run `node scripts/run-benchmark.js`, and verify.
+
+## Known gaps (documented in corpus)
+
+| Case | Why it misses |
+|------|----------------|
+| Multiline concatenated secrets | Line-by-line scanner |
+| Base64 blob without context | No entropy / context rules |
+| Truncated tokens | Below minimum length |
+
+## Also run
+
+```bash
+npm test                        # pattern unit tests (29 cases)
+node scripts/benchmark-summary.js
+```
+
+Unit tests validate individual regexes. The corpus validates end-to-end file scanning.

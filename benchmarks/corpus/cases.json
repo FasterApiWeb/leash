@@ -1,0 +1,326 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-07-09",
+  "description": "Labeled secret-detection corpus for leash-secrets pattern scanner. All values are fake, revoked, or documentation examples.",
+  "methodology": "Each case is a file + line + expected outcome. Run: node scripts/run-benchmark.js",
+  "cases": [
+    {
+      "id": "TP-001",
+      "line": 1,
+      "pattern_id": "aws-access-key-id",
+      "label": "positive",
+      "source": "AWS docs example",
+      "content_b64": "QUtJQUk0NFFIOERIQkVYQU1QTEU="
+    },
+    {
+      "id": "TP-002",
+      "line": 2,
+      "pattern_id": "aws-secret-access-key",
+      "label": "positive",
+      "source": "AWS docs example",
+      "content_b64": "QVdTX1NFQ1JFVF9BQ0NFU1NfS0VZID0gIndKYWxyWFV0bkZFTUkvSzdNREVORy9iUHhSZmlDWUVYQU1QTEVLRVki"
+    },
+    {
+      "id": "TP-003",
+      "line": 2,
+      "pattern_id": "stripe-live-secret-key",
+      "label": "positive",
+      "source": "Stripe live key format",
+      "content_b64": "c3RyaXBlLmFwaUtleSA9ICJza19saXZlXzUxSDdtS2pHOHo0eDl2Um5DM3lUNXFXMmJBMHhGNnBMOGRNMW5PNGtKN3NFOWlVIjs="
+    },
+    {
+      "id": "TP-004",
+      "line": 2,
+      "pattern_id": "github-pat-classic",
+      "label": "positive",
+      "source": "GitHub PAT format",
+      "content_b64": "Y29uc3QgR0lUSFVCX1RPS0VOID0gImdocF9BQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWmFiY2RlZjEyMzQiOw=="
+    },
+    {
+      "id": "TP-005",
+      "line": 1,
+      "pattern_id": "openai-api-key-project",
+      "label": "positive",
+      "source": "OpenAI project key format",
+      "content_b64": "b3BlbmFpLmFwaV9rZXkgPSAic2stcHJvai1hYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYSI="
+    },
+    {
+      "id": "TP-006",
+      "line": 1,
+      "pattern_id": "postgres-connection-string",
+      "label": "positive",
+      "source": "Synthetic connection string",
+      "content_b64": "REFUQUJBU0VfVVJMPXBvc3RncmVzOi8vYWRtaW46U3VwZXJTZWNyZXRQYXNzMTIzQHByb2QtZGIuZXhhbXBsZS5pbnRlcm5hbDo1NDMyL215YXBw"
+    },
+    {
+      "id": "TP-007",
+      "line": 2,
+      "pattern_id": "mysql-connection-string",
+      "label": "positive",
+      "source": "Synthetic connection string",
+      "content_b64": "TVlTUUxfVVJMPW15c3FsOi8vcm9vdDpTdXBlclNlY3JldEBsb2NhbGhvc3Q6MzMwNi9hcHA="
+    },
+    {
+      "id": "TP-008",
+      "line": 3,
+      "pattern_id": "mongodb-connection-string",
+      "label": "positive",
+      "source": "Synthetic connection string",
+      "content_b64": "TU9OR09fVVJJPW1vbmdvZGIrc3J2Oi8vdXNlcjpwYXNzMTIzQGNsdXN0ZXIubW9uZ29kYi5uZXQvZGI="
+    },
+    {
+      "id": "TP-009",
+      "line": 2,
+      "pattern_id": "slack-bot-token",
+      "label": "positive",
+      "source": "Slack bot token format",
+      "content_b64": "ICBib3Q6ICJ4b3hiLTEyMzQ1Njc4OTAxMjMtMTIzNDU2Nzg5MDEyMy1BQkNERUZHSElKS0xNTk9QUVJTVFVWd3gi"
+    },
+    {
+      "id": "TP-010",
+      "line": 3,
+      "pattern_id": "slack-user-token",
+      "label": "positive",
+      "source": "Slack user token format",
+      "content_b64": "ICB1c2VyOiAieG94cC0xMjM0NTY3ODkwLTEyMzQ1Njc4OTAtMTIzNDU2Nzg5MC1hYmNkZWYwMTIzNDU2Nzg5YWJjZGVmMDEyMzQ1Njc4OSI="
+    },
+    {
+      "id": "TP-011",
+      "line": 4,
+      "pattern_id": "discord-bot-token",
+      "label": "positive",
+      "source": "Discord token format",
+      "content_b64": "ZGlzY29yZDogIk1UQXhNak0wTlRZM09Ea3dNVEl6TkRVMk53LkdhQmNEZS5GZ0hpSmtMbU5vUHFSc1R1VndYeVoxMjM0NTY3ODkwIg=="
+    },
+    {
+      "id": "TP-012",
+      "line": 5,
+      "pattern_id": "telegram-bot-token",
+      "label": "positive",
+      "source": "Telegram token format",
+      "content_b64": "dGVsZWdyYW06ICIxMjM0NTY3ODk6QUJDZGVmR0hJamtsTU5PcHFyc1RVVnd4eXoxMjM0NTY3ODki"
+    },
+    {
+      "id": "TP-013",
+      "line": 2,
+      "pattern_id": "gcp-api-key",
+      "label": "positive",
+      "source": "GCP API key format",
+      "content_b64": "ICAiZ2NwX2tleSI6ICJBSXphU3lBMTIzNDU2Nzg5MGFiY2RlZmdoaWprbG1ub3BxcnN0dXYiLA=="
+    },
+    {
+      "id": "TP-014",
+      "line": 3,
+      "pattern_id": "gcp-service-account-key",
+      "label": "positive",
+      "source": "GCP service account JSON",
+      "content_b64": "ICAic2VydmljZV9hY2NvdW50IjogeyJ0eXBlIjoic2VydmljZV9hY2NvdW50IiwicHJpdmF0ZV9rZXkiOiItLS0tLUJFR0lOIFBSSVZBVEUgS0VZLS0tLS1cbk1JSUUifQ=="
+    },
+    {
+      "id": "TP-015",
+      "line": 2,
+      "pattern_id": "azure-connection-string",
+      "label": "positive",
+      "source": "Azure storage connection string",
+      "content_b64": "ICBjb25uOiAiRGVmYXVsdEVuZHBvaW50c1Byb3RvY29sPWh0dHBzO0FjY291bnROYW1lPXg7QWNjb3VudEtleT1hYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ejAxMjM0NTY3ODlBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0NTY3ODlhYmNkZWY9PTsi"
+    },
+    {
+      "id": "TP-016",
+      "line": 3,
+      "pattern_id": "azure-client-secret",
+      "label": "positive",
+      "source": "Azure client secret assignment",
+      "content_b64": "ICBzZWNyZXQ6IGNsaWVudF9zZWNyZXQgPSAiYXp1cmUtY2xpZW50LXNlY3JldC12YWx1ZS1hYmNkZWZnaGlqa2xtbm9wcXJzdCI="
+    },
+    {
+      "id": "TP-017",
+      "line": 1,
+      "pattern_id": "rsa-private-key",
+      "label": "positive",
+      "source": "RSA PEM header",
+      "content_b64": "LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQ=="
+    },
+    {
+      "id": "TP-018",
+      "line": 4,
+      "pattern_id": "openssh-private-key",
+      "label": "positive",
+      "source": "OpenSSH PEM header",
+      "content_b64": "LS0tLS1CRUdJTiBPUEVOU1NIIFBSSVZBVEUgS0VZLS0tLS0="
+    },
+    {
+      "id": "TP-019",
+      "line": 2,
+      "pattern_id": "npm-token",
+      "label": "positive",
+      "source": "npm token format",
+      "content_b64": "ZXhwb3J0IE5QTV9UT0tFTj0ibnBtX0FCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaYWJjZGVmMTIzNCI="
+    },
+    {
+      "id": "TP-020",
+      "line": 3,
+      "pattern_id": "huggingface-token",
+      "label": "positive",
+      "source": "HF token format",
+      "content_b64": "ZXhwb3J0IEhGX1RPS0VOPSJoZl9BQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWmFiY2RlZmdoIg=="
+    },
+    {
+      "id": "TP-021",
+      "line": 4,
+      "pattern_id": "gitlab-pat",
+      "label": "positive",
+      "source": "GitLab PAT format",
+      "content_b64": "ZXhwb3J0IEdJVExBQl9UT0tFTj0iZ2xwYXQtYWJjZGVmZ2hpamtsbW5vcHFyc3Qi"
+    },
+    {
+      "id": "TP-022",
+      "line": 5,
+      "pattern_id": "sendgrid-api-key",
+      "label": "positive",
+      "source": "SendGrid key format",
+      "content_b64": "ZXhwb3J0IFNFTkRHUklEX0tFWT0iU0cuYWFhYWFhYWFhYWFhYWFhYWFhYWFhYS5iYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiIg=="
+    },
+    {
+      "id": "TP-023",
+      "line": 1,
+      "pattern_id": "circleci-token",
+      "label": "positive",
+      "source": "CircleCI token format",
+      "content_b64": "Y2lyY2xlX3Rva2VuPSJhMWIyYzNkNGU1ZjY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTBhYmNkIg=="
+    },
+    {
+      "id": "TP-024",
+      "line": 2,
+      "pattern_id": "pypi-token",
+      "label": "positive",
+      "source": "PyPI token format",
+      "content_b64": "UFlQSV9UT0tFTj0icHlwaS1BQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBIg=="
+    },
+    {
+      "id": "TP-025",
+      "line": 3,
+      "pattern_id": "vercel-token",
+      "label": "positive",
+      "source": "Vercel token format",
+      "content_b64": "dmVyY2VsIHRva2VuID0gImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eDEyMzQ1Njc4OTBhYmNkIg=="
+    },
+    {
+      "id": "TP-026",
+      "line": 1,
+      "pattern_id": "generic-secret-assignment",
+      "label": "positive",
+      "source": "JWT secret assignment",
+      "content_b64": "SldUX1NFQ1JFVCA9ICJteS1zdXBlci1zZWNyZXQtand0LXNpZ25pbmcta2V5LXRoYXQtaXMtdmVyeS1sb25nIg=="
+    },
+    {
+      "id": "TP-027",
+      "line": 2,
+      "pattern_id": "generic-password-assignment",
+      "label": "positive",
+      "source": "Hardcoded password",
+      "content_b64": "cGFzc3dvcmQgPSAiTXlQcm9kU2VjcmV0VmFsdWU5OSEi"
+    },
+    {
+      "id": "TP-028",
+      "line": 3,
+      "pattern_id": "generic-bearer-token-inline",
+      "label": "positive",
+      "source": "Bearer token in header",
+      "content_b64": "aGVhZGVycyA9IHsiQXV0aG9yaXphdGlvbiI6ICJCZWFyZXIgZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5U0lHTiJ9"
+    },
+    {
+      "id": "TP-029",
+      "line": 2,
+      "pattern_id": "openai-api-key",
+      "label": "positive",
+      "source": "Legacy OpenAI sk- key",
+      "content_b64": "bGVnYWN5ID0gInNrLWFiY2RlZmdoaWprbG1ub3BxcnN0VDNCbGJrRkphYmNkZWZnaGlqa2xtbm9wcXJzdCI="
+    },
+    {
+      "id": "TP-030",
+      "line": 3,
+      "pattern_id": "stripe-live-restricted-key",
+      "label": "positive",
+      "source": "Stripe restricted key",
+      "content_b64": "Y29uc3QgcmsgPSAicmtfbGl2ZV81MUg3bUtqRzh6NHg5dlJuQzN5VDVxVzJiQTB4RjZwTDhkTTFuTzRrSjdzRTlpVSI7"
+    },
+    {
+      "id": "TN-001",
+      "line": 1,
+      "label": "negative",
+      "source": "Placeholder API key",
+      "content_b64": "QVBJX0tFWSA9ICJ5b3VyLWFwaS1rZXktaGVyZSI="
+    },
+    {
+      "id": "TN-002",
+      "line": 2,
+      "label": "negative",
+      "source": "sk_test_ key",
+      "content_b64": "U1RSSVBFX1RFU1RfS0VZID0gInNrX3Rlc3RfNGVDMzlIcUx5aldEYXJqdFQxemRwN2RjIg=="
+    },
+    {
+      "id": "TN-003",
+      "line": 3,
+      "label": "negative",
+      "source": "changeme password",
+      "content_b64": "REJfUEFTU1dPUkQgPSAiY2hhbmdlbWUi"
+    },
+    {
+      "id": "TN-004",
+      "line": 4,
+      "label": "negative",
+      "source": "env var reference",
+      "content_b64": "REFUQUJBU0VfVVJMID0gb3MuZW52aXJvblsiREFUQUJBU0VfVVJMIl0="
+    },
+    {
+      "id": "TN-005",
+      "line": 1,
+      "label": "negative",
+      "source": "UUID identifier",
+      "content_b64": "U0VTU0lPTl9JRCA9ICI1NTBlODQwMC1lMjliLTQxZDQtYTcxNi00NDY2NTU0NDAwMDAi"
+    },
+    {
+      "id": "TN-006",
+      "line": 2,
+      "label": "negative",
+      "source": "SHA256 digest",
+      "content_b64": "Q09OVEVOVF9IQVNIID0gInNoYTI1NjphYmMxMjNkZWY0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4Ig=="
+    },
+    {
+      "id": "TN-007",
+      "line": 3,
+      "label": "negative",
+      "source": "Public key PEM",
+      "content_b64": "UFVCTElDX0tFWSA9ICItLS0tLUJFR0lOIFBVQkxJQyBLRVktLS0tLVxuTUlJQklqQU5CZ2txLi4uIg=="
+    },
+    {
+      "id": "TN-008",
+      "line": 4,
+      "label": "negative",
+      "source": "example.com URL",
+      "content_b64": "RE9DU19VUkwgPSAiaHR0cHM6Ly9leGFtcGxlLmNvbS9kb2NzIg=="
+    },
+    {
+      "id": "KM-001",
+      "line": 2,
+      "label": "known_miss",
+      "source": "Secret split across lines",
+      "content_b64": "dG9rZW4gPSAiZ2hwX0FCQ0RFRkdISUpLTE1OT1BRUiIgXA=="
+    },
+    {
+      "id": "KM-002",
+      "line": 1,
+      "label": "known_miss",
+      "source": "Base64 blob without context",
+      "content_b64": "ZEdWemRDMXpaV055WlhRdGRHaGhkQzFwY3kxbGJtTnZaR1ZrTFdsdVltRnpaVFkwTFc5dWJIaz0="
+    },
+    {
+      "id": "KM-003",
+      "line": 2,
+      "label": "known_miss",
+      "source": "Truncated GitHub PAT",
+      "content_b64": "R0lUSFVCX1RPS0VOID0gImdocF9zaG9ydCI="
+    }
+  ],
+  "encoding": "base64 per-case line content — decode to verify"
+}

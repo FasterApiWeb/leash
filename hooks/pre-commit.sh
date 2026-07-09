@@ -47,8 +47,8 @@ CRITICAL_PATTERNS=(
   'npm_[a-zA-Z0-9]{36}'
   # Hugging Face
   'hf_[a-zA-Z0-9]{34}'
-  # Private keys
-  '-----BEGIN (RSA |EC |DSA |OPENSSH |PGP )?PRIVATE KEY'
+  # Private keys (no leading dashes — BSD grep treats ----- as flags)
+  'BEGIN (RSA |EC |DSA |OPENSSH |PGP )?PRIVATE KEY'
   # PlanetScale
   'pscale_pw_[a-zA-Z0-9_-]{43}'
   # Square
@@ -107,6 +107,11 @@ check_allowlist() {
 while IFS= read -r file; do
   [[ -z "$file" ]] && continue
   [[ ! -f "$file" ]] && continue
+
+  # Labeled benchmark/test fixtures contain intentional fake secrets
+  case "$file" in
+    benchmarks/corpus/*|tests/fixtures/*) continue ;;
+  esac
 
   # Skip binary files
   if file "$file" | grep -q "binary"; then

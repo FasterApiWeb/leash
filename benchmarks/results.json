@@ -1,0 +1,546 @@
+{
+  "summary": {
+    "version": "1.0.0",
+    "run_at": "2026-07-09T02:33:32.635Z",
+    "corpus_cases": 41,
+    "encoding": "base64 per-case line content — decode to verify",
+    "positives": {
+      "total": 30,
+      "detected": 30,
+      "missed": 0,
+      "recall_pct": 100
+    },
+    "negatives": {
+      "total": 8,
+      "clean": 8,
+      "false_positives": 0,
+      "false_positive_rate_pct": 0
+    },
+    "known_miss": {
+      "total": 3,
+      "documented_gaps": 3
+    },
+    "all_pass": true
+  },
+  "results": [
+    {
+      "id": "TP-001",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "aws-access-key-id",
+      "pass": true,
+      "detail": "Detected aws-access-key-id",
+      "detected": [
+        {
+          "pattern_id": "aws-access-key-id",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-002",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "aws-secret-access-key",
+      "pass": true,
+      "detail": "Detected aws-secret-access-key",
+      "detected": [
+        {
+          "pattern_id": "aws-secret-access-key",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-003",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "stripe-live-secret-key",
+      "pass": true,
+      "detail": "Detected stripe-live-secret-key",
+      "detected": [
+        {
+          "pattern_id": "stripe-live-secret-key",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-004",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "github-pat-classic",
+      "pass": true,
+      "detail": "Detected github-pat-classic",
+      "detected": [
+        {
+          "pattern_id": "github-pat-classic",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-005",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "openai-api-key-project",
+      "pass": true,
+      "detail": "Detected openai-api-key-project",
+      "detected": [
+        {
+          "pattern_id": "openai-api-key-project",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-006",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "postgres-connection-string",
+      "pass": true,
+      "detail": "Detected postgres-connection-string",
+      "detected": [
+        {
+          "pattern_id": "postgres-connection-string",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-007",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "mysql-connection-string",
+      "pass": true,
+      "detail": "Detected mysql-connection-string",
+      "detected": [
+        {
+          "pattern_id": "mysql-connection-string",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-008",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "mongodb-connection-string",
+      "pass": true,
+      "detail": "Detected mongodb-connection-string",
+      "detected": [
+        {
+          "pattern_id": "mongodb-connection-string",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-009",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "slack-bot-token",
+      "pass": true,
+      "detail": "Detected slack-bot-token",
+      "detected": [
+        {
+          "pattern_id": "slack-bot-token",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-010",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "slack-user-token",
+      "pass": true,
+      "detail": "Detected slack-user-token",
+      "detected": [
+        {
+          "pattern_id": "slack-user-token",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-011",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "discord-bot-token",
+      "pass": true,
+      "detail": "Detected discord-bot-token",
+      "detected": [
+        {
+          "pattern_id": "discord-bot-token",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-012",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "telegram-bot-token",
+      "pass": true,
+      "detail": "Detected telegram-bot-token",
+      "detected": [
+        {
+          "pattern_id": "telegram-bot-token",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-013",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "gcp-api-key",
+      "pass": true,
+      "detail": "Detected gcp-api-key",
+      "detected": [
+        {
+          "pattern_id": "gcp-api-key",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-014",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "gcp-service-account-key",
+      "pass": true,
+      "detail": "Detected gcp-service-account-key",
+      "detected": [
+        {
+          "pattern_id": "gcp-service-account-key",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-015",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "azure-connection-string",
+      "pass": true,
+      "detail": "Detected azure-connection-string",
+      "detected": [
+        {
+          "pattern_id": "azure-connection-string",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-016",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "azure-client-secret",
+      "pass": true,
+      "detail": "Detected azure-client-secret",
+      "detected": [
+        {
+          "pattern_id": "azure-client-secret",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-017",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "rsa-private-key",
+      "pass": true,
+      "detail": "Detected rsa-private-key",
+      "detected": [
+        {
+          "pattern_id": "rsa-private-key",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-018",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "openssh-private-key",
+      "pass": true,
+      "detail": "Detected openssh-private-key",
+      "detected": [
+        {
+          "pattern_id": "openssh-private-key",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-019",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "npm-token",
+      "pass": true,
+      "detail": "Detected npm-token",
+      "detected": [
+        {
+          "pattern_id": "npm-token",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-020",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "huggingface-token",
+      "pass": true,
+      "detail": "Detected huggingface-token",
+      "detected": [
+        {
+          "pattern_id": "huggingface-token",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-021",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "gitlab-pat",
+      "pass": true,
+      "detail": "Detected gitlab-pat",
+      "detected": [
+        {
+          "pattern_id": "gitlab-pat",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-022",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "sendgrid-api-key",
+      "pass": true,
+      "detail": "Detected sendgrid-api-key",
+      "detected": [
+        {
+          "pattern_id": "sendgrid-api-key",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-023",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "circleci-token",
+      "pass": true,
+      "detail": "Detected circleci-token",
+      "detected": [
+        {
+          "pattern_id": "circleci-token",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-024",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "pypi-token",
+      "pass": true,
+      "detail": "Detected pypi-token",
+      "detected": [
+        {
+          "pattern_id": "pypi-token",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-025",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "vercel-token",
+      "pass": true,
+      "detail": "Detected vercel-token",
+      "detected": [
+        {
+          "pattern_id": "vercel-token",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-026",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "generic-secret-assignment",
+      "pass": true,
+      "detail": "Detected generic-secret-assignment",
+      "detected": [
+        {
+          "pattern_id": "generic-secret-assignment",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "TP-027",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "generic-password-assignment",
+      "pass": true,
+      "detail": "Detected generic-password-assignment",
+      "detected": [
+        {
+          "pattern_id": "generic-password-assignment",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "TP-028",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "generic-bearer-token-inline",
+      "pass": true,
+      "detail": "Detected generic-bearer-token-inline",
+      "detected": [
+        {
+          "pattern_id": "generic-bearer-token-inline",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-029",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "openai-api-key",
+      "pass": true,
+      "detail": "Detected openai-api-key",
+      "detected": [
+        {
+          "pattern_id": "openai-api-key",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TP-030",
+      "label": "positive",
+      "line": 1,
+      "pattern_id": "stripe-live-restricted-key",
+      "pass": true,
+      "detail": "Detected stripe-live-restricted-key",
+      "detected": [
+        {
+          "pattern_id": "stripe-live-restricted-key",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "TN-001",
+      "label": "negative",
+      "line": 1,
+      "pattern_id": null,
+      "pass": true,
+      "detail": "No critical on line",
+      "detected": []
+    },
+    {
+      "id": "TN-002",
+      "label": "negative",
+      "line": 1,
+      "pattern_id": null,
+      "pass": true,
+      "detail": "No critical on line",
+      "detected": []
+    },
+    {
+      "id": "TN-003",
+      "label": "negative",
+      "line": 1,
+      "pattern_id": null,
+      "pass": true,
+      "detail": "No critical on line",
+      "detected": []
+    },
+    {
+      "id": "TN-004",
+      "label": "negative",
+      "line": 1,
+      "pattern_id": null,
+      "pass": true,
+      "detail": "No critical on line",
+      "detected": []
+    },
+    {
+      "id": "TN-005",
+      "label": "negative",
+      "line": 1,
+      "pattern_id": null,
+      "pass": true,
+      "detail": "No critical on line",
+      "detected": []
+    },
+    {
+      "id": "TN-006",
+      "label": "negative",
+      "line": 1,
+      "pattern_id": null,
+      "pass": true,
+      "detail": "No critical on line",
+      "detected": []
+    },
+    {
+      "id": "TN-007",
+      "label": "negative",
+      "line": 1,
+      "pattern_id": null,
+      "pass": true,
+      "detail": "No critical on line",
+      "detected": []
+    },
+    {
+      "id": "TN-008",
+      "label": "negative",
+      "line": 1,
+      "pattern_id": null,
+      "pass": true,
+      "detail": "No critical on line",
+      "detected": []
+    },
+    {
+      "id": "KM-001",
+      "label": "known_miss",
+      "line": 1,
+      "pattern_id": null,
+      "pass": true,
+      "detail": "Documented gap — not detected (expected)",
+      "detected": []
+    },
+    {
+      "id": "KM-002",
+      "label": "known_miss",
+      "line": 1,
+      "pattern_id": null,
+      "pass": true,
+      "detail": "Documented gap — not detected (expected)",
+      "detected": []
+    },
+    {
+      "id": "KM-003",
+      "label": "known_miss",
+      "line": 1,
+      "pattern_id": null,
+      "pass": true,
+      "detail": "Documented gap — not detected (expected)",
+      "detected": []
+    }
+  ]
+}

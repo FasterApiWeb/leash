@@ -2,7 +2,10 @@
 # leash-secrets .gitignore — practice what we preach
 # ─────────────────────────────────────────
 
-# ── Secrets & Environment (CRITICAL) ─────
+# ── Generated demo assets ─────────────────
+docs/assets/demo.tape
+docs/assets/demo.cast
+benchmarks/corpus/samples/
 .env
 .env.*
 !.env.example

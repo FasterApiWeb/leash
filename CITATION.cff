@@ -5,13 +5,15 @@ message: >-
   please cite it using this metadata.
 type: software
 authors:
+  - given-names: Eshwar Chandra Vidhyasagar Thedla
+    alias: EshwarCVS
   - name: FasterApiWeb
-    alias: eeshu
+    affiliation: "https://github.com/FasterApiWeb"
 repository-code: https://github.com/FasterApiWeb/leash-secrets
 url: https://fasterapiweb.github.io/leash-secrets
 license: MIT
-version: 1.0.0
-date-released: "2026-07-07"
+version: 1.1.0
+date-released: "2026-07-08"
 keywords:
   - secret-detection
   - security

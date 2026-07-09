@@ -31,6 +31,9 @@ jobs:
       - name: Run pattern tests
         run: node tests/test-patterns.js
 
+      - name: Run benchmark corpus
+        run: node scripts/run-benchmark.js
+
       - name: Test CLI scan (should detect secrets in fixture)
         run: |
           node bin/leash-secrets.js scan tests/fixtures/has-secrets.py && exit 1 || true

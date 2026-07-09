@@ -17,6 +17,7 @@
     "prepare-extension": "node scripts/prepare-vscode-extension.js",
     "package-extension": "npm run prepare-extension && cd vscode-extension && npm run package",
     "benchmark": "node scripts/benchmark-summary.js",
+    "benchmark:corpus": "node scripts/run-benchmark.js",
     "verify": "bash scripts/verify-hygiene.sh",
     "docs:serve": "mkdocs serve",
     "docs:build": "mkdocs build --strict",
@@ -41,7 +42,7 @@
     "devsecops",
     "leash-secrets"
   ],
-  "author": "eeshu",
+  "author": "EshwarCVS (FasterApiWeb)",
   "license": "MIT",
   "repository": {
     "type": "git",

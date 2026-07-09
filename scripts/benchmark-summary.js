@@ -34,7 +34,7 @@ console.log(`Fixture regex tests:       ${tests.ok ? 'PASS' : 'FAIL'}`);
 console.log(`Fixture pass rate:         ${passRate}% (${passed}/${total})`);
 console.log('\nNotes:');
 console.log('- This script validates the checked-in test corpus only.');
-console.log('- Full historical 94% benchmark requires the external corpus described in docs.');
+console.log('- Corpus benchmark: npm run benchmark:corpus');
 console.log('- Run: npm test\n');
 
 if (!validate.ok || !tests.ok) process.exit(1);

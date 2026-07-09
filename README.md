@@ -1,66 +1,44 @@
-<p align="center">
-  <img src="docs/assets/leash-secrets-logo.png" alt="leash-secrets" width="200" />
-</p>
+<img src="docs/assets/leash-secrets-logo.png" align="right" width="140" alt="leash-secrets" />
 
-<h1 align="center">leash-secrets</h1>
+# leash-secrets
 
-<p align="center">
-  <strong>your AI writes fast. leash-secrets makes sure it doesn't run away with your secrets.</strong>
-</p>
+**Defense layer 0 for AI-generated code** — catches API keys, tokens, and credentials while your agent writes, not after `git push`.
 
-<p align="center">
-  <a href="#install">Install</a> ·
-  <a href="#before--after">See it</a> ·
-  <a href="#commands">Commands</a> ·
-  <a href="#patterns">Patterns</a> ·
-  <a href="#benchmarks">Benchmarks</a> ·
-  <a href="#contributing">Contribute</a>
-</p>
+Maintained by [**EshwarCVS**](https://github.com/EshwarCVS) · [**FasterApiWeb**](https://github.com/FasterApiWeb)
 
-<p align="center">
-  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" /></a>
-  <a href="https://www.npmjs.com/package/leash-secrets"><img src="https://img.shields.io/npm/v/leash-secrets.svg" alt="npm version" /></a>
-  <a href="https://github.com/FasterApiWeb/leash-secrets/actions/workflows/ci.yml"><img src="https://github.com/FasterApiWeb/leash-secrets/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
-  <a href="https://github.com/FasterApiWeb/leash-secrets/stargazers"><img src="https://img.shields.io/github/stars/FasterApiWeb/leash-secrets?style=social" alt="Stars" /></a>
-  <a href="https://github.com/FasterApiWeb/leash-secrets/issues"><img src="https://img.shields.io/github/issues/FasterApiWeb/leash-secrets" alt="Issues" /></a>
-  <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" /></a>
-</p>
+[![npm](https://img.shields.io/npm/v/leash-secrets.svg)](https://www.npmjs.com/package/leash-secrets)
+[![CI](https://github.com/FasterApiWeb/leash-secrets/actions/workflows/ci.yml/badge.svg)](https://github.com/FasterApiWeb/leash-secrets/actions/workflows/ci.yml)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![docs](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://fasterapiweb.github.io/leash-secrets/)
 
-<p align="center">
-  <img src="docs/assets/demo.svg" alt="leash-secrets blocking a Stripe live key in an AI agent session" width="760" />
-</p>
+**[Setup](#setup)** · **[Detection examples](#detection-examples)** · **[Benchmark corpus](benchmarks/)** · **[Docs](https://fasterapiweb.github.io/leash-secrets)** · **[Contributing](CONTRIBUTING.md)**
+
+![leash-secrets CLI demo](docs/assets/demo.gif)
 
 ---
 
-AI coding agents write code at lightning speed. GPT, Claude, Copilot — they're incredible at generating code. But they have a problem: **they don't know your secrets are secret.**
+## The problem
 
-Every day, AI-generated code pushes API keys, database passwords, and cloud credentials straight into public repositories. GitHub's own secret scanning catches [millions of leaked secrets per year](https://github.blog/security/secret-scanning/). And with AI writing more code than ever, the problem is accelerating.
+AI agents generate real credentials into source files — Stripe live keys, AWS pairs, database URLs, JWT signing secrets. [GitHub secret scanning](https://github.blog/security/secret-scanning/) catches millions of leaks **after** push. gitleaks and truffleHog catch them **after** commit.
 
-**Other tools catch secrets after they're committed. Leash Secrets catches them while the AI is still typing.**
+**leash-secrets runs inside the agent** (Cursor, Claude Code, Codex, Copilot, Gemini, Windsurf, Cline, and any tool that reads `AGENTS.md`). It scans what the model writes and blocks critical findings before the file exists.
 
-> **Defense layer 0:** Use leash-secrets with gitleaks/truffleHog/GitGuardian — not instead of them. Leash catches secrets at creation; traditional scanners catch anything that slips into git history.
+Use it **with** traditional scanners, not instead of them.
 
-Leash Secrets is a skill/plugin for [Cursor](https://cursor.com), [Claude Code](https://docs.anthropic.com/en/docs/claude-code), [Codex](https://openai.com/index/codex/), [GitHub Copilot](https://github.com/features/copilot), [Gemini CLI](https://github.com/google-gemini/gemini-cli), [Windsurf](https://windsurf.com), [Cline](https://github.com/cline/cline), and 20+ other AI agents. Install once. Your agent scans every line it writes for exposed secrets — API keys, tokens, passwords, private keys — and blocks them before they hit your codebase.
+## Detection examples
 
-## Before / After
+### Without leash-secrets
 
-You ask your AI agent to set up a Stripe integration. Without leash-secrets:
+Your agent sets up Stripe:
 
 ```python
 import stripe
-
 stripe.api_key = "sk_live_" + "YourActualKeyWouldBeHere1234567890"
-
-def create_payment(amount, currency="usd"):
-    return stripe.PaymentIntent.create(
-        amount=amount,
-        currency=currency,
-    )
 ```
 
-Your production Stripe key. In your source code. One `git push` from being public.
+Production key. In source. One push from public.
 
-With leash-secrets:
+### With leash-secrets
 
 ```
 ⛔ LEASH-SECRETS — SECRET DETECTED
@@ -80,7 +58,7 @@ FIX:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-The agent stops. Shows the risk. Provides the fix. Your key never reaches the codebase.
+The agent stops. Shows the risk. Provides the fix. The key never lands in the repo.
 
 <details>
 <summary><strong>More examples — AWS, OpenAI, database, SSH key</strong></summary>
@@ -185,27 +163,33 @@ FIX:      Never commit SSH keys.
 
 Leash Secrets doesn't replace your existing security tools. It adds a layer that catches secrets **before they exist in any file**, because the AI agent that's writing the code is also the one checking it.
 
-## Install
+## Setup
 
-**One command. Finds every agent on your machine. Installs for each.**
+### Universal installer
 
 ```bash
-# macOS · Linux · WSL · Git Bash
+# macOS · Linux · WSL
 curl -fsSL https://raw.githubusercontent.com/FasterApiWeb/leash-secrets/main/scripts/install.sh | bash
 ```
 
 ```powershell
-# Windows · PowerShell 5.1+
+# Windows PowerShell
 irm https://raw.githubusercontent.com/FasterApiWeb/leash-secrets/main/scripts/install.ps1 | iex
 ```
 
-~15 seconds. Skips agents you don't have. Safe to re-run.
+Detects installed agents and copies the right skill/rule files. Idempotent — safe to re-run.
 
-> [!TIP]
-> **Active by default.** Leash Secrets starts in `patrol` mode — it scans everything your agent writes and blocks critical secrets automatically. No command needed. Use `/leash-secrets off` to disable.
+### CLI only
+
+```bash
+npm install -g leash-secrets
+leash-secrets scan .
+```
+
+Patrol mode is on by default in the agent skill — critical secrets are blocked without running a command. Use `/leash-secrets off` to disable.
 
 <details>
-<summary><strong>Install for one agent, or any of 20+ others</strong></summary>
+<summary><strong>Per-agent install paths</strong></summary>
 
 ### Cursor
 
@@ -353,20 +337,25 @@ Save to `patterns/my-company.json` and add it to `patterns/index.json`. See [doc
 
 ## Benchmarks
 
-Leash Secrets is validated with a reproducible fixture suite in this repo (`npm test`). For broader historical benchmarking against revoked-secret corpora, see the methodology page.
+Published labeled corpus — no hand-wavy percentages.
 
-| Metric | No scanning | "Check for secrets" prompt | Leash Secrets |
-|--------|----------:|---------------------------:|--------------:|
-| **Secrets caught** | 0% | 41% | **94%** |
-| **False positives** | 0 | 12% | **3%** |
-| **Auto-fix accuracy** | N/A | 22% | **89%** |
-| **Agent speed impact** | baseline | +2% | **+5%** |
+| Resource | Link |
+|----------|------|
+| **Raw case labels** | [`benchmarks/corpus/cases.json`](benchmarks/corpus/cases.json) |
+| **Fixture files** | [`benchmarks/corpus/samples/`](benchmarks/corpus/samples/) |
+| **Last run results** | [`benchmarks/results.json`](benchmarks/results.json) |
 
-Leash Secrets catches 94% in controlled benchmark runs because it uses **specific regex patterns** rather than relying on the LLM's general judgment. The 6% miss rate is mostly novel/unusual secret formats — contribute patterns to close the gap.
+```bash
+npm run benchmark:corpus   # reproduce locally
+```
 
-> [!NOTE]
-> Reproducible local validation: `npm test` and `node scripts/benchmark-summary.js`  
-> Full methodology and limitations: [docs/reference/benchmarks.md](docs/reference/benchmarks.md)
+| Metric (pattern scanner) | Result |
+|--------------------------|-------:|
+| Recall (30 positives) | **100%** |
+| False positives (8 negatives) | **0%** |
+| Documented known gaps | **3** (multiline, base64-only, truncated tokens) |
+
+This measures **regex detection** in `leash-secrets scan` — reproducible, committed, verifiable. We do not publish unverified LLM-prompt comparison numbers. See [benchmarks/README.md](benchmarks/README.md) and [docs/reference/benchmarks.md](docs/reference/benchmarks.md).
 
 ## How It Works
 
@@ -596,13 +585,13 @@ This repo is dogfooded — the tool scans itself on every PR and push.
 | Pattern + fixture tests | [CI — Test](https://github.com/FasterApiWeb/leash-secrets/actions/workflows/ci.yml) (Node 18/20/22) |
 | Shell script lint | [CI — Shell Scripts](https://github.com/FasterApiWeb/leash-secrets/actions/workflows/ci.yml) |
 | Dogfood scan (no criticals in source) | [CI — Dogfood](https://github.com/FasterApiWeb/leash-secrets/actions/workflows/ci.yml) |
-| Reproducible benchmark | `npm test` + `node scripts/benchmark-summary.js` |
+| Reproducible benchmark | `npm run benchmark:corpus` + `npm test` |
 | Install smoke test | `npm run verify` |
 
 ```bash
 npm run verify   # all local hygiene checks
+npm run benchmark:corpus
 npm test
-node scripts/benchmark-summary.js
 node bin/leash-secrets.js scan src/ scripts/ hooks/ bin/
 ```
 
@@ -617,20 +606,10 @@ Global install: `npm install -g leash-secrets` · curl installer: see [Installat
 - [ ] **Entropy detection** — catch secrets that don't match known patterns
 - [ ] **Multi-language fix templates** — auto-fix for 15+ languages
 
-## Star This Repo
+## Support the project
 
-Every star helps another developer find leash-secrets before their secrets find the internet.
+If leash-secrets saved you a rotation, a star helps others find it before they leak.
 
 ---
 
-<p align="center">
-  <a href="CONTRIBUTING.md">Contributing</a> ·
-  <a href="SECURITY.md">Security</a> ·
-  <a href="https://fasterapiweb.github.io/leash-secrets">Documentation</a> ·
-  <a href="action/README.md">GitHub Action</a> ·
-  <a href="https://github.com/FasterApiWeb/leash-secrets/issues">Issues</a>
-</p>
-
-<p align="center">
-  MIT — free like the secrets you almost leaked.
-</p>
+**Docs:** [fasterapiweb.github.io/leash-secrets](https://fasterapiweb.github.io/leash-secrets) · **Maintainers:** [EshwarCVS](https://github.com/EshwarCVS) / [FasterApiWeb](https://github.com/FasterApiWeb) · **License:** MIT
