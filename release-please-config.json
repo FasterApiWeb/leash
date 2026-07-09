@@ -15,6 +15,7 @@
       ],
       "extra-files": [
         "CITATION.cff",
+        "scripts/install.sh",
         {
           "type": "json",
           "path": "vscode-extension/package.json",
