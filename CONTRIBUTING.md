@@ -110,8 +110,8 @@ Repository/org Actions settings must allow GitHub-owned actions used by workflow
    ```bash
    bash scripts/prepare-release.sh
    ```
-3. Open a PR from `release-please--branches--main--components--leash-secrets` → `main`
-4. **Merge with a merge commit** (not squash) so release-please can tag the release
+3. Open the release PR (created by `prepare-release.sh`) and merge to `main`
+4. **Wait for the Release workflow** to create the GitHub tag/release (do not create the tag manually first)
 5. If auto-tag/npm does not run, finish manually:
    - GitHub Release tag `leash-secrets-vX.Y.Z` with tarball/zip assets
    - **Actions → Publish npm → Run workflow**
