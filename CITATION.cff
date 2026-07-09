@@ -12,7 +12,7 @@ authors:
 repository-code: https://github.com/FasterApiWeb/leash-secrets
 url: https://fasterapiweb.github.io/leash-secrets
 license: MIT
-version: 1.2.0
+version: 1.2.1
 date-released: "2026-07-09"
 keywords:
   - secret-detection

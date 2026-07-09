@@ -5,6 +5,13 @@ All notable changes to leash-secrets will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1](https://github.com/FasterApiWeb/leash-secrets/compare/leash-secrets-v1.2.0...leash-secrets-v1.2.1) (2026-07-09)
+
+
+### Bug Fixes
+
+* stop Release CI failing on org PR policy ([#12](https://github.com/FasterApiWeb/leash-secrets/issues/12)) ([a604f85](https://github.com/FasterApiWeb/leash-secrets/commit/a604f8590805332087b2db930105cd90957515fb))
+
 ## [1.2.0](https://github.com/FasterApiWeb/leash-secrets/compare/leash-secrets-v1.1.0...leash-secrets-v1.2.0) (2026-07-09)
 
 

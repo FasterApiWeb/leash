@@ -1,6 +1,6 @@
 {
   "name": "leash-secrets",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Keep your secrets on a leash — AI agent skill that catches exposed API keys, tokens, and credentials before they hit your codebase",
   "main": "src/index.js",
   "bin": {
