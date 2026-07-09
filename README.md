@@ -19,9 +19,15 @@
 
 <p align="center">
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" /></a>
+  <a href="https://www.npmjs.com/package/leash-secrets"><img src="https://img.shields.io/npm/v/leash-secrets.svg" alt="npm version" /></a>
+  <a href="https://github.com/FasterApiWeb/leash-secrets/actions/workflows/ci.yml"><img src="https://github.com/FasterApiWeb/leash-secrets/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
   <a href="https://github.com/FasterApiWeb/leash-secrets/stargazers"><img src="https://img.shields.io/github/stars/FasterApiWeb/leash-secrets?style=social" alt="Stars" /></a>
   <a href="https://github.com/FasterApiWeb/leash-secrets/issues"><img src="https://img.shields.io/github/issues/FasterApiWeb/leash-secrets" alt="Issues" /></a>
   <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" /></a>
+</p>
+
+<p align="center">
+  <img src="docs/assets/demo.svg" alt="leash-secrets blocking a Stripe live key in an AI agent session" width="760" />
 </p>
 
 ---
@@ -31,6 +37,8 @@ AI coding agents write code at lightning speed. GPT, Claude, Copilot — they're
 Every day, AI-generated code pushes API keys, database passwords, and cloud credentials straight into public repositories. GitHub's own secret scanning catches [millions of leaked secrets per year](https://github.blog/security/secret-scanning/). And with AI writing more code than ever, the problem is accelerating.
 
 **Other tools catch secrets after they're committed. Leash Secrets catches them while the AI is still typing.**
+
+> **Defense layer 0:** Use leash-secrets with gitleaks/truffleHog/GitGuardian — not instead of them. Leash catches secrets at creation; traditional scanners catch anything that slips into git history.
 
 Leash Secrets is a skill/plugin for [Cursor](https://cursor.com), [Claude Code](https://docs.anthropic.com/en/docs/claude-code), [Codex](https://openai.com/index/codex/), [GitHub Copilot](https://github.com/features/copilot), [Gemini CLI](https://github.com/google-gemini/gemini-cli), [Windsurf](https://windsurf.com), [Cline](https://github.com/cline/cline), and 20+ other AI agents. Install once. Your agent scans every line it writes for exposed secrets — API keys, tokens, passwords, private keys — and blocks them before they hit your codebase.
 
@@ -341,25 +349,24 @@ Leash Secrets patterns are extensible JSON files. Add your own:
 }
 ```
 
-Save to `patterns/my-company.json` and add it to `patterns/index.json`. See [docs/custom-patterns.md](docs/custom-patterns.md) for the full schema.
+Save to `patterns/my-company.json` and add it to `patterns/index.json`. See [docs/patterns/custom-patterns.md](docs/patterns/custom-patterns.md) for the full schema.
 
 ## Benchmarks
 
-Tested against a corpus of 500 files from real GitHub repos that had secrets revoked (sourced from GitHub's public secret scanning alerts). Three arms: no scanning, leash-secrets, and a baseline "check for secrets" prompt.
+Leash Secrets is validated with a reproducible fixture suite in this repo (`npm test`). For broader historical benchmarking against revoked-secret corpora, see the methodology page.
 
-| Metric | No scanning | "Check for secrets" prompt | Leash |
-|--------|----------:|---------------------------:|------:|
+| Metric | No scanning | "Check for secrets" prompt | Leash Secrets |
+|--------|----------:|---------------------------:|--------------:|
 | **Secrets caught** | 0% | 41% | **94%** |
 | **False positives** | 0 | 12% | **3%** |
 | **Auto-fix accuracy** | N/A | 22% | **89%** |
 | **Agent speed impact** | baseline | +2% | **+5%** |
 
-Leash Secrets catches 94% of secrets because it uses **specific regex patterns** rather than relying on the LLM's general judgment. The 6% miss rate is mostly novel/unusual secret formats — contribute patterns to close the gap.
-
-The 5% speed impact is the cost of security. A small price for not putting your Stripe live key on the internet.
+Leash Secrets catches 94% in controlled benchmark runs because it uses **specific regex patterns** rather than relying on the LLM's general judgment. The 6% miss rate is mostly novel/unusual secret formats — contribute patterns to close the gap.
 
 > [!NOTE]
-> Benchmark methodology, raw data, and reproduction instructions: [docs/benchmarks.md](docs/benchmarks.md)
+> Reproducible local validation: `npm test` and `node scripts/benchmark-summary.js`  
+> Full methodology and limitations: [docs/reference/benchmarks.md](docs/reference/benchmarks.md)
 
 ## How It Works
 
@@ -441,7 +448,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: FasterApiWeb/leash-secrets/action@main
+      - uses: FasterApiWeb/leash-secrets/action@leash-secrets-v1.1.0
 ```
 
 See [action/README.md](action/README.md) for configuration options (`scan-mode`, `fail-on`, `exclude`, etc.).
@@ -455,11 +462,11 @@ include:
 
 ### VS Code Extension
 
+Packaged and ready, marketplace publish pending:
+
 ```bash
-cd vscode-extension
-npm install
-npx @vscode/vsce package
-code --install-extension leash-secrets-vscode-1.0.0.vsix
+npm run package-extension
+code --install-extension vscode-extension/leash-secrets-vscode-*.vsix
 ```
 
 Real-time inline diagnostics as you type, workspace scanning, and a status bar indicator. See [vscode-extension/README.md](vscode-extension/README.md).
@@ -570,10 +577,20 @@ Leash Secrets' power grows with every pattern contributed. See [CONTRIBUTING.md]
 - **Documentation** — examples, translations, guides
 - **Testing** — pattern validation, edge cases
 
+## Dogfooding
+
+This repository is scanned by its own tooling in CI (`Dogfood` job) and locally:
+
+```bash
+npm test
+node scripts/benchmark-summary.js
+node bin/leash-secrets.js scan src/ scripts/ hooks/ bin/
+```
+
 ## Roadmap
 
 - [x] **leash-secrets-ci** — GitHub Action / GitLab CI integration
-- [x] **leash-secrets-vscode** — VS Code extension with inline warnings
+- [ ] **leash-secrets-vscode** — VS Code extension (packaged; marketplace publish pending)
 - [ ] **leash-secrets-dashboard** — team-wide secret exposure metrics
 - [ ] **Pattern marketplace** — community-contributed pattern packs
 - [ ] **Entropy detection** — catch secrets that don't match known patterns

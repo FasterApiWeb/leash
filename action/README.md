@@ -16,7 +16,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: FasterApiWeb/leash-secrets/action@main
+      - uses: FasterApiWeb/leash-secrets/action@leash-secrets-v1.1.0
 ```
 
 That's it. Leash Secrets will scan changed files and fail the check if critical secrets are found.
@@ -24,7 +24,7 @@ That's it. Leash Secrets will scan changed files and fail the check if critical 
 ## Configuration
 
 ```yaml
-- uses: FasterApiWeb/leash-secrets/action@main
+- uses: FasterApiWeb/leash-secrets/action@leash-secrets-v1.1.0
   with:
     # What to scan: diff (changed files), all (full repo), staged
     scan-mode: diff
@@ -57,7 +57,7 @@ That's it. Leash Secrets will scan changed files and fail the check if critical 
 ### Using Outputs
 
 ```yaml
-- uses: FasterApiWeb/leash-secrets/action@main
+- uses: FasterApiWeb/leash-secrets/action@leash-secrets-v1.1.0
   id: leash-secrets
 
 - name: Comment on PR
@@ -71,7 +71,7 @@ That's it. Leash Secrets will scan changed files and fail the check if critical 
 ### Scan Only Changed Files (Default)
 
 ```yaml
-- uses: FasterApiWeb/leash-secrets/action@main
+- uses: FasterApiWeb/leash-secrets/action@leash-secrets-v1.1.0
   with:
     scan-mode: diff
     fail-on: critical
@@ -80,7 +80,7 @@ That's it. Leash Secrets will scan changed files and fail the check if critical 
 ### Full Repo Audit
 
 ```yaml
-- uses: FasterApiWeb/leash-secrets/action@main
+- uses: FasterApiWeb/leash-secrets/action@leash-secrets-v1.1.0
   with:
     scan-mode: all
     fail-on: warning
@@ -89,7 +89,7 @@ That's it. Leash Secrets will scan changed files and fail the check if critical 
 ### Block All Warnings (Lockdown Mode)
 
 ```yaml
-- uses: FasterApiWeb/leash-secrets/action@main
+- uses: FasterApiWeb/leash-secrets/action@leash-secrets-v1.1.0
   with:
     scan-mode: diff
     fail-on: warning
@@ -99,7 +99,7 @@ That's it. Leash Secrets will scan changed files and fail the check if critical 
 ### JSON Output for Custom Processing
 
 ```yaml
-- uses: FasterApiWeb/leash-secrets/action@main
+- uses: FasterApiWeb/leash-secrets/action@leash-secrets-v1.1.0
   id: leash-secrets
   with:
     format: json

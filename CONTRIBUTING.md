@@ -95,6 +95,14 @@ Releases use [release-please](https://github.com/googleapis/release-please). **N
 | `NPM_TOKEN` | Publish `leash-secrets` to npm | [npmjs.com](https://www.npmjs.com) → Access Tokens → Granular token with **Read and Write** + **Bypass 2FA for publish** |
 | `VSCE_PAT` | Publish `leash-secrets-vscode` to VS Marketplace *(deferred)* | [Azure DevOps](https://dev.azure.com) → Personal Access Token with **Marketplace → Manage** scope |
 
+### GitHub Actions policy (required for CI)
+
+Repository/org Actions settings must allow GitHub-owned actions used by workflows (`actions/checkout`, `actions/setup-node`, `googleapis/release-please-action`, etc.). If CI shows `startup_failure` with zero jobs, set:
+
+`Settings → Actions → General → Allow all actions and reusable workflows`
+
+`local_only` blocks marketplace actions and prevents CI from starting.
+
 ### Release checklist
 
 1. Push changes to `main` — CI must be green
