@@ -86,66 +86,28 @@ npm run package-extension
 
 ## Maintainer Release Setup
 
-CI/CD for this repo (inspired by the [fork-shepherd](https://github.com/FasterApiWeb/fork-shepherd) **release workflow pattern**, not the Fork Shepherd Marketplace action):
+**Full reference (workflow table, secrets, mental model, ship steps):**  
+[docs/contributing/ci-cd.md](docs/contributing/ci-cd.md) · published site: [CI/CD & Releases](https://fasterapiweb.github.io/leash-secrets/contributing/ci-cd/)
 
-**version bump on `main` → Actions → Release Draft (patch/minor/major) → publish draft in UI → npm**
-
-Legacy [release-please](https://github.com/googleapis/release-please) still runs on push to `main` but often cannot open PRs (org policy). Prefer **Release Draft**.
+Quick path: **version bump on `main` → Actions → Release Draft → Publish draft → npm**. Prefer Release Draft over legacy release-please.
 
 ### One-time secrets
 
-| Secret | Purpose | How to create |
-|--------|---------|---------------|
-| `NPM_TOKEN` | Publish `leash-secrets` to npm | [npmjs.com](https://www.npmjs.com) → Access Tokens → Granular token with **Read and Write** + **Bypass 2FA for publish** |
-| `VSCE_PAT` | Publish `leash-secrets-vscode` to VS Marketplace *(deferred)* | [Azure DevOps](https://dev.azure.com) → Personal Access Token with **Marketplace → Manage** scope |
-| `RELEASE_TOKEN` or GitHub App (`RELEASE_APP_*`) | Optional stronger token for Release Draft | Otherwise `GITHUB_TOKEN` is used |
+| Secret | Purpose |
+|--------|---------|
+| `NPM_TOKEN` | Publish to npm (**required** to ship) |
+| `RELEASE_TOKEN` or `RELEASE_APP_*` | Optional for Release Draft (else `GITHUB_TOKEN`) |
+| `VSCE_PAT` | VS Code marketplace *(deferred)* |
 
-### GitHub Actions policy (required for CI)
+Details and creation steps: [ci-cd.md — Secrets](docs/contributing/ci-cd.md#secrets-needed).
 
-Repository/org Actions settings must allow GitHub-owned and Marketplace actions (`actions/checkout`, `actions/setup-node`, `softprops/action-gh-release`, etc.). If CI shows `startup_failure` with zero jobs, set:
+### Release checklist (short)
 
-`Settings → Actions → General → Allow all actions and reusable workflows`
+1. `bash scripts/prepare-release.sh` → merge so `package.json` matches next version  
+2. **Actions → Release Draft → Run** (`patch` / `minor` / `major`)  
+3. **Releases → Publish** the draft → **Publish npm** runs automatically  
 
-`local_only` blocks marketplace actions and prevents CI from starting.
-
-### What runs in CI/CD
-
-| Workflow | When | What it does |
-|----------|------|----------------|
-| **CI** | PR + push to `main` | Tests (Node 18/20/22), shell syntax, hygiene, dogfood scan |
-| **Validate Patterns** | PR touching patterns | Pattern schema/fixture checks |
-| **Deploy Docs** | push to `main` | MkDocs → GitHub Pages |
-| **Release** (release-please) | push to `main` | Legacy; often no-ops / cannot open PRs |
-| **Release Draft** | manual (`workflow_dispatch`) | Semver bump → **draft** GitHub Release + assets |
-| **Publish npm** | manual, or when a draft release is **published** | `npm publish --provenance` |
-
-### Release checklist (Release Draft)
-
-1. Push feature/fix PRs to `main` — CI must be green
-2. Bump version on `main` (Actions cannot open PRs in this org):
-   ```bash
-   bash scripts/prepare-release.sh
-   ```
-   Open/merge the release PR so `package.json` / `install.sh` match the next version
-3. **Actions → Release Draft → Run workflow**
-   - Branch: `main`
-   - Bump: `patch` / `minor` / `major` (must match `package.json`)
-   - Optional: `dry_run` to preview the next tag
-4. Open **Releases** → edit the **draft** `leash-secrets-vX.Y.Z` → **Publish release**
-5. Publishing the draft triggers **Publish npm** automatically (`release: published`)
-
-If npm does not run: **Actions → Publish npm → Run workflow**.
-
-Local publishing (if needed):
-
-```bash
-npm login          # npm account must have 2FA enabled
-npm publish --access public
-
-cd vscode-extension
-export VSCE_PAT=your_token
-npm run publish
-```
+If npm did not run: **Actions → Publish npm → Run workflow**.
 
 ## PR Guidelines
 

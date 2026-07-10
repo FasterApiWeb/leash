@@ -49,6 +49,12 @@ node scripts/check-patterns.js
 npm test
 ```
 
+## Maintainers: CI/CD & releases
+
+Workflow table, secrets, mental model, and ship steps:
+
+[CI/CD & Releases :material-arrow-right:](ci-cd.md)
+
 ## Code of Conduct
 
 See [Code of Conduct](https://github.com/FasterApiWeb/leash-secrets/blob/main/CODE_OF_CONDUCT.md). Be kind, be helpful, be constructive.
