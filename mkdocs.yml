@@ -130,6 +130,7 @@ nav:
       - How to Contribute: contributing/index.md
       - Adding Patterns: contributing/adding-patterns.md
       - Development Setup: contributing/development.md
+      - CI/CD & Releases: contributing/ci-cd.md
   - Reference:
       - Benchmarks: reference/benchmarks.md
       - Security: reference/security.md
