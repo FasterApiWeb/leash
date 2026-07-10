@@ -86,7 +86,11 @@ npm run package-extension
 
 ## Maintainer Release Setup
 
-Releases use [release-please](https://github.com/googleapis/release-please). **Note:** the `FasterApiWeb` org blocks GitHub Actions from opening PRs, so release PRs must be created and merged manually.
+CI/CD for this repo (inspired by the [fork-shepherd](https://github.com/FasterApiWeb/fork-shepherd) **release workflow pattern**, not the Fork Shepherd Marketplace action):
+
+**version bump on `main` → Actions → Release Draft (patch/minor/major) → publish draft in UI → npm**
+
+Legacy [release-please](https://github.com/googleapis/release-please) still runs on push to `main` but often cannot open PRs (org policy). Prefer **Release Draft**.
 
 ### One-time secrets
 
@@ -94,27 +98,43 @@ Releases use [release-please](https://github.com/googleapis/release-please). **N
 |--------|---------|---------------|
 | `NPM_TOKEN` | Publish `leash-secrets` to npm | [npmjs.com](https://www.npmjs.com) → Access Tokens → Granular token with **Read and Write** + **Bypass 2FA for publish** |
 | `VSCE_PAT` | Publish `leash-secrets-vscode` to VS Marketplace *(deferred)* | [Azure DevOps](https://dev.azure.com) → Personal Access Token with **Marketplace → Manage** scope |
+| `RELEASE_TOKEN` or GitHub App (`RELEASE_APP_*`) | Optional stronger token for Release Draft | Otherwise `GITHUB_TOKEN` is used |
 
 ### GitHub Actions policy (required for CI)
 
-Repository/org Actions settings must allow GitHub-owned actions used by workflows (`actions/checkout`, `actions/setup-node`, `googleapis/release-please-action`, etc.). If CI shows `startup_failure` with zero jobs, set:
+Repository/org Actions settings must allow GitHub-owned and Marketplace actions (`actions/checkout`, `actions/setup-node`, `softprops/action-gh-release`, etc.). If CI shows `startup_failure` with zero jobs, set:
 
 `Settings → Actions → General → Allow all actions and reusable workflows`
 
 `local_only` blocks marketplace actions and prevents CI from starting.
 
-### Release checklist
+### What runs in CI/CD
 
-1. Push changes to `main` — CI must be green
-2. Prepare the release branch locally (Actions cannot open PRs in this org):
+| Workflow | When | What it does |
+|----------|------|----------------|
+| **CI** | PR + push to `main` | Tests (Node 18/20/22), shell syntax, hygiene, dogfood scan |
+| **Validate Patterns** | PR touching patterns | Pattern schema/fixture checks |
+| **Deploy Docs** | push to `main` | MkDocs → GitHub Pages |
+| **Release** (release-please) | push to `main` | Legacy; often no-ops / cannot open PRs |
+| **Release Draft** | manual (`workflow_dispatch`) | Semver bump → **draft** GitHub Release + assets |
+| **Publish npm** | manual, or when a draft release is **published** | `npm publish --provenance` |
+
+### Release checklist (Release Draft)
+
+1. Push feature/fix PRs to `main` — CI must be green
+2. Bump version on `main` (Actions cannot open PRs in this org):
    ```bash
    bash scripts/prepare-release.sh
    ```
-3. Open the release PR (created by `prepare-release.sh`) and merge to `main`
-4. **Wait for the Release workflow** to create the GitHub tag/release (do not create the tag manually first)
-5. If auto-tag/npm does not run, finish manually:
-   - GitHub Release tag `leash-secrets-vX.Y.Z` with tarball/zip assets
-   - **Actions → Publish npm → Run workflow**
+   Open/merge the release PR so `package.json` / `install.sh` match the next version
+3. **Actions → Release Draft → Run workflow**
+   - Branch: `main`
+   - Bump: `patch` / `minor` / `major` (must match `package.json`)
+   - Optional: `dry_run` to preview the next tag
+4. Open **Releases** → edit the **draft** `leash-secrets-vX.Y.Z` → **Publish release**
+5. Publishing the draft triggers **Publish npm** automatically (`release: published`)
+
+If npm does not run: **Actions → Publish npm → Run workflow**.
 
 Local publishing (if needed):
 

@@ -1,0 +1,187 @@
+# Manual semver release (same pattern as FasterApiWeb/fork-shepherd).
+# Actions → Release Draft → Run workflow → pick branch + patch|minor|major
+# → creates a *draft* GitHub Release. Publish the draft in the UI to ship.
+# Publishing the draft triggers Publish npm (see publish-npm.yml).
+#
+# Tag format: leash-secrets-vX.Y.Z (matches existing releases).
+# Does NOT bump package.json — merge a version bump to main first
+# (scripts/prepare-release.sh), then run this with the matching bump,
+# or use dry_run to preview the next tag.
+
+name: Release Draft
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Git branch (or SHA) to tag and release from"
+        required: true
+        type: string
+        default: main
+      bump:
+        description: "Semver bump from the latest leash-secrets-vX.Y.Z tag"
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: patch
+      dry_run:
+        description: "Compute next version only (do not tag or release)"
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Tag & Draft Release
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_APP_ID: ${{ secrets.RELEASE_APP_ID }}
+      RELEASE_APP_PRIVATE_KEY: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+      RELEASE_APP_INSTALLATION_ID: ${{ secrets.RELEASE_APP_INSTALLATION_ID }}
+      RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+
+    steps:
+      - name: Create GitHub App token
+        id: app-token
+        if: env.RELEASE_APP_ID != '' && env.RELEASE_APP_PRIVATE_KEY != ''
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ env.RELEASE_APP_ID }}
+          private-key: ${{ env.RELEASE_APP_PRIVATE_KEY }}
+          installation-id: ${{ env.RELEASE_APP_INSTALLATION_ID }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
+          permission-contents: write
+
+      - name: Resolve release token
+        id: auth
+        env:
+          APP_TOKEN: ${{ steps.app-token.outputs.token }}
+          PAT_TOKEN: ${{ env.RELEASE_TOKEN }}
+          FALLBACK_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if [[ -n "${APP_TOKEN}" ]]; then
+            echo "Using GitHub App installation token"
+            echo "::add-mask::${APP_TOKEN}"
+            echo "token=${APP_TOKEN}" >> "${GITHUB_OUTPUT}"
+          elif [[ -n "${PAT_TOKEN}" ]]; then
+            echo "Using RELEASE_TOKEN PAT"
+            echo "::add-mask::${PAT_TOKEN}"
+            echo "token=${PAT_TOKEN}" >> "${GITHUB_OUTPUT}"
+          else
+            echo "Using GITHUB_TOKEN"
+            echo "::add-mask::${FALLBACK_TOKEN}"
+            echo "token=${FALLBACK_TOKEN}" >> "${GITHUB_OUTPUT}"
+          fi
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ inputs.branch }}
+          token: ${{ steps.auth.outputs.token }}
+
+      - name: Resolve version
+        id: version
+        env:
+          BUMP: ${{ inputs.bump }}
+          SOURCE_LABEL: ${{ inputs.branch }}
+        run: |
+          set -euo pipefail
+
+          if git rev-parse --verify "origin/${SOURCE_LABEL}" >/dev/null 2>&1; then
+            git checkout -B "${SOURCE_LABEL}" "origin/${SOURCE_LABEL}"
+          elif git rev-parse --verify "${SOURCE_LABEL}" >/dev/null 2>&1; then
+            git checkout --detach "${SOURCE_LABEL}"
+          else
+            echo "::error::Unknown branch/ref: ${SOURCE_LABEL}"
+            exit 1
+          fi
+
+          sha="$(git rev-parse HEAD)"
+          pkg="$(node -p "require('./package.json').version")"
+          latest="$(git tag -l 'leash-secrets-v[0-9]*.[0-9]*.[0-9]*' --sort=-v:refname | head -n1 || true)"
+          if [[ -z "${latest}" ]]; then
+            latest="leash-secrets-v0.0.0"
+          fi
+
+          ver="${latest#leash-secrets-v}"
+          IFS='.' read -r major minor patch <<< "${ver}"
+          major="${major:-0}"
+          minor="${minor:-0}"
+          patch="${patch:-0}"
+
+          case "${BUMP}" in
+            major) major=$((major + 1)); minor=0; patch=0 ;;
+            minor) minor=$((minor + 1)); patch=0 ;;
+            patch) patch=$((patch + 1)) ;;
+            *) echo "::error::Unknown bump: ${BUMP}"; exit 1 ;;
+          esac
+
+          tag="leash-secrets-v${major}.${minor}.${patch}"
+          expected="${major}.${minor}.${patch}"
+
+          if git rev-parse "${tag}" >/dev/null 2>&1; then
+            echo "::error::Tag ${tag} already exists"
+            exit 1
+          fi
+
+          if [[ "${pkg}" != "${expected}" ]]; then
+            echo "::error::package.json is ${pkg} but ${BUMP} bump expects ${expected}."
+            echo "::error::Merge a version bump to main first (bash scripts/prepare-release.sh), then re-run."
+            exit 1
+          fi
+
+          {
+            echo "tag=${tag}"
+            echo "version=${expected}"
+            echo "latest=${latest}"
+            echo "bump=${BUMP}"
+            echo "sha=${sha}"
+            echo "branch=${SOURCE_LABEL}"
+          } >> "${GITHUB_OUTPUT}"
+
+          echo "Bumping ${latest} --${BUMP}--> ${tag} from ${SOURCE_LABEL} @ ${sha:0:7} (package.json ${pkg})"
+
+      - name: Package release assets
+        if: inputs.dry_run != true
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+          tar -czf "leash-secrets-${VERSION}.tar.gz" \
+            skills/ patterns/ hooks/ src/ bin/ \
+            AGENTS.md .cursor/rules/leash-secrets.mdc .github/copilot-instructions.md \
+            package.json README.md LICENSE
+          zip -r "leash-secrets-${VERSION}.zip" \
+            skills/ patterns/ hooks/ src/ bin/ \
+            AGENTS.md .cursor/rules/leash-secrets.mdc .github/copilot-instructions.md \
+            package.json README.md LICENSE
+
+      - name: Create GitHub Release (draft)
+        if: inputs.dry_run != true
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: leash-secrets v${{ steps.version.outputs.version }}
+          target_commitish: ${{ steps.version.outputs.sha }}
+          draft: true
+          generate_release_notes: true
+          files: |
+            leash-secrets-${{ steps.version.outputs.version }}.tar.gz
+            leash-secrets-${{ steps.version.outputs.version }}.zip
+          token: ${{ steps.auth.outputs.token }}
+
+      - name: Summary
+        run: |
+          if [[ "${{ inputs.dry_run }}" == "true" ]]; then
+            echo "::notice::Dry run — would draft ${{ steps.version.outputs.tag }} from ${{ steps.version.outputs.branch }} @ ${{ steps.version.outputs.sha }}"
+          else
+            echo "::notice::Draft ${{ steps.version.outputs.tag }} created. Open Releases → edit draft → Publish release to ship (triggers npm publish)."
+          fi
