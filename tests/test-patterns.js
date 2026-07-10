@@ -39,6 +39,7 @@ const TEST_CASES = {
       "datadog_application_key: '" + "e".repeat(40) + "'",
     ],
     shouldNotMatch: [ "DD_APP_KEY=short" ],
+  },
   'cloudflare-api-token': {
     shouldMatch: [
       "CLOUDFLARE_API_TOKEN=abcdefghijklmnopqrstuvwxyz0123456789ABCD",
