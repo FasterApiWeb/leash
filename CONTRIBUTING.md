@@ -154,3 +154,23 @@ See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). Be kind, be helpful, be constructi
 ## License
 
 By contributing, you agree that your contributions will be licensed under the MIT License.
+
+## Writing allowlist rules
+
+Allowlist patterns are **line-level** suppressions for educational/placeholder text.
+They must never suppress the secret grammar itself.
+
+**Good**
+- `/not[_-]?a[_-]?real/i`
+- `/REPLACE_ME/i`
+- `/example\.com/i`
+
+**Bad**
+- `/-----BEGIN [A-Z0-9 ]+ PRIVATE KEY-----/` (matches real RSA/OpenSSH findings)
+- Over-broad `\.+` / `...` tokens that appear in legitimate secrets
+
+When adding an FP rule:
+1. Add a **positive** fixture that still detects a real secret.
+2. Add a **negative** fixture for the educational line you want suppressed.
+3. Run the pattern test suite (`npm test` / project test script).
+
