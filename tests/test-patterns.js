@@ -32,6 +32,20 @@ const TEST_CASES = {
   'sentry-dsn': {
     shouldMatch: [ 'https://' + 'a'.repeat(32) + '@o0.ingest.sentry.io/123456' ],
     shouldNotMatch: [ 'https://example.com/123', 'https://short@host/1' ],
+  'datadog-api-key': {
+    shouldMatch: [
+      "DD_API_KEY=" + "a".repeat(32),
+      "datadog_api_key: '" + "b".repeat(32) + "'",
+      "DATADOG_API_KEY=" + "c".repeat(32),
+    ],
+    shouldNotMatch: [ "DD_API_KEY=short", "not_a_datadog_key" ],
+  },
+  'datadog-app-key': {
+    shouldMatch: [
+      "DD_APP_KEY=" + "d".repeat(40),
+      "datadog_application_key: '" + "e".repeat(40) + "'",
+    ],
+    shouldNotMatch: [ "DD_APP_KEY=short" ],
   },
   'cloudflare-api-token': {
     shouldMatch: [
