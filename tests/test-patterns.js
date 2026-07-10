@@ -32,6 +32,7 @@ const TEST_CASES = {
   'sentry-dsn': {
     shouldMatch: [ 'https://' + 'a'.repeat(32) + '@o0.ingest.sentry.io/123456' ],
     shouldNotMatch: [ 'https://example.com/123', 'https://short@host/1' ],
+  },
   'cloudflare-api-token': {
     shouldMatch: [
       "CLOUDFLARE_API_TOKEN=abcdefghijklmnopqrstuvwxyz0123456789ABCD",
