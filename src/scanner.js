@@ -21,6 +21,12 @@ const DEFAULT_ALLOWLIST = [
   /dummy/i,
   /placeholder/i,
   /fake/i,
+  // Truncated / redacted educational examples in docs (do NOT allowlist real PEM bodies)
+  /abc123/i,
+  /not[_-]?a[_-]?real/i,
+  /replace-me/i,
+  /SECRET DETECTED/i,
+  /\|\s*Private Key\s*\|/i,
 ];
 
 function redact(value) {
