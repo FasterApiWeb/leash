@@ -1,0 +1,62 @@
+# Keep open PRs current when main moves (contributor forks + same-repo branches).
+# Branch sync is off — this repo is the upstream, not a fork.
+#
+# Secret required: FORK_SYNC_PAT
+#   Fine-grained PAT on FasterApiWeb/leash-secrets with:
+#   Contents: Read and write · Issues: Read and write · Pull requests: Read and write
+#   (Classic PAT: repo scope. Authorize for org SSO if required.)
+#
+# Marketplace: https://github.com/marketplace/actions/fork-shepherd
+
+name: Fork Shepherd
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request_target:
+    types: [opened, labeled, closed]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  shepherd:
+    name: PR monitor
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require FORK_SYNC_PAT
+        id: gate
+        env:
+          FORK_SYNC_PAT: ${{ secrets.FORK_SYNC_PAT }}
+        run: |
+          if [[ -z "${FORK_SYNC_PAT}" ]]; then
+            echo "::notice::FORK_SYNC_PAT secret is not set — skipping Fork Shepherd. Add it under Settings → Secrets to enable PR auto-updates."
+            echo "skip=true" >> "${GITHUB_OUTPUT}"
+          else
+            echo "skip=false" >> "${GITHUB_OUTPUT}"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.gate.outputs.skip != 'true'
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.FORK_SYNC_PAT }}
+
+      - uses: FasterApiWeb/fork-shepherd@v1
+        if: steps.gate.outputs.skip != 'true'
+        with:
+          # Required input; branch sync is disabled below.
+          upstream_repo: FasterApiWeb/leash-secrets
+          sync_branches: main
+          github_token: ${{ secrets.FORK_SYNC_PAT }}
+          monitor_all_prs: "true"
+          enable_branch_sync: "false"
+          enable_pr_monitor: "true"
+          enable_backport: "false"
+          enable_cleanup: "true"
+          merge_strategy: merge
