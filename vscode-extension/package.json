@@ -2,7 +2,7 @@
   "name": "leash-secrets-vscode",
   "displayName": "Leash Secrets — Secret Scanner",
   "description": "Inline warnings for exposed API keys, tokens, and credentials. 71 patterns across 11 provider categories.",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "publisher": "FasterApiWeb",
   "license": "MIT",
   "icon": "icon.png",
