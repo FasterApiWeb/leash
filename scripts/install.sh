@@ -5,7 +5,7 @@ set -euo pipefail
 # leash-secrets installer — macOS · Linux · WSL · Git Bash
 # ──────────────────────────────────────────
 
-VERSION="1.2.2"
+VERSION="1.3.0"
 REPO="FasterApiWeb/leash-secrets"
 RAW="https://raw.githubusercontent.com/$REPO/main"
 
