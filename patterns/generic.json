@@ -56,7 +56,7 @@
       "id": "generic-basic-auth-url",
       "name": "URL with Basic Auth Credentials",
       "severity": "critical",
-      "regex": "https?://[^:]+:[^@]+@(?!example\\.com|localhost)",
+      "regex": "https?://[^:\\]\\(]+:[^@\\]\\(]+@(?!example\\.com|localhost)",
       "description": "URL containing embedded username:password",
       "risk": "Credentials visible in source code, logs, and browser history.",
       "fix": "Separate credentials from URLs. Pass via headers or environment variables."

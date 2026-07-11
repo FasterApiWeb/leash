@@ -29,6 +29,16 @@ const TEST_CASES = {
     shouldMatch: [ 'sntrys_' + 'A'.repeat(60) ],
     shouldNotMatch: [ 'sntrys_short', 'not_a_sentry_token' ],
   },
+  'generic-basic-auth-url': {
+  shouldMatch: [
+    'https://admin:S3cr3tP4ss@internal.example-corp.com/api',
+  ],
+  shouldNotMatch: [
+    'https://example.com/123',
+    'https://short@host/1',
+    '[![Docs](https://img.shields.io/badge/docs-latest-blue)](mailto:user@example-corp.com)',
+  ],
+},
   'sentry-dsn': {
     shouldMatch: [ 'https://' + 'a'.repeat(32) + '@o0.ingest.sentry.io/123456' ],
     shouldNotMatch: [ 'https://example.com/123', 'https://short@host/1' ],
