@@ -25,6 +25,14 @@ function fail(msg) {
 }
 
 const TEST_CASES = {
+  'sentry-auth-token': {
+    shouldMatch: [ 'sntrys_' + 'A'.repeat(60) ],
+    shouldNotMatch: [ 'sntrys_short', 'not_a_sentry_token' ],
+  },
+  'sentry-dsn': {
+    shouldMatch: [ 'https://' + 'a'.repeat(32) + '@o0.ingest.sentry.io/123456' ],
+    shouldNotMatch: [ 'https://example.com/123', 'https://short@host/1' ],
+  },
   'datadog-api-key': {
     shouldMatch: [
       "DD_API_KEY=" + "a".repeat(32),

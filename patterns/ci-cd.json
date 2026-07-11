@@ -75,6 +75,32 @@
       "description": "CircleCI personal or project API token",
       "risk": "Can trigger builds, access build artifacts, and read environment variables.",
       "fix": "Use CIRCLECI_TOKEN environment variable."
+    },
+    {
+      "id": "sentry-auth-token",
+      "name": "Sentry Auth Token",
+      "severity": "critical",
+      "regex": "sntrys_[A-Za-z0-9_\\-/+]{60,}",
+      "description": "Sentry authentication token (sntrys_ prefix)",
+      "risk": "Can create/modify Sentry projects, access issue data, and manage org settings depending on scopes.",
+      "fix": "Use SENTRY_AUTH_TOKEN environment variable. Rotate immediately if exposed.",
+      "rotation_url": "https://sentry.io/settings/account/api/auth-tokens/",
+      "false_positive_hints": [
+        "Ignore clearly truncated or placeholder values in docs"
+      ]
+    },
+    {
+      "id": "sentry-dsn",
+      "name": "Sentry DSN",
+      "severity": "warning",
+      "regex": "https://[a-f0-9]{32}@[a-z0-9.-]+\\.[a-z]+/[0-9]+",
+      "description": "Sentry Data Source Name (DSN) used by SDKs to submit events",
+      "risk": "Attackers can inject fake error events into your Sentry project (noise/DoS of quotas).",
+      "fix": "Use SENTRY_DSN environment variable.",
+      "rotation_url": "https://docs.sentry.io/product/sentry-basics/dsn-explainer/",
+      "false_positive_hints": [
+        "Ignore localhost or example DSN placeholders in docs"
+      ]
     }
   ]
 }
