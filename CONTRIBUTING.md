@@ -93,20 +93,27 @@ Quick path: **Actions → Release Draft (auto-bumps) → Publish draft → npm**
 
 ### One-time secrets
 
+Prefer **org-level** secrets (not a personal PAT):
+
 | Secret | Purpose |
 |--------|---------|
 | `NPM_TOKEN` | Publish to npm (**required** to ship) |
-| `RELEASE_TOKEN` or `RELEASE_APP_*` | Recommended for Release Draft push to protected `main` (else `GITHUB_TOKEN` may be blocked) |
+| `RELEASE_APP_ID` / `RELEASE_APP_PRIVATE_KEY` / `RELEASE_APP_INSTALLATION_ID` | Org GitHub App so Release Draft can push bumps to protected `main` |
 | `VSCE_PAT` | VS Code marketplace *(deferred)* |
 
-Details: [ci-cd.md — Secrets](docs/contributing/ci-cd.md#secrets-needed).
+Do **not** use a personal `RELEASE_TOKEN` if the App is set up. Full steps (create App, install, secrets, ruleset bypass): [ci-cd.md — Org GitHub App](docs/contributing/ci-cd.md#org-github-app-for-release-draft-recommended). **No CI workflow file changes** are required for the App.
+
+### After merge to `main`
+
+Automatic: **CI** (always) → **Validate Patterns** / **Deploy Docs** (only if paths match) → **Release** (legacy; ignore).  
+To ship: **Release Draft** → Publish draft → **Publish npm**. Details: [ci-cd.md — After a merge](docs/contributing/ci-cd.md#after-a-merge-to-main--what-runs-in-order).
 
 ### Release checklist (short)
 
 1. **Actions → Release Draft → Run** (`patch` / `minor` / `major`) — bumps version on `main` if needed, creates draft  
 2. **Releases → Publish** the draft → **Publish npm** runs (skips if version already on npm)  
 
-If the draft push fails: add `RELEASE_TOKEN` (admin PAT / bypass) and re-run.  
+If the draft push fails: finish org App + ruleset bypass, then re-run.  
 If you only need npm: **Actions → Publish npm → Run workflow**.
 ## PR Guidelines
 
