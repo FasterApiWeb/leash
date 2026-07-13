@@ -163,6 +163,14 @@ const TEST_CASES = {
       'hf_short',
     ],
   },
+  'generic-basic-auth-url': {
+    shouldMatch: [
+      'https://admin:S3cr3tP@ss@internal-api.example-corp.com/v1',
+    ],
+    shouldNotMatch: [
+      'https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400',
+    ],
+  },
 };
 
 console.log('\n  Testing leash-secrets patterns against fixtures...\n');
